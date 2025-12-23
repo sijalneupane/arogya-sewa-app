@@ -1,0 +1,22 @@
+name: arogya_sewa_monorepo
+environment:
+  sdk: ">=3.10.4 <4.0.0"
+dev_dependencies:
+  melos: ^7.3.0
+
+workspace:
+  - apps/doctor_app
+  - apps/patient_app
+  - packages/shared_core
+  - packages/shared_ui
+  - packages/shared_network
+
+melos:
+  scripts:
+    doctor:
+      run: |
+        cd apps/doctor_app && flutter run
+
+    patient:
+      run: |
+        cd apps/patient_app && flutter run

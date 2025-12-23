@@ -1,0 +1,66 @@
+# =========================
+# Flutter / Dart build artifacts
+# =========================
+**/build/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Pods/
+**/ios/Runner.xcworkspace/
+**/ios/Flutter/App.framework
+**/android/.gradle/
+**/android/app/build/
+**/android/local.properties
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/generated_plugin_registrant.dart
+
+# =========================
+# Flutter / Dart packages
+# =========================
+# Commit pubspec.lock for apps only
+packages/*/pubspec.lock
+# Keep pubspec.lock for apps (doctor_app, patient_app)
+
+# =========================
+# Melos workspace
+# =========================
+.melos/
+.melos_tool/
+
+# =========================
+# IDE / Editor
+# =========================
+# VS Code
+.vscode/
+.history/
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# =========================
+# OS files
+# =========================
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+desktop.ini
+# Linux
+*.swp
+
+# =========================
+# Flutter specific
+# =========================
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.*
