@@ -9,7 +9,7 @@ workspace:
   - apps/patient_app
   - packages/shared_core
   - packages/shared_ui
-  - packages/shared_network
+  - packages/shared_config
 
 melos:
   scripts:

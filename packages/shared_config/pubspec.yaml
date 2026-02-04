@@ -1,8 +1,7 @@
-name: shared_network
+name: shared_config
 description: "A new Flutter package project."
 version: 0.0.1
 homepage:
-
 resolution: workspace
 environment:
   sdk: ^3.10.4

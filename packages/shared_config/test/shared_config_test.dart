@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:shared_network/shared_network.dart';
+import 'package:shared_config/shared_config.dart';
 
 void main() {
   test('adds one to input values', () {
