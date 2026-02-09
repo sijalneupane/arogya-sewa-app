@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:patient_app/features/auth/pages/login_page.dart';
+import 'package:patient_app/features/auth/presentation/login_page.dart';
 import 'package:shared_ui/widgets/splash/arogya_sewa_splash_page.dart';
 
 class PatientSplashScreen extends StatelessWidget {

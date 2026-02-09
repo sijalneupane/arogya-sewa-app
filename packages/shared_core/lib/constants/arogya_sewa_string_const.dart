@@ -2,12 +2,12 @@
 const String accessDenied = 'Access denied';
 
 // -- B --
-const String badRequest = 'Bad request';
-const String defaultError = 'Something went wrong. Please try again.';
+const String badGatewayString="Bad gateway";
+const String badRequestString = 'Bad request';
 
 // -- D --
 const String dashString='-';
-const String defaultErrorMessage="Something went wrong!";
+const String defaultErrorSting="Something went wrong!";
 const String defaultInfoMessage="Information. Please read carefully";
 const String defaultSuccessMessage="Operation Successful!";
 
@@ -17,8 +17,17 @@ const String emailEmptyValidationString = 'Please enter your email address';
 const String emailValidationString = 'Please enter a valid email address';
 
 // -- F --
+const String fileUpdateFailedString="File update failed";
+const String fileUploadFailedString="File upload failed";
+const String fileSizeExceedString="File size exceeds the maximum limit of 2MB";
+const String forbiddenString="Access to this resource is forbidden";
 const String forgotPasswordString='Forgot Password?';
 
+// -- G --
+const String gatewayTimeoutString=" Gateway timeout. Please try again later.";
+// -- I --
+const String internalServerErrorString="Internal server error. Please try again later.";
+const String invalidCredentialsString="Invalid email or password";
 // -- L --
 const String loadingString='Loading...';
 const String loginFailedStr = 'Login failed';
@@ -30,8 +39,9 @@ const String logoutFailedStr = 'Logout failed';
 const String logoutSuccessStr = 'Logout successful';
 
 // -- N --
-const String noInternetConnection = 'No internet connection';
-const String notFound = 'Not found';
+const String notAuthenticatedString="Please authenticate to access this resource";
+const String noInternetConnectionString = 'No internet connection';
+const String notFoundString = 'Not found';
 
 // -- O --
 const String okString='OK';
@@ -45,14 +55,20 @@ const String passwordLengthValidationString = 'Password must be at least 6 chara
 const String requestTimedOut = 'Request timed out';
 
 // -- S --
-const String serverError = 'Server error. Please try again later.';
-const String sessionExpired = 'Session expired. Please log in again.';
+const String serverErrorString = 'Server error. Please try again later.';
+const String serviceUnavailableString="Sevice is currently not available";
+const String sessionExpiredString = 'Session expired. Please log in again.';
 
 // -- U --
-const String unexpectedError = 'Unexpected error occurred';
+const String unexpectedErrorString = 'Unexpected error occurred';
+const String unknownErrorString = 'Unknown error occurred';
+const String userDetailsFetchFailedString='Failed to fetch user details';
+const String userDetailsClearFailedString='Failed to clear user details';
+const String unexpectedResponseFormatString="Unexpected response format received from the server";
 
 // -- V --
 const String versionLabelString='Version';
+const String versionFetchFailedString='Failed to fetch app version';
 
 // -- W --
 const String welcomeString='Welcome to Arogya Sewa';

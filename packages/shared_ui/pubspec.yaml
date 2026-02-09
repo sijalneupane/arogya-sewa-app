@@ -20,6 +20,8 @@ dependencies:
 
   shared_core:
     path: ../shared_core
+  shared_feature:
+    path: ../shared_feature
 dev_dependencies:
   flutter_test:
     sdk: flutter

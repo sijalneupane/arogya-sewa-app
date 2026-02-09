@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_core/auth/bloc/auth_bloc.dart';
-import 'package:shared_core/auth/bloc/auth_event.dart';
-import 'package:shared_core/auth/bloc/auth_state.dart';
-import 'package:shared_core/auth/models/login_model.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_event.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_state.dart';
+import 'package:shared_feature/auth/data/models/login_model.dart';
 import 'package:shared_core/constants/arogya_sewa_string_const.dart';
 import 'package:shared_ui/utils/hide_keyboard.dart';
 import 'package:shared_ui/widgets/arogya_sewa_bottom_sheet.dart';

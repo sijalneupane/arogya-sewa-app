@@ -54,7 +54,7 @@ class ArogyaSewaBottomSheet {
       case BottomSheetType.error:
         icon = Icons.error;
         color = Colors.red;
-        defaultMessage = defaultErrorMessage;
+        defaultMessage = defaultErrorSting;
         break;
     }
 

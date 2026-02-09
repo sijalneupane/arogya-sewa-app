@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "732011602394",
+    "project_id": "arogya-sewa",
+    "storage_bucket": "arogya-sewa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732011602394:android:8466128bc72404fb6fa0e3",
+        "android_client_info": {
+          "package_name": "com.arogyasewa.doctorapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKe3lVOp6Vd5IYdL4L8OzaiblSTPa9hEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732011602394:android:8789962425d4308e6fa0e3",
+        "android_client_info": {
+          "package_name": "com.arogyasewa.patientapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKe3lVOp6Vd5IYdL4L8OzaiblSTPa9hEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
