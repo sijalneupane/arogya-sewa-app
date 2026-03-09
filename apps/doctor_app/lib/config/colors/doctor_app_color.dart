@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
   * This file is used to define the colors used in the app
   * Don't use hardcoded color values in the app
  */
-class AppColors {
+class DoctorAppColors {
   //primary color
   static const  Color primaryColor = Color(0xff1b2a59);
   static const Color secondaryColor = Color(0xff276185);
