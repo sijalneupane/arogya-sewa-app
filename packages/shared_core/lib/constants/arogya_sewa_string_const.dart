@@ -4,12 +4,15 @@ const String accessDenied = 'Access denied';
 // -- B --
 const String badGatewayString="Bad gateway";
 const String badRequestString = 'Bad request';
+const String biometricLoginString='Log in with Biometrics';
+const String biometricLoginFailedString='Biometric login failed';
 
 // -- D --
 const String dashString='-';
 const String defaultErrorSting="Something went wrong!";
 const String defaultInfoMessage="Information. Please read carefully";
 const String defaultSuccessMessage="Operation Successful!";
+const String dontHaveAccountString="Don't have an account?";
 
 // -- E --
 const String emailLabel='Email';
@@ -58,6 +61,7 @@ const String requestTimedOut = 'Request timed out';
 const String serverErrorString = 'Server error. Please try again later.';
 const String serviceUnavailableString="Sevice is currently not available";
 const String sessionExpiredString = 'Session expired. Please log in again.';
+const String signUpString='Sign Up';
 
 // -- U --
 const String unexpectedErrorString = 'Unexpected error occurred';
@@ -72,7 +76,7 @@ const String versionFetchFailedString='Failed to fetch app version';
 
 // -- W --
 const String welcomeString='Welcome to Arogya Sewa';
-const String welcomeBackString='Welcome back! Please login to your account.';
+const String welcomeBackString='Welcome back';
 
 // -- Y --
 const String yesString='Yes';
