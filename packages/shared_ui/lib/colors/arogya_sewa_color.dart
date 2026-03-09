@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
  */
 class ArogyaSewaColors {
   //primary color
-  static const  Color primaryColor = Color(0xff161c4e);
-  static const Color secondaryColor = Color(0xFF283ADE);
+  static const  Color primaryColor = Color(0xFF1A205C);
+  static const Color secondaryColor =  Color(0xFF0D47A1);
 
   static const Color transparent = Colors.transparent;
 
@@ -17,7 +17,7 @@ class ArogyaSewaColors {
 
   //border and text colors
   static const Color borderColorWhite = Color(0xFF333333);
-  static const Color borderColorBlack = Color(0xFFFAFAFA);
+  static const Color borderColorBlack = Color(0xFFDDDDDD);
   static const Color borderColorGrey = Color(0xFFB9B3B3);
   static const Color dialogBoxColor = Color(0xFFF8F8F8);
 
@@ -32,6 +32,8 @@ class ArogyaSewaColors {
   
   //gradient color
   static LinearGradient primrayGraidient = LinearGradient(
-    colors: [primaryColor, primaryColor.withAlpha((255 * 0.8).round())],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [primaryColor, secondaryColor.withAlpha((255 * 0.8).round())],
   );
 }
