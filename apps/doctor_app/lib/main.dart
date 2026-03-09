@@ -1,5 +1,5 @@
 import 'package:doctor_app/config/routes/doctor_app_router.dart';
-import 'package:doctor_app/core/constants/app_strings_const.dart';
+import 'package:doctor_app/core/constants/doctor_app_strings_const.dart';
 import 'package:doctor_app/doctor_injection_container.dart';
 import 'package:doctor_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';

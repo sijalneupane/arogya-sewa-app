@@ -1,4 +1,4 @@
-const String appName = "Code Bridge";
+const String appName = "Doctor App";
 // const String letsGoString = "Let’s Go";
 const String enterLoginDetailString = "Please enter the details to Log in";
 const String emailString = "Email";
