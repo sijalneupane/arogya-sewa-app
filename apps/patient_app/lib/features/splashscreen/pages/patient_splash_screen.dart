@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:patient_app/features/auth/presentation/login_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:patient_app/config/routes/routes_name.dart';
+import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:shared_ui/widgets/splash/arogya_sewa_splash_page.dart';
 
 class PatientSplashScreen extends StatelessWidget {
@@ -9,13 +11,10 @@ class PatientSplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ArogyaSewaSplashPage(
-        appLogoImgPath: 'assets/images/patient_app_logo.png',
-        appTitle: 'Patient App',
+        appLogoImgPath:appLogoWhiteBgPath,
+        appTitle: appName,
         afterDelayNavigate: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) =>  PatientLoginPage()),
-          );
+          context.pushNamed(RoutesName.loginScreen);
         },
       ),
     );
