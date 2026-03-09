@@ -3,7 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:patient_app/config/routes/patient_app_router.dart';
-import 'package:patient_app/core/constants/app_strings_const.dart';
+import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:patient_app/firebase_options.dart';
 import 'package:patient_app/patient_injection_container.dart';
 import 'package:shared_core/bloc/notification/notification_bloc.dart';
