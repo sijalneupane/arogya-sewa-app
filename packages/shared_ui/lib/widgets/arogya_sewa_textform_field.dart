@@ -24,6 +24,7 @@ class ArogyaSewaTextFormField extends StatelessWidget {
   bool? enabled;
   Color? suffixIconColor;
   Color? prefixIconColor;
+  EdgeInsetsGeometry? contentPadding;
 
   ArogyaSewaTextFormField({
     super.key,
@@ -47,6 +48,7 @@ class ArogyaSewaTextFormField extends StatelessWidget {
     this.outerLabelStyle,
     this.prefixIconColor,
     this.suffixIconColor,
+    this.contentPadding
   });
   @override
   Widget build(BuildContext context) {
@@ -65,91 +67,90 @@ class ArogyaSewaTextFormField extends StatelessWidget {
       context,
     ).textTheme.bodyMedium?.copyWith(color: textColor);
     final double fontSize = smallTextFormField ? 12 : (textStyle?.fontSize ?? 14);
-    final contentPadding = EdgeInsets.symmetric(
+    final contentPadding = this.contentPadding ?? EdgeInsets.symmetric(
       vertical:12,
       horizontal: 10,
     );
     final borderRadius = BorderRadius.circular(10);
     
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-        child: Column(
-          children: [
-            if (outerLabel != null)
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0, left: 4.0),
-                  child: Text(
-                    outerLabel!,
-                    style:
-                        outerLabelStyle ??
-                        Theme.of(context).textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: enabled == false ? textColor : null,
-                        ),
-                  ),
+      child: Column(
+        children: [
+          if (outerLabel != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 5.0, left: 4.0),
+                child: Text(
+                  outerLabel!,
+                  style:
+                      outerLabelStyle ??
+                      Theme.of(context).textTheme.labelLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: enabled == false ? textColor : null,
+                      ),
                 ),
               ),
-
-            TextFormField(
-              enabled: enabled,
-              controller: controller,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              readOnly: readOnly,
-              onTap: onTap,
-              onChanged: onChanged,
-              textAlign: TextAlign.start,
-              style: textStyle?.copyWith(fontSize: fontSize),
-              decoration: InputDecoration(
-                isCollapsed: smallTextFormField,
-                filled: true,
-                fillColor: fillColor,
-                contentPadding: contentPadding,
-                prefixIcon: prefixIcon,
-                prefixIconColor: prefixIconColor ?? defaultIconColor,
-                prefixIconConstraints: const BoxConstraints(minWidth: 40.0),
-                hintText: hintText,
-                hintStyle: TextStyle(
-                  fontSize: fontSize,
-                  color: ArogyaSewaColors.textColorGrey,
-                ),
-                suffixIcon: suffixIcon,
-                suffixIconColor: suffixIconColor ?? defaultIconColor,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: borderRadius,
-                  borderSide: BorderSide(
-                    style: isDarkMode ? BorderStyle.none : BorderStyle.solid,
-                  ),
-                ),
-                disabledBorder:  OutlineInputBorder(
-                  borderRadius: borderRadius,
-                  borderSide: BorderSide(
-                    style: isDarkMode ? BorderStyle.none : BorderStyle.solid,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: borderRadius,
-                  borderSide: BorderSide(
-                    color:  ArogyaSewaColors.primaryColor,
-                    width: 2.0,
-                  ),
-                ),
-                errorMaxLines: 2,
-              ),
-              maxLines: maxLines,
-              obscureText: obsecureText ?? false,
-              keyboardType: keyboardType,
-              inputFormatters: inputFormatter,
-              validator: validator,
             ),
-          ],
-        ),
+      
+          TextFormField(
+            enabled: enabled,
+            controller: controller,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            readOnly: readOnly,
+            onTap: onTap,
+            onChanged: onChanged,
+            textAlign: TextAlign.start,
+            style: textStyle?.copyWith(fontSize: fontSize),
+            decoration: InputDecoration(
+              isCollapsed: smallTextFormField,
+              filled: true,
+              fillColor: fillColor,
+              contentPadding: contentPadding,
+              prefixIcon: prefixIcon,
+              prefixIconColor: prefixIconColor ?? defaultIconColor,
+              prefixIconConstraints: const BoxConstraints(minWidth: 40.0),
+              hintText: hintText,
+              hintStyle: TextStyle(
+                fontSize: fontSize,
+                color: ArogyaSewaColors.textColorGrey,
+              ),
+              suffixIcon: suffixIcon,
+              suffixIconColor: suffixIconColor ?? defaultIconColor,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide(
+                  color: isDarkMode ? ArogyaSewaColors.borderColorGrey : ArogyaSewaColors.borderColorBlack,
+                  style: isDarkMode ? BorderStyle.none : BorderStyle.solid,
+                ),
+              ),
+              disabledBorder:  OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide(
+                  style: isDarkMode ? BorderStyle.none : BorderStyle.solid,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: borderRadius,
+                borderSide: BorderSide(
+                  color:  ArogyaSewaColors.primaryColor,
+                  width: 2.0,
+                ),
+              ),
+              errorMaxLines: 2,
+            ),
+            maxLines: maxLines,
+            obscureText: obsecureText ?? false,
+            keyboardType: keyboardType,
+            inputFormatters: inputFormatter,
+            validator: validator,
+          ),
+        ],
       ),
     );
   }
