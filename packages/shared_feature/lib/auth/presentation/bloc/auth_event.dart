@@ -1,10 +1,10 @@
-import 'package:shared_feature/auth/data/models/login_model.dart';
+import 'package:shared_feature/auth/domain/entity/login_entity.dart';
 
 abstract class AuthEvent {}
 
 class AuthLoginInitiated extends AuthEvent {
-  final LoginModel loginModel;
-  AuthLoginInitiated(this.loginModel);
+  final LoginEntity loginEntity;
+  AuthLoginInitiated(this.loginEntity);
 }
 class AuthPasswordToggled extends AuthEvent {
   final bool obscure;

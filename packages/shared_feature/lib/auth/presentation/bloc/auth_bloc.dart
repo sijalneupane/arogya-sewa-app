@@ -16,14 +16,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthLoginInitiated event,
     Emitter<AuthState> emit,
   ) async {
-    emit(AuthLoading());
-    
+    // emit(AuthLoading());
+    // final result = await loginUsecase(event.loginEntity);
   }
 
   void _onLoginPasswordToggled(
     AuthPasswordToggled event,
     Emitter<AuthState> emit,
   ) {
+    emit(AuthInitial(obscure:!event.obscure));
   }
 
   // Future<void> _onLogoutRequested(AuthLogoutRequested event, Emitter<AuthState> emit) async {

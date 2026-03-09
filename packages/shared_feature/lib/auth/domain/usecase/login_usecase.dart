@@ -11,7 +11,7 @@ class LoginUsecase implements UseCase<AuthSessionEntity, LoginEntity> {
   LoginUsecase(this.repo);
 
   @override
-  Future<Either<Failure, AuthSessionEntity>> call(LoginEntity p) {
-    return repo.login(p);
+  Future<Either<Failure, AuthSessionEntity>> call(LoginEntity p) async {
+    return await repo.login(p);
   }
 }
