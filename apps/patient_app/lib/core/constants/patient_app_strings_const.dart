@@ -1,4 +1,6 @@
 const String appName = "Patient App";
+const String appLogoWhiteBgPath= 'assets/images/patient_app_logo_white_bg.png';
+const String appLogoTransparentBgPath= 'assets/images/patient_app_logo_transparent_bg.png';
 // const String letsGoString = "Let’s Go";
 const String enterLoginDetailString = "Please enter the details to Log in";
 const String emailString = "Email";
@@ -247,7 +249,6 @@ Image and file path strings
 */
 const String forgotPasswordImgPath='assets/images/forget_password.png';
 const String profileImgPath='assets/images/profile.png';
-const String appLogoImgPath='assets/images/app_logo.png';
 // Biometric constants
 const String biometricUnavailableString = "Biometric authentication unavailable";
 const String biometricNotEnrolledString = "No biometric enrolled";

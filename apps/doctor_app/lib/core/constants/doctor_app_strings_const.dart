@@ -1,4 +1,6 @@
 const String appName = "Doctor App";
+const String appLogoWhiteBgPath= 'assets/images/doctor_app_logo_white_bg.png';
+const String appLogoTransparentBgPath= 'assets/images/doctor_app_logo_transparent_bg.png';
 // const String letsGoString = "Let’s Go";
 const String enterLoginDetailString = "Please enter the details to Log in";
 const String emailString = "Email";

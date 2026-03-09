@@ -12,17 +12,24 @@ class PatientLoginPage extends StatelessWidget {
       MaterialPageRoute(builder: (context) => const HomePage()),
     );
   }
-  void afterAuthenticationFail() {
-    
-  }
+
+  void afterAuthenticationFail() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Column(
-        children: [
-          ArogyaSewaLoginForm(emailController: emailController, passwordController: passwordController, afterAuthenticationSuccess: (context) => afterAuthenticationSuccess(context), afterAuthenticationFail: afterAuthenticationFail)
-        ],
-      ))
+      body: SafeArea(
+        child: Column(
+          children: [
+            ArogyaSewaLoginForm(
+              emailController: emailController,
+              passwordController: passwordController,
+              afterAuthenticationSuccess: (context) =>
+                  afterAuthenticationSuccess(context),
+              afterAuthenticationFail: afterAuthenticationFail,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
