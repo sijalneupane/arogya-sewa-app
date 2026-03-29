@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-class HideKeyboard {
-  static void hide(BuildContext context) {
-    FocusManager.instance.primaryFocus?.unfocus();
-  }
-}
+// class HideKeyboard {
+//   static void hide(BuildContext context) {
+//     FocusManager.instance.primaryFocus?.unfocus();
+//   }
+// }
