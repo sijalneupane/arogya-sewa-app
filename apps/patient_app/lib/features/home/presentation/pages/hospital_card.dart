@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
-import 'package:patient_app/features/home/domain/model/hospital_entity.dart';
+import 'package:patient_app/common/model/hospital_entity.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 
