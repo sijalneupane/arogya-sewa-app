@@ -168,6 +168,20 @@ const String maternityString = "Maternity";
 const String paternityString = "Paternity";
 const String unpaidString = "Unpaid";
 
+// Home - Location permission UI strings
+const String locationPermissionTitleString = "Location Access Required";
+const String locationPermissionDescString = "We need your location to show nearest hospitals. Please enable location services to continue.";
+const String grantPermissionString = "Grant Permission";
+
+// Home - Hospital card strings
+const String distanceString = "Distance";
+const String kilometersString = "km";
+const String viewDetailsString = "View Details";
+
+// Home - Empty state strings
+const String noHospitalsNearbyString = "No Hospitals Nearby";
+const String noHospitalsNearbyDescString = "There are no hospitals registered in your current area. Try searching manually.";
+
 // leave status type 
 const String pendingString ="Pending";
 
