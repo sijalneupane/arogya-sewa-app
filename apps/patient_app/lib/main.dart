@@ -10,6 +10,7 @@ import 'package:shared_core/bloc/notification/notification_bloc.dart';
 import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shared_feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:shared_ui/theme/app_theme.dart';
+import 'package:toastification/toastification.dart';
 // MUST be top-level/static for background messages
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -41,14 +42,16 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<AuthBloc>()),
         BlocProvider(create: (_) => sl<NotificationBloc>()),
       ],
-      child: MaterialApp.router(
-            routerConfig: PatientAppRouter.router,
-            debugShowCheckedModeBanner: false,
-            title: appName,
-            theme: AppThemeData.light(),
-            darkTheme: AppThemeData.dark(),
-             themeMode: ThemeMode.system,
-          )
+      child: ToastificationWrapper(
+        child: MaterialApp.router(
+          routerConfig: PatientAppRouter.router,
+          debugShowCheckedModeBanner: false,
+          title: appName,
+          theme: AppThemeData.light(),
+          darkTheme: AppThemeData.dark(),
+          themeMode: ThemeMode.system,
+        ),
+      ),
     );
   }
 }
