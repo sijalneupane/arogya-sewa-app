@@ -47,6 +47,8 @@ dependencies:
   equatable: ^2.0.7
   shimmer: ^3.0.0
   cached_network_image: ^3.4.1
+  sqflite: ^2.4.1
+  toastification: ^3.0.3
   shared_ui:
     path: ../../packages/shared_ui
 
