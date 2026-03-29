@@ -1,6 +1,7 @@
-import 'package:patient_app/features/home/domain/model/hospital_entity.dart';
+import 'package:patient_app/common/model/hospital_entity.dart';
 import 'package:shared_core/data/models/file_model.dart';
 
+/// Model for serializing hospital data to/from JSON
 class HospitalModel extends HospitalEntity {
   const HospitalModel({
     required super.hospitalId,
@@ -8,6 +9,7 @@ class HospitalModel extends HospitalEntity {
     required super.location,
     required super.latitude,
     required super.longitude,
+    required super.distanceKm,
     required super.contactNumber,
     required super.openedDate,
     super.logo,
@@ -22,6 +24,7 @@ class HospitalModel extends HospitalEntity {
       location: json['location'] as String? ?? '',
       latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0,
       longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,
+      distanceKm: (json['distance_km'] as num?)?.toDouble(),
       contactNumber: List<String>.from(
         (json['contact_number'] as List<dynamic>?) ?? [],
       ),
@@ -39,6 +42,7 @@ class HospitalModel extends HospitalEntity {
       'location': location,
       'latitude': latitude,
       'longitude': longitude,
+      'distance_km': distanceKm,
       'contact_number': contactNumber,
       'opened_date': openedDate,
       'logo': logo != null ? FileModel.fromEntity(logo!).toJson() : null,
@@ -56,6 +60,7 @@ class HospitalModel extends HospitalEntity {
       location: entity.location,
       latitude: entity.latitude,
       longitude: entity.longitude,
+      distanceKm: entity.distanceKm,
       contactNumber: entity.contactNumber,
       openedDate: entity.openedDate,
       logo: entity.logo,

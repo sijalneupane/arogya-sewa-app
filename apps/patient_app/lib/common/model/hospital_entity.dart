@@ -1,11 +1,13 @@
 import 'package:shared_core/domain/entities/file_entity.dart';
 
+/// Entity representing a hospital with its details
 class HospitalEntity {
   final String hospitalId;
   final String name;
   final String location;
   final double latitude;
   final double longitude;
+  final double? distanceKm;
   final List<String> contactNumber;
   final String openedDate;
   final FileEntity? logo;
@@ -18,6 +20,7 @@ class HospitalEntity {
     required this.location,
     required this.latitude,
     required this.longitude,
+    required this.distanceKm,
     required this.contactNumber,
     required this.openedDate,
     this.logo,
