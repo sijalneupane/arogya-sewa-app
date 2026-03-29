@@ -1,4 +1,4 @@
-import 'package:patient_app/features/home/data/model/hospital_model.dart';
+import 'package:patient_app/common/model/hospital_model.dart';
 import 'package:patient_app/features/home/domain/model/nearest_hospitals_response_entity.dart';
 
 class NearestHospitalsResponseModel extends NearestHospitalsResponseEntity {
