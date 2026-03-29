@@ -182,6 +182,13 @@ const String viewDetailsString = "View Details";
 const String noHospitalsNearbyString = "No Hospitals Nearby";
 const String noHospitalsNearbyDescString = "There are no hospitals registered in your current area. Try searching manually.";
 
+// Home - Doctor strings
+const String topDoctorsString = "Top Doctors";
+const String viewMoreString = "View More";
+const String failedToFetchDoctorsString = "Failed to fetch doctors";
+const String noDoctorsFoundString = "No doctors found";
+const String noDoctorsFoundDescString = "There are no doctors available at the moment. Please check back later.";
+
 // leave status type 
 const String pendingString ="Pending";
 
