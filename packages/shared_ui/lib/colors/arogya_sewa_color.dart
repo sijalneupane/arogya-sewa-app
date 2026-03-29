@@ -36,4 +36,10 @@ class ArogyaSewaColors {
     end: Alignment.bottomCenter,
     colors: [primaryColor, secondaryColor.withAlpha((255 * 0.8).round())],
   );
+
+  // shimmer colors for loading states
+  static const Color shimmerBaseLight = Color(0xFFE0E0E0);
+  static const Color shimmerHighlightLight = Color(0xFFF5F5F5);
+  static const Color shimmerBaseDark = Color(0xFF3A3A3A);
+  static const Color shimmerHighlightDark = Color(0xFF4A4A4A);
 }
