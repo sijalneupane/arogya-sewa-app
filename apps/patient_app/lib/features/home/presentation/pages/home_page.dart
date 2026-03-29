@@ -3,14 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
+import 'package:patient_app/common/widgets/hospital_card.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_event.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_state.dart';
-import 'package:patient_app/features/home/presentation/pages/hospital_card.dart';
 import 'package:patient_app/features/home/presentation/pages/hospital_search_screen.dart';
+import 'package:patient_app/features/home/presentation/widgets/hospitals_empty_state_widget.dart';
+import 'package:patient_app/features/home/presentation/widgets/hospitals_shimmer_widget.dart';
+import 'package:patient_app/features/home/presentation/widgets/location_permission_widget.dart';
 import 'package:shared_core/services/location_service.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
+import 'package:shared_ui/widgets/app_toast.dart';
 import 'package:shared_ui/widgets/arogya_sewa_retry_widget.dart';
 import 'package:shared_ui/widgets/search/arogya_sewa_search_bar.dart';
 
@@ -54,8 +58,10 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error getting location: $e')),
+        AppToast.error(
+          context,
+          'Error getting location: $e',
+          title: 'Location Error',
         );
       }
     }
@@ -119,9 +125,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     SizedBox(height: context.vh(2)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: context.vw(2.5)),
-                      child: _buildHospitalContent(context, state, isDarkMode),
+                    SizedBox(
+                      height: context.vh(28),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: context.vw(2.5)),
+                            child: _buildNearestHospitalsSection(context, state, isDarkMode, constraints),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -133,42 +146,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildHospitalContent(
+  Widget _buildNearestHospitalsSection(
     BuildContext context,
     HomeState state,
     bool isDarkMode,
+    BoxConstraints constraints,
   ) {
-    final textColor = isDarkMode
-        ? ArogyaSewaColors.textColorWhite
-        : ArogyaSewaColors.textColorBlack;
-
     if (state is LocationPermissionCheckLoading) {
-      return Center(
-        child: CircularProgressIndicator(
-          color: ArogyaSewaColors.primaryColor,
-        ),
-      );
+      return const HospitalsShimmerWidget();
     }
 
     if (state is LocationPermissionDenied) {
-      return _buildLocationPermissionDenied(context, textColor);
+      return LocationPermissionWidget(
+        onRequestPermission: _requestLocationPermission,
+      );
     }
 
     if (state is NearestHospitalsLoading) {
-      return Center(
-        child: Column(
-          children: [
-            CircularProgressIndicator(
-              color: ArogyaSewaColors.primaryColor,
-            ),
-            SizedBox(height: context.vh(1)),
-            Text(
-              fetchingHospitalsString,
-              style: TextStyle(color: textColor),
-            ),
-          ],
-        ),
-      );
+      return const HospitalsShimmerWidget();
     }
 
     if (state is NearestHospitalsError) {
@@ -177,78 +172,28 @@ class _HomePageState extends State<HomePage> {
 
     if (state is NearestHospitalsLoaded) {
       if (state.hospitals.isEmpty) {
-        return Center(
-          child: Text(
-            noHospitalsFoundString,
-            style: TextStyle(color: textColor),
-          ),
-        );
+        return const HospitalsEmptyStateWidget();
       }
 
       return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
         itemCount: state.hospitals.length,
         itemBuilder: (context, index) {
+          final hospital = state.hospitals[index];
           return HospitalCard(
-            hospital: state.hospitals[index],
+            hospital: hospital,
             onTap: () {
               // Navigate to hospital details page when available.
+              AppToast.success(context, 'Tapped on ${hospital.name}');
             },
           );
         },
       );
     }
 
-    return _buildLocationPermissionDenied(context, textColor);
-  }
-
-  Widget _buildLocationPermissionDenied(BuildContext context, Color textColor) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.location_off,
-            size: 64,
-            color: ArogyaSewaColors.primaryColor.withOpacity(0.5),
-          ),
-          SizedBox(height: context.vh(2)),
-          Text(
-            locationDisabledString,
-            style: TextStyle(
-              color: textColor,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: context.vh(1)),
-          Text(
-            enableLocationDescString,
-            style: TextStyle(
-              color: ArogyaSewaColors.textColorGrey,
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: context.vh(3)),
-          ElevatedButton(
-            onPressed: _requestLocationPermission,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: ArogyaSewaColors.primaryColor,
-              padding: EdgeInsets.symmetric(
-                horizontal: context.vw(8),
-                vertical: context.vh(1.5),
-              ),
-            ),
-            child: Text(
-              enableLocationString,
-              style: const TextStyle(color: ArogyaSewaColors.textColorWhite),
-            ),
-          ),
-        ],
-      ),
+    return LocationPermissionWidget(
+      onRequestPermission: _requestLocationPermission,
     );
   }
 
