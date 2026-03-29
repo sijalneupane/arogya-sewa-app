@@ -9,9 +9,17 @@ class AuthSessionModel extends AuthSessionEntity {
   });
   factory AuthSessionModel.fromJson(Map<String, dynamic> json) {
     return AuthSessionModel(
-      user: UserModel.fromJson(json['user']),
-      accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
+      user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      accessToken: json['access_token'],
+      refreshToken: json['refresh_token'],
     );
   }
 }
+// name: json['name'],
+//       email: json['email'],
+//       id: json['id'],
+//       phoneNumber: json['phoneNumber'],
+//       profileImage: json['profileImage'] != null
+//           ? FileModel.fromJson(json['profileImage'])
+//           : null,
+//     );

@@ -18,7 +18,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       // If we reach here, response is successful (2xx due to validateStatus config)
       if(response.statusCode == 200 || response.statusCode == 201) {
       if (response.data is Map<String, dynamic>) {
-        return AuthSessionModel.fromJson(response.data as Map<String, dynamic>);
+        return AuthSessionModel.fromJson(response.data["data"] as Map<String, dynamic>);
       }
       }
       throw returnKnownDioException(response, unexpectedResponseFormatString);

@@ -1,7 +1,12 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:patient_app/core/constants/patient_app_strings_const.dart'
+  as patient_strings;
 import 'package:patient_app/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:patient_app/features/home/domain/model/nearest_hospitals_response_entity.dart';
+import 'package:shared_core/constants/arogya_sewa_string_const.dart';
 import 'package:shared_core/error/failure.dart';
+import 'package:shared_core/error/repository_exception_handler.dart';
 import 'package:shared_core/network/network_info.dart';
 import 'home_repository.dart';
 
@@ -20,7 +25,7 @@ class HomeRepositoryImpl implements HomeRepository {
     required double longitude,
   }) async {
     if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure('No internet connection'));
+      return Left(NetworkFailure(noInternetConnectionString));
     }
 
     try {
@@ -29,8 +34,11 @@ class HomeRepositoryImpl implements HomeRepository {
         longitude: longitude,
       );
       return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    } on DioException catch (e) {
+      return handleRepositoryException(
+        e,
+        unknownError: patient_strings.failedToFetchHospitalsString,
+      );
     }
   }
 }

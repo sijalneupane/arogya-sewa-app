@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:shared_feature/auth/domain/entity/auth_session_entity.dart';
 
 abstract class AuthState extends Equatable {
   final bool isLoading;
@@ -23,7 +24,11 @@ class AuthLoading extends AuthState {
 }
 
 class Authenticated extends AuthState {
-  const Authenticated();
+  final AuthSessionEntity authSession;
+  const Authenticated({required this.authSession});
+
+  @override
+  List<Object?> get props => [authSession, ...super.props];
 }
 
 class AuthUnauthenticated extends AuthState {
@@ -32,4 +37,7 @@ class AuthUnauthenticated extends AuthState {
 
 class AuthError extends AuthState {
   const AuthError(String error) : super(error: error);
+
+  @override
+  List<Object?> get props => [error, ...super.props];
 }

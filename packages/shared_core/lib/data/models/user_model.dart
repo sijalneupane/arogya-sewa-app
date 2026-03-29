@@ -25,9 +25,9 @@ class UserModel extends UserEntity {
       name: json['name'],
       email: json['email'],
       id: json['id'],
-      phoneNumber: json['phoneNumber'],
-      profileImage: json['profileImage'] != null
-          ? FileModel.fromJson(json['profileImage'])
+      phoneNumber: json['phone_number'],
+      profileImage: json['profile_img'] != null
+          ? FileModel.fromJson(json['profile_img'])
           : null,
     );
   }

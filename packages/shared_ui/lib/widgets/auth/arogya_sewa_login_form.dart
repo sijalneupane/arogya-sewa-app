@@ -74,6 +74,8 @@ class ArogyaSewaLoginForm extends StatelessWidget {
         if (state is AuthInitial) {
           obscure = state.obscure;
         }
+        
+        final isLoading = state is AuthLoading;
 
         return Form(
           key: formKey,
@@ -103,6 +105,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
               
               // Email Field with outerLabel
               ArogyaSewaTextFormField(
+                enabled: !isLoading,
                 outerLabel: emailLabel,
                 outerLabelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w400,
@@ -132,6 +135,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
               
               // Password Field with outerLabel
               ArogyaSewaTextFormField(
+                enabled: !isLoading,
                 outerLabel: passwordLabel,
                 outerLabelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w400,
@@ -146,11 +150,12 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                 ),
                 prefixIconColor: iconColor,
                 suffixIcon: IconButton(
+                  onLongPress: isLoading ? null : () {},
                   icon: Icon(
                     obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                     color: iconColor,
                   ),
-                  onPressed: () {
+                  onPressed: isLoading ? null : () {
                     context.read<AuthBloc>().add(
                       AuthPasswordToggled(obscure: obscure),
                     );
@@ -173,7 +178,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: isLoading ? null : () {
                     // Add your forgot password logic
                   },
                   child: Padding(
@@ -181,7 +186,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                     child: Text(
                       forgotPasswordString,
                       style: TextStyle(
-                        color: primaryColortextColor,
+                        color: isLoading ? ArogyaSewaColors.textColorGrey : primaryColortextColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -194,7 +199,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
               // Biometrics Login
               Center(
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: isLoading ? null : () {
                     // Add biometrics login logic
                   },
                   child: Padding(
@@ -206,12 +211,14 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                           width: 48,
                           height: 48,
                           decoration: BoxDecoration(
-                            border: Border.all(color: primaryColortextColor),
+                            border: Border.all(
+                              color: isLoading ? ArogyaSewaColors.textColorGrey : primaryColortextColor,
+                            ),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.fingerprint,
-                            color: primaryColortextColor,
+                            color: isLoading ? ArogyaSewaColors.textColorGrey : primaryColortextColor,
                             size: 28,
                           ),
                         ),
@@ -219,7 +226,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                         Text(
                           biometricLoginString,
                           style: TextStyle(
-                            color: primaryColortextColor,
+                            color: isLoading ? ArogyaSewaColors.textColorGrey : primaryColortextColor,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
@@ -234,24 +241,33 @@ class ArogyaSewaLoginForm extends StatelessWidget {
               
               // Sign In Button with Gradient
               ArogyaSewaButton(
-                onPressed: () => _submitLoginForm(context, formKey),
+                onPressed: isLoading ? null : () => _submitLoginForm(context, formKey),
                 gradient: ArogyaSewaColors.primrayGraidient,
                 foregroundColor: ArogyaSewaColors.textColorWhite,
                 height: 52,
-                child: Text(
-                  loginString,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: ArogyaSewaColors.textColorWhite,
-                  ),
-                ),
+                child: isLoading
+                    ? SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                          color: ArogyaSewaColors.textColorWhite,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        loginString,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: ArogyaSewaColors.textColorWhite,
+                        ),
+                      ),
               ),
               
                SizedBox(height: context.vh(2)),
               
               // Sign Up Section
               GestureDetector(
-                onTap: () {
+                onTap: isLoading ? null : () {
                   // Add your sign up navigation logic
                 },
                 child: Row(
@@ -260,14 +276,14 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                     Text(
                       dontHaveAccountString,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: hintColor,
+                        color: isLoading ? ArogyaSewaColors.textColorGrey : hintColor,
                       ),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       signUpString,
                       style: TextStyle(
-                        color: primaryColortextColor,
+                        color: isLoading ? ArogyaSewaColors.textColorGrey : primaryColortextColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),

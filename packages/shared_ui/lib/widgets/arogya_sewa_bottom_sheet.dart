@@ -9,8 +9,9 @@ class ArogyaSewaBottomSheet {
   /// [context]: The BuildContext used to show the bottom sheet.
   /// [type]: The type of bottom sheet (success, info, or error).
   /// [message]: The message to display in the bottom sheet.
-  /// [duration]: Optional duration after which the bottom sheet auto-dismisses.
+  /// [duration]: Duration after which the bottom sheet auto-dismisses (default: 2 seconds).
   /// [onDismissed]: Optional callback when the bottom sheet is dismissed.
+  /// [executeCallbackAfterDismiss]: If true, onDismissed callback executes after auto-dismiss (default: true).
   /// [isDismissible]: Whether the bottom sheet can be dismissed by tapping outside/swipe (default: false).
   /// [enableDrag]: Whether the bottom sheet can be dragged (default: false).
   /// [useRootNavigator]: If true, shows the sheet over the root navigator (overlays bottom nav bar).
@@ -23,8 +24,9 @@ class ArogyaSewaBottomSheet {
     required BottomSheetType type,
     required String message,
     BuildContext? parentContext,
-    Duration? duration,
+    Duration duration = const Duration(seconds: 2),
     VoidCallback? onDismissed,
+    bool executeCallbackAfterDismiss = true,
     bool isDismissible = false,
     bool enableDrag = false,
     bool useRootNavigator = true,
@@ -69,16 +71,14 @@ class ArogyaSewaBottomSheet {
       isDismissible: isDismissible,
       enableDrag: enableDrag,
       builder: (BuildContext innerContext) {
-        // Set up auto-dismiss if duration is provided
-        if (duration != null) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Future.delayed(duration, () {
-              if (innerContext.mounted && Navigator.of(innerContext).canPop()) {
-                Navigator.of(innerContext).pop();
-              }
-            });
+        // Set up auto-dismiss with duration
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Future.delayed(duration, () {
+            if (innerContext.mounted && Navigator.of(innerContext).canPop()) {
+              Navigator.of(innerContext).pop();
+            }
           });
-        }
+        });
 
         return Container(
           width: MediaQuery.of(context).size.width,
@@ -112,7 +112,9 @@ class ArogyaSewaBottomSheet {
       },
     );
 
-    // Call the onDismissed callback
-    onDismissed?.call();
+    // Execute callback after bottom sheet dismisses if flag is enabled
+    if (executeCallbackAfterDismiss) {
+      onDismissed?.call();
+    }
   }
 }

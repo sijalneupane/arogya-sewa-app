@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:patient_app/core/constants/patient_api_const.dart';
+import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:patient_app/features/home/data/model/nearest_hospitals_response_model.dart';
+import 'package:shared_core/error/datasource_exception_handler.dart';
 import 'home_remote_datasource.dart';
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -14,20 +17,22 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }) async {
     try {
       final response = await dio.get(
-        '/hospital/nearest',
+        PatientApiConst.nearestHospitals,
         queryParameters: {
           'latitude': latitude,
           'longitude': longitude,
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return NearestHospitalsResponseModel.fromJson(response.data);
-      } else {
-        throw Exception('Failed to fetch nearest hospitals');
       }
+      throw returnKnownDioException(response, failedToFetchHospitalsString);
     } catch (e) {
-      rethrow;
+      throw handleDataSourceDioException(
+        e,
+        path: PatientApiConst.nearestHospitals,
+      );
     }
   }
 }
