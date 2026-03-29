@@ -20,6 +20,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
   // final void Function() onForgotPassword;
   final void Function(BuildContext context) afterAuthenticationSuccess;
   final void Function() afterAuthenticationFail;
+  final void Function(bool isLoading)? onLoadingChanged;
   final String appLogoPath;
   bool obscure;
 
@@ -31,6 +32,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
     required TextEditingController passwordController,
     required this.afterAuthenticationSuccess,
     required this.afterAuthenticationFail,
+    this.onLoadingChanged,
     required this.appLogoPath,
     required this.formKey,
     this.obscure = true,
@@ -53,6 +55,8 @@ class ArogyaSewaLoginForm extends StatelessWidget {
 
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
+        onLoadingChanged?.call(state is AuthLoading);
+
         if (state is AuthError) {
           ArogyaSewaBottomSheet().showAppBottomSheet(
             context,
@@ -245,22 +249,13 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                 gradient: ArogyaSewaColors.primrayGraidient,
                 foregroundColor: ArogyaSewaColors.textColorWhite,
                 height: 52,
-                child: isLoading
-                    ? SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(
-                          color: ArogyaSewaColors.textColorWhite,
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : Text(
-                        loginString,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: ArogyaSewaColors.textColorWhite,
-                        ),
-                      ),
+                child: Text(
+                  loginString,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: ArogyaSewaColors.textColorWhite,
+                  ),
+                ),
               ),
               
                SizedBox(height: context.vh(2)),

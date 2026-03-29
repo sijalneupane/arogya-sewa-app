@@ -8,6 +8,7 @@ DioException returnKnownDioException(Response response, String errorMessage) {
   and return a generic server error message
   As dio does not automatically handle this based on status code on some case
   */
+  final finalErroMessage=response.statusMessage??errorMessage;
   final contentType = response.headers.value('content-type');
   if (contentType!.contains('text/html')) {
     return DioException(
@@ -28,9 +29,9 @@ DioException returnKnownDioException(Response response, String errorMessage) {
     error: errorMessage,
     message: response.data is Map<String, dynamic>
         ? response.data is List
-            ?( response.data["message"]?.join(", ") ?? errorMessage)
-            : (response.data['message'] ?? errorMessage)
-        : errorMessage,
+            ?( response.data["message"]?.join(", ") ?? finalErroMessage)
+            : (response.data['message'] ?? finalErroMessage)
+        :  finalErroMessage,
   );
 }
 
