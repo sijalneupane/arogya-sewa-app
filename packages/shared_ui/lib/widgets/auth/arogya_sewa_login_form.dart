@@ -9,7 +9,6 @@ import 'package:shared_ui/utils/hide_keyboard.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shared_ui/widgets/arogya_sewa_bottom_sheet.dart';
 import 'package:shared_ui/widgets/arogya_sewa_button.dart';
-import 'package:shared_ui/widgets/arogya_sewa_text_button.dart';
 import 'package:shared_ui/widgets/arogya_sewa_textform_field.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 
@@ -173,51 +172,60 @@ class ArogyaSewaLoginForm extends StatelessWidget {
               // Forgot Password - Right Aligned
               Align(
                 alignment: Alignment.centerRight,
-                child: ArogyaSewaTextButton(
-                  label: Text(
-                    forgotPasswordString,
-                    style: TextStyle(
-                      color: primaryColortextColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onPressed: () {
+                child: GestureDetector(
+                  onTap: () {
                     // Add your forgot password logic
                   },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      forgotPasswordString,
+                      style: TextStyle(
+                        color: primaryColortextColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               
                SizedBox(height: context.vh(5)),
               // Biometrics Login
               Center(
-                child: TextButton.icon(
-                  onPressed: () {
+                child: GestureDetector(
+                  onTap: () {
                     // Add biometrics login logic
                   },
-                  icon: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: primaryColortextColor),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.fingerprint,
-                      color: primaryColortextColor,
-                      size: 28,
-                    ),
-                  ),
-                  label: Text(
-                    biometricLoginString,
-                    style: TextStyle(
-                      color: primaryColortextColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  style: TextButton.styleFrom(
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: primaryColortextColor),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.fingerprint,
+                            color: primaryColortextColor,
+                            size: 28,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          biometricLoginString,
+                          style: TextStyle(
+                            color: primaryColortextColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -242,21 +250,21 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                SizedBox(height: context.vh(2)),
               
               // Sign Up Section
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    dontHaveAccountString,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: hintColor,
+              GestureDetector(
+                onTap: () {
+                  // Add your sign up navigation logic
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      dontHaveAccountString,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: hintColor,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 4),
-                  GestureDetector(
-                    onTap: () {
-                      // Add your sign up navigation logic
-                    },
-                    child: Text(
+                    const SizedBox(width: 4),
+                    Text(
                       signUpString,
                       style: TextStyle(
                         color: primaryColortextColor,
@@ -264,8 +272,8 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               
               //  SizedBox(height: context.vh(2)),
