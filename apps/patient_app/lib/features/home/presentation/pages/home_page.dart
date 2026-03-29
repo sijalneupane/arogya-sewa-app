@@ -11,6 +11,7 @@ import 'package:patient_app/features/home/presentation/pages/hospital_search_scr
 import 'package:shared_core/services/location_service.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
+import 'package:shared_ui/widgets/arogya_sewa_retry_widget.dart';
 import 'package:shared_ui/widgets/search/arogya_sewa_search_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -252,47 +253,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildErrorWidget(BuildContext context, String message) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline,
-            size: 64,
-            color: Colors.red.withOpacity(0.5),
-          ),
-          SizedBox(height: context.vh(2)),
-          Text(
-            failedToFetchHospitalsString,
-            style: const TextStyle(
-              color: Colors.red,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: context.vh(1)),
-          Text(
-            message,
-            style: const TextStyle(
-              color: ArogyaSewaColors.textColorGrey,
-              fontSize: 14,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: context.vh(3)),
-          ElevatedButton(
-            onPressed: _checkLocationPermission,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: ArogyaSewaColors.primaryColor,
-            ),
-            child: const Text(
-              retryString,
-              style: TextStyle(color: ArogyaSewaColors.textColorWhite),
-            ),
-          ),
-        ],
-      ),
+    return ArogyaSewaRetryWidget(
+      message: message,
+      onRetry: _checkLocationPermission,
+      useCard: false,
+      buttonText: retryString,
     );
   }
 }
