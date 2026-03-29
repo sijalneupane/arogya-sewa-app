@@ -66,42 +66,39 @@ class ArogyaSewaSearchBar extends StatelessWidget {
             : Colors.grey.shade100);
     final effectiveBorderColor = borderColor ?? Colors.transparent;
 
-    return Padding(
-      padding: padding ?? EdgeInsets.symmetric(horizontal: context.vw(2.5)),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          height: height ?? 48,
-          decoration: BoxDecoration(
-            color: effectiveBgColor,
-            borderRadius: BorderRadius.circular(borderRadius),
-            border: Border.all(
-              color: effectiveBorderColor,
-              width: 1,
-            ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height ?? 48,
+        decoration: BoxDecoration(
+          color: effectiveBgColor,
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: Border.all(
+            color: effectiveBorderColor,
+            width: 1,
           ),
-          child: Row(
-            children: [
-              SizedBox(width: context.vw(3)),
-              Icon(
-                prefixIcon,
-                color: effectiveIconColor,
-                size: 20,
-              ),
-              SizedBox(width: context.vw(2)),
-              Expanded(
-                child: Text(
-                  hintText,
-                  style: TextStyle(
-                    color: effectiveHintColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+        ),
+        child: Row(
+          children: [
+            SizedBox(width: context.vw(3)),
+            Icon(
+              prefixIcon,
+              color: effectiveIconColor,
+              size: 20,
+            ),
+            SizedBox(width: context.vw(2)),
+            Expanded(
+              child: Text(
+                hintText,
+                style: TextStyle(
+                  color: effectiveHintColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(width: context.vw(3)),
-            ],
-          ),
+            ),
+            SizedBox(width: context.vw(3)),
+          ],
         ),
       ),
     );

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
+import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/common/widgets/hospital_card.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_event.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_state.dart';
-import 'package:patient_app/features/home/presentation/pages/hospital_search_screen.dart';
 import 'package:patient_app/features/home/presentation/widgets/hospitals_empty_state_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/hospitals_shimmer_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/location_permission_widget.dart';
@@ -99,40 +100,29 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: context.vh(2)),
+                padding: EdgeInsets.all( context.vh(2)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ArogyaSewaSearchBar(
                       hintText: searchHospitalsString,
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const HospitalSearchScreen(),
-                          ),
-                        );
+                        context.pushNamed(RoutesName.hospitalSearchScreen);
                       },
                     ),
-                    SizedBox(height: context.vh(3)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: context.vw(2.5)),
-                      child: Text(
-                        nearestHospitalsString,
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: textColor,
-                            ),
-                      ),
+                    SizedBox(height: context.vh(1)),
+                    Text(
+                      nearestHospitalsString,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold
+                          ),
                     ),
-                    SizedBox(height: context.vh(2)),
+                    SizedBox(height: context.vh(1)),
                     SizedBox(
                       height: context.vh(28),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: context.vw(2.5)),
-                            child: _buildNearestHospitalsSection(context, state, isDarkMode, constraints),
-                          );
+                          return _buildNearestHospitalsSection(context, state, isDarkMode, constraints);
                         },
                       ),
                     ),

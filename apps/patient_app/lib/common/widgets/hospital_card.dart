@@ -25,7 +25,7 @@ class HospitalCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: context.vw(50),
-        margin: EdgeInsets.only(right: context.vw(3)),
+        margin: EdgeInsets.only(right: context.vw(2)),
         decoration: BoxDecoration(
           color: isDarkMode
               ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.1)
