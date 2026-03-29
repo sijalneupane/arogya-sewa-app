@@ -1,4 +1,4 @@
-import 'package:patient_app/features/home/domain/model/hospital_entity.dart';
+import 'package:patient_app/common/model/hospital_entity.dart';
 
 abstract class HomeState {
   const HomeState();
