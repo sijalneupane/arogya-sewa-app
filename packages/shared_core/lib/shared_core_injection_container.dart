@@ -25,6 +25,7 @@ import 'package:shared_feature/splash/domain/repositories/splash_repository_impl
 import 'package:shared_feature/splash/domain/usecases/fetch_app_version_usecase.dart';
 import 'package:shared_feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:shared_core/storage/secure_storage.dart';
+import 'package:shared_core/services/location_service.dart';
 
 Future<void> registerSharedCoreDependencies(GetIt sl) async {
   // -------- External
@@ -72,6 +73,10 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
   //Device Info
   sl.registerLazySingleton<DeviceInfo>(
     () => DeviceInfoImpl(sl<DeviceInfoPlugin>()),
+  );
+  // Location Service
+  sl.registerLazySingleton<LocationService>(
+    () => LocationService(),
   );
   // Add more shared services...
 

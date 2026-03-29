@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
-import 'package:patient_app/features/home/pages/home_page.dart';
+import 'package:patient_app/features/home/presentation/pages/home_page.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shared_ui/widgets/auth/arogya_sewa_login_form.dart';
 

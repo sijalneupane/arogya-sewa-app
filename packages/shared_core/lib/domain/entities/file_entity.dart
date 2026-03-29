@@ -1,19 +1,21 @@
 class FileEntity {
   final String fileId;
   final String fileUrl;
-  final String publicId;
-  final String type;
+  final String? publicId;
+  final String? type;
   final String metaType;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   FileEntity({
     required this.fileId,
     required this.fileUrl,
-    required this.publicId,
-    required this.type,
+    this.publicId,
+    this.type,
     required this.metaType,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
+
+  String get fileType => type ?? '';
 }

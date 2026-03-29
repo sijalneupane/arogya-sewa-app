@@ -4,34 +4,53 @@ class FileModel extends FileEntity {
   FileModel({
     required super.fileId,
     required super.fileUrl,
-    required super.publicId,
-    required super.type,
+    super.publicId,
+    super.type,
     required super.metaType,
-    required super.createdAt,
-    required super.updatedAt,
+    super.createdAt,
+    super.updatedAt,
   });
 
   factory FileModel.fromJson(Map<String, dynamic> json) {
+    DateTime? parseDate(dynamic raw) {
+      if (raw is String && raw.isNotEmpty) {
+        return DateTime.tryParse(raw);
+      }
+      return null;
+    }
+
     return FileModel(
-      fileId: json['file_id'],
-      fileUrl: json['fileUrl'],
-      publicId: json['publicId'],
-      type: json['type'],
-      metaType: json['metaType'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      fileId: (json['file_id'] ?? json['fileId'] ?? '') as String,
+      fileUrl: (json['file_url'] ?? json['fileUrl'] ?? '') as String,
+      publicId: json['public_id'] as String? ?? json['publicId'] as String?,
+      type: json['file_type'] as String? ?? json['type'] as String?,
+      metaType: (json['meta_type'] ?? json['metaType'] ?? '') as String,
+      createdAt: parseDate(json['created_at'] ?? json['createdAt']),
+      updatedAt: parseDate(json['updated_at'] ?? json['updatedAt']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'file_id': fileId,
-      'fileUrl': fileUrl,
-      'publicId': publicId,
-      'type': type,
-      'metaType': metaType,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'file_url': fileUrl,
+      'public_id': publicId,
+      'file_type': type,
+      'meta_type': metaType,
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
     };
+  }
+
+  factory FileModel.fromEntity(FileEntity entity) {
+    return FileModel(
+      fileId: entity.fileId,
+      fileUrl: entity.fileUrl,
+      publicId: entity.publicId,
+      type: entity.type,
+      metaType: entity.metaType,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+    );
   }
 }

@@ -148,6 +148,22 @@ const String annualString = "Annual";
 const String examString = "Exam";
 const String sickString = "Sick";
 const String casualString = "Casual";
+
+// Home feature strings
+const String searchHospitalsString = "Search Hospitals";
+const String searchString = "Search";
+const String nearestHospitalsString = "Nearest Hospitals";
+const String enableLocationString = "Enable Location";
+const String enableLocationDescString = "Enable location services to find nearest hospitals";
+const String locationDisabledString = "Location services are disabled";
+const String noHospitalsFoundString = "No hospitals found in your area";
+const String hospitalString = "Hospital";
+const String locationString = "Location";
+const String contactString = "Contact";
+const String openedDateString = "Opened";
+const String fetchingHospitalsString = "Fetching hospitals...";
+const String failedToFetchHospitalsString = "Failed to fetch hospitals";
+const String pleaseEnableLocationString = "Please enable location to get nearest hospitals";
 const String maternityString = "Maternity";
 const String paternityString = "Paternity";
 const String unpaidString = "Unpaid";
