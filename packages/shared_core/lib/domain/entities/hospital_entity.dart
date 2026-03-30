@@ -1,6 +1,5 @@
 import 'package:shared_core/domain/entities/file_entity.dart';
 
-/// Entity representing a hospital with its details
 class HospitalEntity {
   final String hospitalId;
   final String name;

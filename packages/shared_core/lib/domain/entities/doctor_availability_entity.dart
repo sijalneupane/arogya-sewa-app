@@ -1,4 +1,3 @@
-/// Entity representing doctor's upcoming availability
 class DoctorAvailabilityEntity {
   final String availabilityId;
   final String doctorId;

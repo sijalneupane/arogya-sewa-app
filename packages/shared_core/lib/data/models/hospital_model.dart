@@ -1,7 +1,6 @@
-import 'package:patient_app/common/model/hospital_entity.dart';
 import 'package:shared_core/data/models/file_model.dart';
+import 'package:shared_core/domain/entities/hospital_entity.dart';
 
-/// Model for serializing hospital data to/from JSON
 class HospitalModel extends HospitalEntity {
   const HospitalModel({
     required super.hospitalId,
@@ -26,12 +25,18 @@ class HospitalModel extends HospitalEntity {
       longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,
       distanceKm: (json['distance_km'] as num?)?.toDouble(),
       contactNumber: List<String>.from(
-        (json['contact_number'] as List<dynamic>?) ?? [],
+        (json['contact_number'] as List<dynamic>?) ?? const <String>[],
       ),
       openedDate: json['opened_date'] as String? ?? '',
-      logo: json['logo'] != null ? FileModel.fromJson(json['logo']) : null,
-      license: json['license'] != null ? FileModel.fromJson(json['license']) : null,
-      banner: json['banner'] != null ? FileModel.fromJson(json['banner']) : null,
+      logo: json['logo'] != null
+          ? FileModel.fromJson(json['logo'] as Map<String, dynamic>)
+          : null,
+      license: json['license'] != null
+          ? FileModel.fromJson(json['license'] as Map<String, dynamic>)
+          : null,
+      banner: json['banner'] != null
+          ? FileModel.fromJson(json['banner'] as Map<String, dynamic>)
+          : null,
     );
   }
 

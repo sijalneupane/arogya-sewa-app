@@ -1,10 +1,9 @@
-import 'package:patient_app/common/model/doctor_availability_model.dart';
-import 'package:patient_app/common/model/doctor_department_model.dart';
-import 'package:patient_app/features/home/domain/entities/doctor_entity.dart';
+import 'package:shared_core/data/models/department_model.dart';
+import 'package:shared_core/data/models/doctor_availability_model.dart';
 import 'package:shared_core/data/models/file_model.dart';
 import 'package:shared_core/data/models/user_model.dart';
+import 'package:shared_core/domain/entities/doctor_entity.dart';
 
-/// Model for serializing doctor data to/from JSON
 class DoctorModel extends DoctorEntity {
   const DoctorModel({
     required super.doctorId,
@@ -25,10 +24,12 @@ class DoctorModel extends DoctorEntity {
       status: json['status'] as String? ?? '',
       bio: json['bio'] as String?,
       licenseCertificate: json['license_certificate'] != null
-          ? FileModel.fromJson(json['license_certificate'])
+          ? FileModel.fromJson(
+              json['license_certificate'] as Map<String, dynamic>,
+            )
           : null,
       hospitalId: json['hospital_id'] as String? ?? '',
-      department: DoctorDepartmentModel.fromJson(
+      department: DepartmentModel.fromJson(
         json['department'] as Map<String, dynamic>,
       ),
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
@@ -38,6 +39,24 @@ class DoctorModel extends DoctorEntity {
             )
           : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'doctor_id': doctorId,
+      'experience': experience,
+      'status': status,
+      'bio': bio,
+      'license_certificate': licenseCertificate != null
+          ? FileModel.fromEntity(licenseCertificate!).toJson()
+          : null,
+      'hospital_id': hospitalId,
+      'department': DepartmentModel.fromEntity(department).toJson(),
+      'user': (user as UserModel).toJson(),
+      'upcoming_availability': upcomingAvailability != null
+          ? DoctorAvailabilityModel.fromEntity(upcomingAvailability!).toJson()
+          : null,
+    };
   }
 
   factory DoctorModel.fromEntity(DoctorEntity entity) {

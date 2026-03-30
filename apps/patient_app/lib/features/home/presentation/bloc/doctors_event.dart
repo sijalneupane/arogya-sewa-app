@@ -11,68 +11,90 @@ abstract class DoctorsEvent extends Equatable {
 
 /// Event to fetch doctors list
 class FetchDoctorsEvent extends DoctorsEvent {
+  final int page;
+  final int size;
   final String? name;
   final String? departmentId;
   final bool? freeUpcomingOnly;
 
   const FetchDoctorsEvent({
+    this.page = 1,
+    this.size = 10,
     this.name,
     this.departmentId,
     this.freeUpcomingOnly,
   });
 
   FetchDoctorsParams get params => FetchDoctorsParams(
-        name: name,
-        departmentId: departmentId,
-        freeUpcomingOnly: freeUpcomingOnly,
-      );
+    page: page,
+    size: size,
+    name: name,
+    departmentId: departmentId,
+    freeUpcomingOnly: freeUpcomingOnly,
+  );
 
   @override
-  List<Object?> get props => [name, departmentId, freeUpcomingOnly];
+  List<Object?> get props => [page, size, name, departmentId, freeUpcomingOnly];
 }
 
 /// Event to load more doctors (pagination)
 class LoadMoreDoctorsEvent extends DoctorsEvent {
   final int currentPage;
+  final int size;
   final String? name;
   final String? departmentId;
   final bool? freeUpcomingOnly;
 
   const LoadMoreDoctorsEvent({
     required this.currentPage,
+    this.size = 10,
     this.name,
     this.departmentId,
     this.freeUpcomingOnly,
   });
 
   FetchDoctorsParams get params => FetchDoctorsParams(
-        name: name,
-        departmentId: departmentId,
-        freeUpcomingOnly: freeUpcomingOnly,
-      );
+    page: currentPage,
+    size: size,
+    name: name,
+    departmentId: departmentId,
+    freeUpcomingOnly: freeUpcomingOnly,
+  );
 
   @override
-  List<Object?> get props => [currentPage, name, departmentId, freeUpcomingOnly];
+  List<Object?> get props => [
+    currentPage,
+    size,
+    name,
+    departmentId,
+    freeUpcomingOnly,
+  ];
 }
 
 /// Event to retry fetching doctors after error
 class RetryFetchDoctorsEvent extends DoctorsEvent {
+  final int page;
+  final int size;
   final String? name;
   final String? departmentId;
   final bool? freeUpcomingOnly;
 
   const RetryFetchDoctorsEvent({
+    this.page = 1,
+    this.size = 10,
     this.name,
     this.departmentId,
     this.freeUpcomingOnly,
   });
 
   FetchDoctorsParams get params => FetchDoctorsParams(
-        name: name,
-        departmentId: departmentId,
-        freeUpcomingOnly: freeUpcomingOnly,
-      );
+    page: page,
+    size: size,
+    name: name,
+    departmentId: departmentId,
+    freeUpcomingOnly: freeUpcomingOnly,
+  );
 
   @override
-  List<Object?> get props => [name, departmentId, freeUpcomingOnly];
+  List<Object?> get props => [page, size, name, departmentId, freeUpcomingOnly];
 }

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:patient_app/common/model/hospital_entity.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
+import 'package:shared_core/domain/entities/hospital_entity.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shimmer/shimmer.dart';
@@ -11,11 +11,7 @@ class HospitalCard extends StatelessWidget {
   final HospitalEntity hospital;
   final VoidCallback? onTap;
 
-  const HospitalCard({
-    super.key,
-    required this.hospital,
-    this.onTap,
-  });
+  const HospitalCard({super.key, required this.hospital, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +76,7 @@ class HospitalCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             hospital.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
+                            style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: isDarkMode
@@ -98,6 +92,7 @@ class HospitalCard extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
+
                     /// Location
                     Row(
                       children: [
@@ -114,7 +109,9 @@ class HospitalCard extends StatelessWidget {
                             hospital.location,
                             style: TextStyle(
                               color: isDarkMode
-                                  ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.7)
+                                  ? ArogyaSewaColors.textColorWhite.withValues(
+                                      alpha: 0.7,
+                                    )
                                   : ArogyaSewaColors.textColorGrey,
                               fontSize: 11,
                             ),
@@ -124,6 +121,7 @@ class HospitalCard extends StatelessWidget {
                         ),
                       ],
                     ),
+
                     /// Distance (if available)
                     if (hospital.distanceKm != null) ...[
                       SizedBox(height: context.vh(0.3)),
@@ -183,9 +181,7 @@ class HospitalCard extends StatelessWidget {
       width: context.vw(9),
       height: context.vw(9),
       decoration: BoxDecoration(
-        color: isDarkMode
-            ? ArogyaSewaColors.shimmerBaseDark
-            : Colors.white,
+        color: isDarkMode ? ArogyaSewaColors.shimmerBaseDark : Colors.white,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
@@ -195,9 +191,7 @@ class HospitalCard extends StatelessWidget {
           ),
         ],
       ),
-      child: ClipOval(
-        child: _buildLogoContent(context, isDarkMode),
-      ),
+      child: ClipOval(child: _buildLogoContent(context, isDarkMode)),
     );
   }
 
@@ -206,8 +200,10 @@ class HospitalCard extends StatelessWidget {
       return CachedNetworkImage(
         imageUrl: hospital.logo!.fileUrl,
         fit: BoxFit.cover,
-        placeholder: (context, url) => _buildShimmer(isDarkMode, isCircle: true),
-        errorWidget: (context, url, error) => _buildLogoIconPlaceholder(context, isDarkMode),
+        placeholder: (context, url) =>
+            _buildShimmer(isDarkMode, isCircle: true),
+        errorWidget: (context, url, error) =>
+            _buildLogoIconPlaceholder(context, isDarkMode),
       );
     }
     return _buildLogoIconPlaceholder(context, isDarkMode);

@@ -1,4 +1,4 @@
-import 'package:patient_app/common/model/hospital_entity.dart';
+import 'package:shared_core/domain/entities/hospital_entity.dart';
 
 class NearestHospitalsResponseEntity {
   final List<HospitalEntity> hospitals;

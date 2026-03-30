@@ -1,6 +1,5 @@
-import 'package:patient_app/common/model/doctor_availability_entity.dart';
+import 'package:shared_core/domain/entities/doctor_availability_entity.dart';
 
-/// Model for serializing doctor availability data to/from JSON
 class DoctorAvailabilityModel extends DoctorAvailabilityEntity {
   const DoctorAvailabilityModel({
     required super.availabilityId,

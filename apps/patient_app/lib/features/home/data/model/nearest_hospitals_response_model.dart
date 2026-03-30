@@ -1,5 +1,5 @@
-import 'package:patient_app/common/model/hospital_model.dart';
 import 'package:patient_app/features/home/domain/model/nearest_hospitals_response_entity.dart';
+import 'package:shared_core/data/models/hospital_model.dart';
 
 class NearestHospitalsResponseModel extends NearestHospitalsResponseEntity {
   const NearestHospitalsResponseModel({
@@ -12,11 +12,15 @@ class NearestHospitalsResponseModel extends NearestHospitalsResponseEntity {
 
   factory NearestHospitalsResponseModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] as List<dynamic>? ?? [];
-    final paginationMeta = json['paginationMeta'] as Map<String, dynamic>? ?? {};
+    final paginationMeta =
+        json['paginationMeta'] as Map<String, dynamic>? ?? {};
 
     return NearestHospitalsResponseModel(
       hospitals: data
-          .map((hospital) => HospitalModel.fromJson(hospital as Map<String, dynamic>))
+          .map(
+            (hospital) =>
+                HospitalModel.fromJson(hospital as Map<String, dynamic>),
+          )
           .toList(),
       totalPage: (paginationMeta['totalPage'] as num?)?.toInt() ?? 1,
       currentPage: (paginationMeta['currentPage'] as num?)?.toInt() ?? 1,
@@ -27,7 +31,9 @@ class NearestHospitalsResponseModel extends NearestHospitalsResponseEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'data': hospitals.map((h) => HospitalModel.fromEntity(h).toJson()).toList(),
+      'data': hospitals
+          .map((h) => HospitalModel.fromEntity(h).toJson())
+          .toList(),
       'paginationMeta': {
         'totalPage': totalPage,
         'currentPage': currentPage,

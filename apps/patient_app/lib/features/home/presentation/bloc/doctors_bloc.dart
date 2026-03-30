@@ -7,7 +7,8 @@ import 'package:patient_app/features/home/presentation/bloc/doctors_state.dart';
 class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsState> {
   final FetchDoctorsUsecase fetchDoctorsUsecase;
 
-  DoctorsBloc({required this.fetchDoctorsUsecase}) : super(const DoctorsInitial()) {
+  DoctorsBloc({required this.fetchDoctorsUsecase})
+    : super(const DoctorsInitial()) {
     on<FetchDoctorsEvent>(_onFetchDoctors);
     on<LoadMoreDoctorsEvent>(_onLoadMoreDoctors);
     on<RetryFetchDoctorsEvent>(_onRetryFetchDoctors);
@@ -22,18 +23,20 @@ class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsState> {
 
     final result = await fetchDoctorsUsecase.call(event.params);
 
-    result.fold(
-      (failure) => emit(DoctorsError(failure.message)),
-      (doctorsResult) {
-        emit(DoctorsLoaded(
+    result.fold((failure) => emit(DoctorsError(failure.message)), (
+      doctorsResult,
+    ) {
+      final paginationMeta = doctorsResult.paginationMeta;
+      emit(
+        DoctorsLoaded(
           doctors: doctorsResult.doctors,
-          currentPage: doctorsResult.currentPage,
-          totalPage: doctorsResult.totalPage,
-          totalRecords: doctorsResult.totalRecords,
-          hasReachedMax: doctorsResult.currentPage >= doctorsResult.totalPage,
-        ));
-      },
-    );
+          currentPage: paginationMeta.currentPage,
+          totalPage: paginationMeta.totalPage,
+          totalRecords: paginationMeta.totalRecords,
+          hasReachedMax: paginationMeta.currentPage >= paginationMeta.totalPage,
+        ),
+      );
+    });
   }
 
   /// Handle load more doctors event (pagination)
@@ -60,19 +63,24 @@ class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsState> {
       },
       (doctorsResult) {
         if (currentState is DoctorsLoaded) {
+          final paginationMeta = doctorsResult.paginationMeta;
+
           // Append new doctors to existing list
           final updatedDoctors = [
             ...currentState.doctors,
             ...doctorsResult.doctors,
           ];
 
-          emit(DoctorsLoaded(
-            doctors: updatedDoctors,
-            currentPage: doctorsResult.currentPage,
-            totalPage: doctorsResult.totalPage,
-            totalRecords: doctorsResult.totalRecords,
-            hasReachedMax: doctorsResult.currentPage >= doctorsResult.totalPage,
-          ));
+          emit(
+            DoctorsLoaded(
+              doctors: updatedDoctors,
+              currentPage: paginationMeta.currentPage,
+              totalPage: paginationMeta.totalPage,
+              totalRecords: paginationMeta.totalRecords,
+              hasReachedMax:
+                  paginationMeta.currentPage >= paginationMeta.totalPage,
+            ),
+          );
         }
       },
     );
@@ -84,10 +92,12 @@ class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsState> {
     Emitter<DoctorsState> emit,
   ) async {
     // Re-trigger fetch doctors
-    add(FetchDoctorsEvent(
-      name: event.name,
-      departmentId: event.departmentId,
-      freeUpcomingOnly: event.freeUpcomingOnly,
-    ));
+    add(
+      FetchDoctorsEvent(
+        name: event.name,
+        departmentId: event.departmentId,
+        freeUpcomingOnly: event.freeUpcomingOnly,
+      ),
+    );
   }
 }

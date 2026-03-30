@@ -1,5 +1,4 @@
-/// Entity representing doctor's department
-class DoctorDepartmentEntity {
+class DepartmentEntity {
   final String departmentId;
   final String name;
   final String? description;
@@ -8,7 +7,7 @@ class DoctorDepartmentEntity {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const DoctorDepartmentEntity({
+  const DepartmentEntity({
     required this.departmentId,
     required this.name,
     this.description,

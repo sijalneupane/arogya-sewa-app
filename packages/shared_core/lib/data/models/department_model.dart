@@ -1,8 +1,7 @@
-import 'package:patient_app/common/model/doctor_department_entity.dart';
+import 'package:shared_core/domain/entities/department_entity.dart';
 
-/// Model for serializing doctor department data to/from JSON
-class DoctorDepartmentModel extends DoctorDepartmentEntity {
-  const DoctorDepartmentModel({
+class DepartmentModel extends DepartmentEntity {
+  const DepartmentModel({
     required super.departmentId,
     required super.name,
     super.description,
@@ -12,8 +11,8 @@ class DoctorDepartmentModel extends DoctorDepartmentEntity {
     required super.updatedAt,
   });
 
-  factory DoctorDepartmentModel.fromJson(Map<String, dynamic> json) {
-    return DoctorDepartmentModel(
+  factory DepartmentModel.fromJson(Map<String, dynamic> json) {
+    return DepartmentModel(
       departmentId: json['department_id'] as String? ?? '',
       name: json['name'] as String? ?? '',
       description: json['description'] as String?,
@@ -36,8 +35,8 @@ class DoctorDepartmentModel extends DoctorDepartmentEntity {
     };
   }
 
-  factory DoctorDepartmentModel.fromEntity(DoctorDepartmentEntity entity) {
-    return DoctorDepartmentModel(
+  factory DepartmentModel.fromEntity(DepartmentEntity entity) {
+    return DepartmentModel(
       departmentId: entity.departmentId,
       name: entity.name,
       description: entity.description,

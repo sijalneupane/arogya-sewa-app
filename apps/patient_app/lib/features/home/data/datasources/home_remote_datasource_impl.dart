@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:patient_app/core/constants/patient_api_const.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:patient_app/features/home/data/model/nearest_hospitals_response_model.dart';
-import 'package:patient_app/features/home/data/model/doctor_model.dart';
 import 'package:patient_app/features/home/data/model/doctors_query_params_model.dart';
 import 'package:shared_core/error/datasource_exception_handler.dart';
+import 'package:shared_core/data/models/doctor_list_model.dart';
 import 'home_remote_datasource.dart';
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -20,10 +20,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     try {
       final response = await dio.get(
         PatientApiConst.nearestHospitals,
-        queryParameters: {
-          'latitude': latitude,
-          'longitude': longitude,
-        },
+        queryParameters: {'latitude': latitude, 'longitude': longitude},
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -39,7 +36,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<DoctorsResult> fetchDoctors(DoctorsQueryParamsModel queryParams) async {
+  Future<DoctorListModel> fetchDoctors(
+    DoctorsQueryParamsModel queryParams,
+  ) async {
     try {
       final response = await dio.get(
         PatientApiConst.doctors,
@@ -47,20 +46,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
-        final data = response.data;
-        final doctorsList = (data['data'] as List?)?.map((doctor) {
-          return DoctorModel.fromJson(doctor as Map<String, dynamic>);
-        }).toList() ?? [];
-
-        final paginationMeta = data['paginationMeta'] as Map<String, dynamic>? ?? {};
-
-        return DoctorsResult(
-          doctors: doctorsList,
-          totalPage: (paginationMeta['totalPage'] as num?)?.toInt() ?? 1,
-          currentPage: (paginationMeta['currentPage'] as num?)?.toInt() ?? 1,
-          pageSize: (paginationMeta['pageSize'] as num?)?.toInt() ?? 10,
-          totalRecords: (paginationMeta['totalRecords'] as num?)?.toInt() ?? 0,
-        );
+        return DoctorListModel.fromJson(response.data as Map<String, dynamic>);
       }
       throw returnKnownDioException(response, failedToFetchDoctorsString);
     } catch (e) {

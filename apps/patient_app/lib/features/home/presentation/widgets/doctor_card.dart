@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:patient_app/features/home/domain/entities/doctor_entity.dart';
+import 'package:shared_core/domain/entities/doctor_entity.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shimmer/shimmer.dart';
@@ -10,11 +10,7 @@ class DoctorCard extends StatelessWidget {
   final DoctorEntity doctor;
   final VoidCallback? onTap;
 
-  const DoctorCard({
-    super.key,
-    required this.doctor,
-    this.onTap,
-  });
+  const DoctorCard({super.key, required this.doctor, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +57,7 @@ class DoctorCard extends StatelessWidget {
                   fit: StackFit.expand,
                   children: [
                     _buildProfileImage(context, isDarkMode),
+
                     /// Status Badge positioned on the right side of profile image
                     Positioned(
                       // right: context.vw(2),
@@ -83,20 +80,18 @@ class DoctorCard extends StatelessWidget {
                     /// Doctor Name
                     Text(
                       doctor.user.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall
-                          ?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: isDarkMode
-                                ? ArogyaSewaColors.textColorWhite
-                                : ArogyaSewaColors.textColorBlack,
-                            fontSize: 14,
-                          ),
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: isDarkMode
+                            ? ArogyaSewaColors.textColorWhite
+                            : ArogyaSewaColors.textColorBlack,
+                        fontSize: 14,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: context.vh(0.5)),
+
                     /// Department
                     Row(
                       children: [
@@ -111,7 +106,9 @@ class DoctorCard extends StatelessWidget {
                             doctor.department.name,
                             style: TextStyle(
                               color: isDarkMode
-                                  ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.7)
+                                  ? ArogyaSewaColors.textColorWhite.withValues(
+                                      alpha: 0.7,
+                                    )
                                   : ArogyaSewaColors.textColorGrey,
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
@@ -123,6 +120,7 @@ class DoctorCard extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: context.vh(0.5)),
+
                     /// Experience
                     Row(
                       children: [
@@ -137,7 +135,9 @@ class DoctorCard extends StatelessWidget {
                             doctor.experience,
                             style: TextStyle(
                               color: isDarkMode
-                                  ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.7)
+                                  ? ArogyaSewaColors.textColorWhite.withValues(
+                                      alpha: 0.7,
+                                    )
                                   : ArogyaSewaColors.textColorGrey,
                               fontSize: 11,
                             ),
@@ -159,7 +159,7 @@ class DoctorCard extends StatelessWidget {
 
   Widget _buildProfileImage(BuildContext context, bool isDarkMode) {
     final profileImg = doctor.user.profileImage;
-    
+
     if (profileImg != null && profileImg.fileUrl.isNotEmpty) {
       return CachedNetworkImage(
         imageUrl: profileImg.fileUrl,
@@ -167,7 +167,8 @@ class DoctorCard extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         placeholder: (context, url) => _buildShimmerPlaceholder(),
-        errorWidget: (context, url, error) => _buildImagePlaceholder(isDarkMode),
+        errorWidget: (context, url, error) =>
+            _buildImagePlaceholder(isDarkMode),
       );
     }
     return _buildImagePlaceholder(isDarkMode);
@@ -248,11 +249,7 @@ class DoctorCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            statusIcon,
-            size: 12,
-            color: textColor,
-          ),
+          Icon(statusIcon, size: 12, color: textColor),
           SizedBox(width: context.vw(1)),
           Text(
             doctor.status,

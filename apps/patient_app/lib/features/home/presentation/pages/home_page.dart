@@ -68,11 +68,11 @@ class _HomePageState extends State<HomePage> {
 
       if (mounted) {
         context.read<HomeBloc>().add(
-              FetchNearestHospitalsEvent(
-                latitude: position.latitude,
-                longitude: position.longitude,
-              ),
-            );
+          FetchNearestHospitalsEvent(
+            latitude: position.latitude,
+            longitude: position.longitude,
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {
@@ -86,17 +86,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _fetchDoctors() {
-    context.read<DoctorsBloc>().add( FetchDoctorsEvent());
+    context.read<DoctorsBloc>().add(FetchDoctorsEvent());
   }
 
   void _onDoctorsScroll() {
     if (_doctorsScrollController.position.pixels >=
-            _doctorsScrollController.position.maxScrollExtent - 200) {
+        _doctorsScrollController.position.maxScrollExtent - 200) {
       final state = context.read<DoctorsBloc>().state;
       if (state is DoctorsLoaded && !state.hasReachedMax) {
         context.read<DoctorsBloc>().add(
-               LoadMoreDoctorsEvent(currentPage: 1),
-            );
+          LoadMoreDoctorsEvent(currentPage: state.currentPage + 1),
+        );
       }
     }
   }
@@ -112,10 +112,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(
           homeString,
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
         ),
         backgroundColor: isDarkMode
             ? ArogyaSewaColors.primaryColor
@@ -148,16 +145,20 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   nearestHospitalsString,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
                 ),
                 SizedBox(height: context.vh(1)),
                 SizedBox(
                   height: context.vh(30),
                   child: BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
-                      return _buildNearestHospitalsSection(context, state, isDarkMode);
+                      return _buildNearestHospitalsSection(
+                        context,
+                        state,
+                        isDarkMode,
+                      );
                     },
                   ),
                 ),
@@ -167,9 +168,9 @@ class _HomePageState extends State<HomePage> {
                 Text(
                   topDoctorsString,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
                 ),
                 SizedBox(height: context.vh(1)),
                 BlocBuilder<DoctorsBloc, DoctorsState>(
@@ -236,9 +237,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (state is DoctorsError) {
-      return DoctorsErrorWidget(
-        onRetry: _fetchDoctors,
-      );
+      return DoctorsErrorWidget(onRetry: _fetchDoctors);
     }
 
     if (state is DoctorsLoaded) {
@@ -265,7 +264,10 @@ class _HomePageState extends State<HomePage> {
               return DoctorCard(
                 doctor: state.doctors[index],
                 onTap: () {
-                  AppToast.success(context, 'Tapped on Dr. ${state.doctors[index].user.name}');
+                  AppToast.success(
+                    context,
+                    'Tapped on Dr. ${state.doctors[index].user.name}',
+                  );
                 },
               );
             },
@@ -289,8 +291,8 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: () {
         context.read<DoctorsBloc>().add(
-              LoadMoreDoctorsEvent(currentPage: state.currentPage + 1),
-            );
+          LoadMoreDoctorsEvent(currentPage: state.currentPage + 1),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -367,11 +369,11 @@ class _HomePageState extends State<HomePage> {
             Text(
               noDoctorsFoundString,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: isDarkMode
-                        ? ArogyaSewaColors.textColorWhite
-                        : ArogyaSewaColors.textColorBlack,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: isDarkMode
+                    ? ArogyaSewaColors.textColorWhite
+                    : ArogyaSewaColors.textColorBlack,
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: context.vh(1)),

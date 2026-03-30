@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:patient_app/features/home/domain/entities/doctor_entity.dart';
+import 'package:shared_core/domain/entities/doctor_entity.dart';
 
 /// Base class for all doctors states
 abstract class DoctorsState extends Equatable {
@@ -41,7 +41,13 @@ class DoctorsLoaded extends DoctorsState {
   });
 
   @override
-  List<Object?> get props => [doctors, currentPage, totalPage, totalRecords, hasReachedMax];
+  List<Object?> get props => [
+    doctors,
+    currentPage,
+    totalPage,
+    totalRecords,
+    hasReachedMax,
+  ];
 
   /// Create a copy with updated values
   DoctorsLoaded copyWith({
