@@ -86,6 +86,7 @@ class DoctorBloc extends Bloc<DoctorEvent, DoctorState> {
         name: event.name,
         departmentName: event.departmentName,
         freeUpcomingOnly: event.freeUpcomingOnly,
+        status: event.status,
       ),
     );
   }

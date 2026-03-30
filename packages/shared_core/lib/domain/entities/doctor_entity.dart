@@ -1,12 +1,13 @@
 import 'package:shared_core/domain/entities/department_entity.dart';
 import 'package:shared_core/domain/entities/doctor_availability_entity.dart';
+import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_core/domain/entities/file_entity.dart';
 import 'package:shared_core/domain/entities/user_entity.dart';
 
 class DoctorEntity {
   final String doctorId;
   final String experience;
-  final String status;
+  final DoctorStatusEnum status;
   final String? bio;
   final FileEntity? licenseCertificate;
   final String hospitalId;

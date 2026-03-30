@@ -3,6 +3,7 @@ export 'domain/entities/file_entity.dart';
 export 'data/models/file_model.dart';
 
 // Export doctor domain entities and models
+export 'domain/enums/doctor_status_enum.dart';
 export 'domain/entities/doctor_availability_entity.dart';
 export 'domain/entities/doctor_entity.dart';
 export 'domain/entities/doctor_list_entity.dart';

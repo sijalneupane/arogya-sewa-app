@@ -86,6 +86,7 @@ class HomeDoctorBloc extends Bloc<HomeDoctorEvent, HomeDoctorState> {
         name: event.name,
         departmentName: event.departmentName,
         freeUpcomingOnly: event.freeUpcomingOnly,
+        status: event.status,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:patient_app/features/doctors/domain/entities/doctors_query_params_entity.dart';
+import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 
 abstract class DoctorEvent extends Equatable {
   const DoctorEvent();
@@ -14,6 +15,7 @@ class FetchDoctorEvent extends DoctorEvent {
   final String? name;
   final String? departmentName;
   final bool? freeUpcomingOnly;
+  final DoctorStatusEnum? status;
 
   const FetchDoctorEvent({
     this.page = 1,
@@ -21,6 +23,7 @@ class FetchDoctorEvent extends DoctorEvent {
     this.name,
     this.departmentName,
     this.freeUpcomingOnly,
+    this.status,
   });
 
   DoctorsQueryParamsEntity get queryParams => DoctorsQueryParamsEntity(
@@ -29,6 +32,7 @@ class FetchDoctorEvent extends DoctorEvent {
     name: name,
     departmentName: departmentName,
     freeUpcomingOnly: freeUpcomingOnly,
+    status: status,
   );
 
   @override
@@ -38,6 +42,7 @@ class FetchDoctorEvent extends DoctorEvent {
     name,
     departmentName,
     freeUpcomingOnly,
+    status,
   ];
 }
 
@@ -47,6 +52,7 @@ class LoadMoreDoctorEvent extends DoctorEvent {
   final String? name;
   final String? departmentName;
   final bool? freeUpcomingOnly;
+  final DoctorStatusEnum? status;
 
   const LoadMoreDoctorEvent({
     required this.currentPage,
@@ -54,6 +60,7 @@ class LoadMoreDoctorEvent extends DoctorEvent {
     this.name,
     this.departmentName,
     this.freeUpcomingOnly,
+    this.status,
   });
 
   DoctorsQueryParamsEntity get queryParams => DoctorsQueryParamsEntity(
@@ -62,6 +69,7 @@ class LoadMoreDoctorEvent extends DoctorEvent {
     name: name,
     departmentName: departmentName,
     freeUpcomingOnly: freeUpcomingOnly,
+    status: status,
   );
 
   @override
@@ -71,6 +79,7 @@ class LoadMoreDoctorEvent extends DoctorEvent {
     name,
     departmentName,
     freeUpcomingOnly,
+    status,
   ];
 }
 
@@ -80,6 +89,7 @@ class RetryFetchDoctorEvent extends DoctorEvent {
   final String? name;
   final String? departmentName;
   final bool? freeUpcomingOnly;
+  final DoctorStatusEnum? status;
 
   const RetryFetchDoctorEvent({
     this.page = 1,
@@ -87,6 +97,7 @@ class RetryFetchDoctorEvent extends DoctorEvent {
     this.name,
     this.departmentName,
     this.freeUpcomingOnly,
+    this.status,
   });
 
   @override
@@ -96,5 +107,6 @@ class RetryFetchDoctorEvent extends DoctorEvent {
     name,
     departmentName,
     freeUpcomingOnly,
+    status,
   ];
 }

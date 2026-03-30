@@ -3,6 +3,7 @@ import 'package:shared_core/data/models/doctor_availability_model.dart';
 import 'package:shared_core/data/models/file_model.dart';
 import 'package:shared_core/data/models/user_model.dart';
 import 'package:shared_core/domain/entities/doctor_entity.dart';
+import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 
 class DoctorModel extends DoctorEntity {
   const DoctorModel({
@@ -21,7 +22,7 @@ class DoctorModel extends DoctorEntity {
     return DoctorModel(
       doctorId: json['doctor_id'] as String? ?? '',
       experience: json['experience'] as String? ?? '',
-      status: json['status'] as String? ?? '',
+      status: DoctorStatusEnumX.fromValue(json['status'] as String?),
       bio: json['bio'] as String?,
       licenseCertificate: json['license_certificate'] != null
           ? FileModel.fromJson(
@@ -45,7 +46,7 @@ class DoctorModel extends DoctorEntity {
     return {
       'doctor_id': doctorId,
       'experience': experience,
-      'status': status,
+      'status': status.value,
       'bio': bio,
       'license_certificate': licenseCertificate != null
           ? FileModel.fromEntity(licenseCertificate!).toJson()

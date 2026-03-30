@@ -7,6 +7,7 @@ class DoctorsQueryParamsModel extends DoctorsQueryParamsEntity {
     super.name,
     super.departmentName,
     super.freeUpcomingOnly,
+    super.status,
   });
 
   factory DoctorsQueryParamsModel.fromEntity(DoctorsQueryParamsEntity entity) {
@@ -16,6 +17,7 @@ class DoctorsQueryParamsModel extends DoctorsQueryParamsEntity {
       name: entity.name,
       departmentName: entity.departmentName,
       freeUpcomingOnly: entity.freeUpcomingOnly,
+      status: entity.status,
     );
   }
 
@@ -26,6 +28,7 @@ class DoctorsQueryParamsModel extends DoctorsQueryParamsEntity {
       name: name,
       departmentName: departmentName,
       freeUpcomingOnly: freeUpcomingOnly,
+      status: status,
     );
   }
 
@@ -37,6 +40,7 @@ class DoctorsQueryParamsModel extends DoctorsQueryParamsEntity {
       if (departmentName != null && departmentName!.isNotEmpty)
         'department': departmentName,
       if (freeUpcomingOnly != null) 'free_upcoming_only': freeUpcomingOnly,
+      if (status != null) 'status': status!.value,
     };
   }
 }

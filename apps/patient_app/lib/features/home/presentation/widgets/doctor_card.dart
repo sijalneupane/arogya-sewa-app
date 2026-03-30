@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_core/domain/entities/doctor_entity.dart';
+import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shimmer/shimmer.dart';
@@ -208,23 +209,23 @@ class DoctorCard extends StatelessWidget {
     Color textColor;
     IconData statusIcon;
 
-    switch (doctor.status.toLowerCase()) {
-      case 'active':
+    switch (doctor.status) {
+      case DoctorStatusEnum.available:
         badgeColor = Colors.green;
         textColor = Colors.white;
         statusIcon = Icons.check_circle_rounded;
         break;
-      case 'on leave':
+      case DoctorStatusEnum.onLeave:
         badgeColor = Colors.orange;
         textColor = Colors.white;
         statusIcon = Icons.beach_access_rounded;
         break;
-      case 'on appointment':
+      case DoctorStatusEnum.onAppointment:
         badgeColor = Colors.blue;
         textColor = Colors.white;
         statusIcon = Icons.event_available_rounded;
         break;
-      default:
+      case DoctorStatusEnum.inactive:
         badgeColor = Colors.grey;
         textColor = Colors.white;
         statusIcon = Icons.info_rounded;
@@ -252,7 +253,7 @@ class DoctorCard extends StatelessWidget {
           Icon(statusIcon, size: 12, color: textColor),
           SizedBox(width: context.vw(1)),
           Text(
-            doctor.status,
+            doctor.status.value,
             style: TextStyle(
               color: textColor,
               fontSize: 8,

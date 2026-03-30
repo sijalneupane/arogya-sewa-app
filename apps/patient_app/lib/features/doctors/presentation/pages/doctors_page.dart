@@ -7,6 +7,7 @@ import 'package:patient_app/features/doctors/presentation/bloc/doctor_state.dart
 import 'package:patient_app/features/home/presentation/widgets/doctor_card.dart';
 import 'package:patient_app/features/home/presentation/widgets/doctors_error_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/doctors_shimmer_widget.dart';
+import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 
@@ -26,6 +27,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
   String? _name;
   String? _departmentName;
   bool _freeUpcomingOnly = false;
+  DoctorStatusEnum? _status;
 
   @override
   void initState() {
@@ -48,6 +50,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
         name: _name,
         departmentName: _departmentName,
         freeUpcomingOnly: _freeUpcomingOnly ? true : null,
+        status: _status,
       ),
     );
   }
@@ -62,6 +65,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
         name: _name,
         departmentName: _departmentName,
         freeUpcomingOnly: _freeUpcomingOnly ? true : null,
+        status: _status,
       ),
     );
   }
@@ -76,6 +80,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
   Future<void> _showFilterSheet() async {
     _departmentController.text = _departmentName ?? '';
     bool localFreeUpcomingOnly = _freeUpcomingOnly;
+    DoctorStatusEnum? localStatus = _status;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final sheetBgColor = isDarkMode
         ? const Color(0xFF1D255F)
@@ -214,6 +219,66 @@ class _DoctorsPageState extends State<DoctorsPage> {
                     ),
                   ),
                   SizedBox(height: context.vh(0.8)),
+                  DropdownButtonFormField<DoctorStatusEnum?>(
+                    value: localStatus,
+                    isExpanded: true,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall?.copyWith(fontSize: 13),
+                    decoration: InputDecoration(
+                      labelText: 'Status',
+                      labelStyle: const TextStyle(fontSize: 12),
+                      prefixIcon: const Icon(
+                        Icons.badge_outlined,
+                        size: 18,
+                      ),
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: context.vw(2.5),
+                        vertical: context.vh(1),
+                      ),
+                      filled: true,
+                      fillColor: isDarkMode
+                          ? Colors.white.withValues(alpha: 0.06)
+                          : Colors.grey.shade50,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: sheetBorderColor),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(color: sheetBorderColor),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: ArogyaSewaColors.primaryColor,
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                    items: [
+                      const DropdownMenuItem<DoctorStatusEnum?>(
+                        value: null,
+                        child: Text('Any status', style: TextStyle(fontSize: 12)),
+                      ),
+                      ...DoctorStatusEnum.values.map(
+                        (status) => DropdownMenuItem<DoctorStatusEnum?>(
+                          value: status,
+                          child: Text(
+                            status.value,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setModalState(() {
+                        localStatus = value;
+                      });
+                    },
+                  ),
+                  SizedBox(height: context.vh(0.8)),
                   Container(
                     decoration: BoxDecoration(
                       color: isDarkMode
@@ -258,6 +323,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                             setState(() {
                               _departmentName = null;
                               _freeUpcomingOnly = false;
+                              _status = null;
                             });
                             _departmentController.clear();
                             Navigator.of(context).pop();
@@ -286,6 +352,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                                   ? null
                                   : _departmentController.text.trim();
                               _freeUpcomingOnly = localFreeUpcomingOnly;
+                              _status = localStatus;
                             });
                             Navigator.of(context).pop();
                             _fetchDoctors(page: 1);
@@ -432,7 +499,9 @@ class _DoctorsPageState extends State<DoctorsPage> {
 
   Widget _buildSearchAndFilterBar(BuildContext context, bool isDarkMode) {
     final hasActiveFilters =
-        (_departmentName?.isNotEmpty ?? false) || _freeUpcomingOnly;
+        (_departmentName?.isNotEmpty ?? false) ||
+        _freeUpcomingOnly ||
+        _status != null;
 
     return Container(
       decoration: BoxDecoration(
