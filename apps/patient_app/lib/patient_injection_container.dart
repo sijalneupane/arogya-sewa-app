@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:patient_app/config/routes/patient_app_router.dart';
-import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:patient_app/features/home/data/datasources/home_remote_datasource_impl.dart';
 import 'package:patient_app/features/home/domain/repositories/home_repository.dart';
 import 'package:patient_app/features/home/domain/repositories/home_repository_impl.dart';
+import 'package:patient_app/features/home/domain/usecase/fetch_doctors_usecase.dart';
 import 'package:patient_app/features/home/domain/usecase/fetch_nearest_hospitals_usecase.dart';
+import 'package:patient_app/features/home/presentation/bloc/doctors_bloc.dart';
+import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:shared_core/bloc/notification/notification_bloc.dart';
 import 'package:shared_core/network/network_info.dart';
 import 'package:shared_core/services/firebase_notification_service.dart';
@@ -34,18 +36,27 @@ Future<void> initDI() async {
   );
 
   // Usecase
+  // --------- Home Usecases
   sl.registerLazySingleton<FetchNearestHospitalsUsecase>(
     () => FetchNearestHospitalsUsecase(repository: sl<HomeRepository>()),
   );
+    sl.registerLazySingleton<FetchDoctorsUsecase>(
+    () => FetchDoctorsUsecase(repository: sl<HomeRepository>()),
+  );
+
 
   // Bloc
+  // --------- Home Blocs
   sl.registerLazySingleton<HomeBloc>(
     () => HomeBloc(
       fetchNearestHospitalsUsecase: sl<FetchNearestHospitalsUsecase>(),
       locationService: sl<LocationService>(),
     ),
   );
-  
+  sl.registerLazySingleton<DoctorsBloc>(
+    () => DoctorsBloc(fetchDoctorsUsecase: sl<FetchDoctorsUsecase>()),
+  );
+
   await sl.allReady();
   // 3. ⚠️ CRITICAL: Initialize Notification Service AFTER router exists
   await FirebaseNotificationService().setup(
