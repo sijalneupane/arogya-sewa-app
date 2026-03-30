@@ -45,6 +45,7 @@ dependencies:
   dio: ^5.9.0
   geolocator: ^14.0.2
   equatable: ^2.0.7
+  dartz: ^0.10.1
   shimmer: ^3.0.0
   cached_network_image: ^3.4.1
   sqflite: ^2.4.1
