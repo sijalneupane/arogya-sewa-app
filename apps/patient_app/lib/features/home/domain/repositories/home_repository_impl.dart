@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart'
   as patient_strings;
 import 'package:patient_app/features/home/data/datasources/home_remote_datasource.dart';
+import 'package:patient_app/features/home/data/model/doctors_query_params_model.dart';
 import 'package:patient_app/features/home/domain/model/nearest_hospitals_response_entity.dart';
 import 'package:shared_core/constants/arogya_sewa_string_const.dart';
 import 'package:shared_core/error/failure.dart';
@@ -38,6 +39,32 @@ class HomeRepositoryImpl implements HomeRepository {
       return handleRepositoryException(
         e,
         unknownError: patient_strings.failedToFetchHospitalsString,
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, DoctorsResult>> fetchDoctors({
+    String? name,
+    String? departmentId,
+    bool? freeUpcomingOnly,
+  }) async {
+    if (!await networkInfo.isConnected) {
+      return Left(NetworkFailure(noInternetConnectionString));
+    }
+
+    try {
+      final queryParams = DoctorsQueryParamsModel(
+        name: name,
+        departmentId: departmentId,
+        freeUpcomingOnly: freeUpcomingOnly,
+      );
+      final result = await remoteDataSource.fetchDoctors(queryParams);
+      return Right(result);
+    } on DioException catch (e) {
+      return handleRepositoryException(
+        e,
+        unknownError: patient_strings.failedToFetchDoctorsString,
       );
     }
   }

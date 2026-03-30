@@ -158,7 +158,7 @@ class DoctorCard extends StatelessWidget {
   }
 
   Widget _buildProfileImage(BuildContext context, bool isDarkMode) {
-    final profileImg = doctor.user.profileImg;
+    final profileImg = doctor.user.profileImage;
     
     if (profileImg != null && profileImg.fileUrl.isNotEmpty) {
       return CachedNetworkImage(

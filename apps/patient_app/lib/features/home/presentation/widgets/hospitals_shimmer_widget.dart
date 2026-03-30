@@ -11,24 +11,21 @@ class HospitalsShimmerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    return SizedBox(
-      height: context.vh(30),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Shimmer.fromColors(
-            baseColor: isDarkMode
-                ? ArogyaSewaColors.shimmerBaseDark
-                : ArogyaSewaColors.shimmerBaseLight,
-            highlightColor: isDarkMode
-                ? ArogyaSewaColors.shimmerHighlightDark
-                : ArogyaSewaColors.shimmerHighlightLight,
-            child: _buildShimmerCard(context, isDarkMode),
-          );
-        },
-      ),
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: isDarkMode
+              ? ArogyaSewaColors.shimmerBaseDark
+              : ArogyaSewaColors.shimmerBaseLight,
+          highlightColor: isDarkMode
+              ? ArogyaSewaColors.shimmerHighlightDark
+              : ArogyaSewaColors.shimmerHighlightLight,
+          child: _buildShimmerCard(context, isDarkMode),
+        );
+      },
     );
   }
 

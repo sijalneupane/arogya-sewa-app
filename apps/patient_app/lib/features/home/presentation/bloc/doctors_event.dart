@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:patient_app/features/home/domain/usecase/fetch_doctors_usecase.dart';
 
 /// Base class for all doctors events
 abstract class DoctorsEvent extends Equatable {
@@ -20,6 +21,12 @@ class FetchDoctorsEvent extends DoctorsEvent {
     this.freeUpcomingOnly,
   });
 
+  FetchDoctorsParams get params => FetchDoctorsParams(
+        name: name,
+        departmentId: departmentId,
+        freeUpcomingOnly: freeUpcomingOnly,
+      );
+
   @override
   List<Object?> get props => [name, departmentId, freeUpcomingOnly];
 }
@@ -38,6 +45,12 @@ class LoadMoreDoctorsEvent extends DoctorsEvent {
     this.freeUpcomingOnly,
   });
 
+  FetchDoctorsParams get params => FetchDoctorsParams(
+        name: name,
+        departmentId: departmentId,
+        freeUpcomingOnly: freeUpcomingOnly,
+      );
+
   @override
   List<Object?> get props => [currentPage, name, departmentId, freeUpcomingOnly];
 }
@@ -53,6 +66,12 @@ class RetryFetchDoctorsEvent extends DoctorsEvent {
     this.departmentId,
     this.freeUpcomingOnly,
   });
+
+  FetchDoctorsParams get params => FetchDoctorsParams(
+        name: name,
+        departmentId: departmentId,
+        freeUpcomingOnly: freeUpcomingOnly,
+      );
 
   @override
   List<Object?> get props => [name, departmentId, freeUpcomingOnly];

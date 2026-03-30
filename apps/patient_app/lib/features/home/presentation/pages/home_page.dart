@@ -6,9 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/common/widgets/hospital_card.dart';
+import 'package:patient_app/features/home/presentation/bloc/doctors_bloc.dart';
+import 'package:patient_app/features/home/presentation/bloc/doctors_event.dart';
+import 'package:patient_app/features/home/presentation/bloc/doctors_state.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_event.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_state.dart';
+import 'package:patient_app/features/home/presentation/widgets/doctor_card.dart';
+import 'package:patient_app/features/home/presentation/widgets/doctors_error_widget.dart';
+import 'package:patient_app/features/home/presentation/widgets/doctors_shimmer_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/hospitals_empty_state_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/hospitals_shimmer_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/location_permission_widget.dart';
@@ -27,21 +33,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ScrollController _doctorsScrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
     _checkLocationPermission();
+    _fetchDoctors();
+    _doctorsScrollController.addListener(_onDoctorsScroll);
+  }
+
+  @override
+  void dispose() {
+    _doctorsScrollController.removeListener(_onDoctorsScroll);
+    _doctorsScrollController.dispose();
+    super.dispose();
   }
 
   void _checkLocationPermission() {
     context.read<HomeBloc>().add(const CheckLocationPermissionEvent());
   }
 
-  Future<void> _requestLocationPermission() async {
+  void _requestLocationPermission() {
     context.read<HomeBloc>().add(const RequestLocationPermissionEvent());
   }
 
-  Future<void> _fetchNearestHospitals() async {
+  Future<void> _onLocationPermissionGranted() async {
     try {
       final locationService = GetIt.instance<LocationService>();
       final position = await locationService.getCurrentPosition(
@@ -64,6 +81,22 @@ class _HomePageState extends State<HomePage> {
           'Error getting location: $e',
           title: 'Location Error',
         );
+      }
+    }
+  }
+
+  void _fetchDoctors() {
+    context.read<DoctorsBloc>().add( FetchDoctorsEvent());
+  }
+
+  void _onDoctorsScroll() {
+    if (_doctorsScrollController.position.pixels >=
+            _doctorsScrollController.position.maxScrollExtent - 200) {
+      final state = context.read<DoctorsBloc>().state;
+      if (state is DoctorsLoaded && !state.hasReachedMax) {
+        context.read<DoctorsBloc>().add(
+               LoadMoreDoctorsEvent(currentPage: 1),
+            );
       }
     }
   }
@@ -93,44 +126,60 @@ class _HomePageState extends State<HomePage> {
       body: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state is LocationPermissionGranted) {
-            _fetchNearestHospitals();
+            _onLocationPermissionGranted();
           }
         },
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all( context.vh(2)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ArogyaSewaSearchBar(
-                      hintText: searchHospitalsString,
-                      onTap: () {
-                        context.pushNamed(RoutesName.hospitalSearchScreen);
-                      },
-                    ),
-                    SizedBox(height: context.vh(1)),
-                    Text(
-                      nearestHospitalsString,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold
-                          ),
-                    ),
-                    SizedBox(height: context.vh(1)),
-                    SizedBox(
-                      height: context.vh(28),
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return _buildNearestHospitalsSection(context, state, isDarkMode, constraints);
-                        },
-                      ),
-                    ),
-                  ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(context.vh(2)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Search Bar
+                ArogyaSewaSearchBar(
+                  hintText: searchHospitalsString,
+                  onTap: () {
+                    context.pushNamed(RoutesName.hospitalSearchScreen);
+                  },
                 ),
-              ),
-            );
-          },
+                SizedBox(height: context.vh(2)),
+
+                /// Nearest Hospitals Section
+                Text(
+                  nearestHospitalsString,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                ),
+                SizedBox(height: context.vh(1)),
+                SizedBox(
+                  height: context.vh(30),
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return _buildNearestHospitalsSection(context, state, isDarkMode);
+                    },
+                  ),
+                ),
+                SizedBox(height: context.vh(3)),
+
+                /// Top Doctors Section
+                Text(
+                  topDoctorsString,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                ),
+                SizedBox(height: context.vh(1)),
+                BlocBuilder<DoctorsBloc, DoctorsState>(
+                  builder: (context, state) {
+                    return _buildDoctorsSection(context, state, isDarkMode);
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -140,20 +189,11 @@ class _HomePageState extends State<HomePage> {
     BuildContext context,
     HomeState state,
     bool isDarkMode,
-    BoxConstraints constraints,
   ) {
-    if (state is LocationPermissionCheckLoading) {
-      return const HospitalsShimmerWidget();
-    }
-
     if (state is LocationPermissionDenied) {
       return LocationPermissionWidget(
         onRequestPermission: _requestLocationPermission,
       );
-    }
-
-    if (state is NearestHospitalsLoading) {
-      return const HospitalsShimmerWidget();
     }
 
     if (state is NearestHospitalsError) {
@@ -174,7 +214,6 @@ class _HomePageState extends State<HomePage> {
           return HospitalCard(
             hospital: hospital,
             onTap: () {
-              // Navigate to hospital details page when available.
               AppToast.success(context, 'Tapped on ${hospital.name}');
             },
           );
@@ -182,8 +221,172 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    return LocationPermissionWidget(
-      onRequestPermission: _requestLocationPermission,
+    // For initial/transient states (initial, checking permission, granted, loading),
+    // keep a stable loading UI to avoid flickering between permission and retry widgets.
+    return const HospitalsShimmerWidget();
+  }
+
+  Widget _buildDoctorsSection(
+    BuildContext context,
+    DoctorsState state,
+    bool isDarkMode,
+  ) {
+    if (state is DoctorsLoading) {
+      return const DoctorsShimmerWidget();
+    }
+
+    if (state is DoctorsError) {
+      return DoctorsErrorWidget(
+        onRetry: _fetchDoctors,
+      );
+    }
+
+    if (state is DoctorsLoaded) {
+      if (state.doctors.isEmpty) {
+        return _buildNoDoctorsWidget(context, isDarkMode);
+      }
+
+      return Column(
+        children: [
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.69,
+            ),
+            itemCount: state.doctors.length + (state.hasReachedMax ? 0 : 1),
+            itemBuilder: (context, index) {
+              if (index == state.doctors.length) {
+                return _buildLoadMoreButton(context, state, isDarkMode);
+              }
+              return DoctorCard(
+                doctor: state.doctors[index],
+                onTap: () {
+                  AppToast.success(context, 'Tapped on Dr. ${state.doctors[index].user.name}');
+                },
+              );
+            },
+          ),
+        ],
+      );
+    }
+
+    return const DoctorsShimmerWidget();
+  }
+
+  Widget _buildLoadMoreButton(
+    BuildContext context,
+    DoctorsLoaded state,
+    bool isDarkMode,
+  ) {
+    final isLoadingMore = context.select<DoctorsBloc, bool>(
+      (bloc) => bloc.state is DoctorsLoadingMore,
+    );
+
+    return GestureDetector(
+      onTap: () {
+        context.read<DoctorsBloc>().add(
+              LoadMoreDoctorsEvent(currentPage: state.currentPage + 1),
+            );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: isDarkMode
+              ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.1)
+              : ArogyaSewaColors.primaryColor.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.2),
+          ),
+        ),
+        child: Center(
+          child: isLoadingMore
+              ? SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: ArogyaSewaColors.primaryColor,
+                  ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.expand_more_rounded,
+                      color: ArogyaSewaColors.primaryColor,
+                      size: 32,
+                    ),
+                    Text(
+                      viewMoreString,
+                      style: TextStyle(
+                        color: ArogyaSewaColors.primaryColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoDoctorsWidget(BuildContext context, bool isDarkMode) {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.all(context.vw(4)),
+        decoration: BoxDecoration(
+          color: isDarkMode
+              ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.05)
+              : Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.1),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.all(context.vw(4)),
+              decoration: BoxDecoration(
+                color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.medical_services_outlined,
+                size: context.vw(10),
+                color: ArogyaSewaColors.primaryColor,
+              ),
+            ),
+            SizedBox(height: context.vh(2)),
+            Text(
+              noDoctorsFoundString,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: isDarkMode
+                        ? ArogyaSewaColors.textColorWhite
+                        : ArogyaSewaColors.textColorBlack,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: context.vh(1)),
+            Text(
+              noDoctorsFoundDescString,
+              style: TextStyle(
+                color: ArogyaSewaColors.textColorGrey,
+                fontSize: 13,
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 

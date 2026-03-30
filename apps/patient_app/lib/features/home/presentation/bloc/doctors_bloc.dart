@@ -20,11 +20,7 @@ class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsState> {
   ) async {
     emit(const DoctorsLoading());
 
-    final result = await fetchDoctorsUsecase.call(
-      name: event.name,
-      departmentId: event.departmentId,
-      freeUpcomingOnly: event.freeUpcomingOnly,
-    );
+    final result = await fetchDoctorsUsecase.call(event.params);
 
     result.fold(
       (failure) => emit(DoctorsError(failure.message)),
@@ -53,11 +49,7 @@ class DoctorsBloc extends Bloc<DoctorsEvent, DoctorsState> {
 
     emit(const DoctorsLoadingMore());
 
-    final result = await fetchDoctorsUsecase.call(
-      name: event.name,
-      departmentId: event.departmentId,
-      freeUpcomingOnly: event.freeUpcomingOnly,
-    );
+    final result = await fetchDoctorsUsecase.call(event.params);
 
     result.fold(
       (failure) {
