@@ -12,6 +12,7 @@ import 'package:patient_app/features/home/presentation/widgets/doctors_shimmer_w
 import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
+import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
 
 class DoctorsPage extends StatefulWidget {
   const DoctorsPage({super.key});
@@ -376,20 +377,11 @@ class _DoctorsPageState extends State<DoctorsPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDarkMode
-        ? ArogyaSewaColors.textColorWhite
-        : ArogyaSewaColors.textColorBlack;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          doctorsString,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: isDarkMode
-            ? ArogyaSewaColors.primaryColor
-            : ArogyaSewaColors.textColorWhite,
-        elevation: 0,
+      appBar: ArogyaSewaAppBar.create(
+        context: context,
+        title: doctorsString,
       ),
       body: Padding(
         padding: EdgeInsets.all(context.vh(2)),

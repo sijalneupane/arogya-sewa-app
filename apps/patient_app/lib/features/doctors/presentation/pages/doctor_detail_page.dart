@@ -8,6 +8,7 @@ import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_sta
 import 'package:shared_core/domain/entities/doctor_detail_entity.dart';
 import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
+import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
 import 'package:shared_ui/widgets/arogya_sewa_interactive_viewer.dart';
 
 class DoctorDetailPage extends StatefulWidget {
@@ -60,35 +61,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   Widget _buildLoadingShimmer(bool isDarkMode) {
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          expandedHeight: 280,
-          floating: false,
-          pinned: true,
-          backgroundColor: isDarkMode
-              ? ArogyaSewaColors.primaryColor
-              : ArogyaSewaColors.textColorWhite,
-          flexibleSpace: FlexibleSpaceBar(
-            background: Container(
-              decoration: BoxDecoration(
-                color: isDarkMode
-                    ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.1)
-                    : ArogyaSewaColors.primaryColor.withValues(alpha: 0.05),
-              ),
-              child: Center(
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? ArogyaSewaColors.shimmerBaseDark
-                        : ArogyaSewaColors.shimmerBaseLight,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        ArogyaSewaAppBar.createLoadingSliverAppBar(context),
         SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.all(20),
@@ -326,7 +299,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             shape: BoxShape.circle,
           ),
           child: Icon(
-            Icons.arrow_back_rounded,
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
             color: isDarkMode
                 ? ArogyaSewaColors.textColorWhite
                 : ArogyaSewaColors.textColorBlack,

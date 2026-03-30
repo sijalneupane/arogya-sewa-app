@@ -12,6 +12,7 @@ export 'utils/hide_keyboard.dart';
 export 'utils/screen_size.dart';
 
 // Export widgets
+export 'widgets/arogya_sewa_app_bar.dart';
 export 'widgets/arogya_sewa_button.dart';
 export 'widgets/arogya_sewa_interactive_viewer.dart';
 export 'widgets/arogya_sewa_loader.dart';
