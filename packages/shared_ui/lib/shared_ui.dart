@@ -21,6 +21,7 @@ export 'widgets/arogya_sewa_retry_widget.dart';
 export 'widgets/arogya_sewa_text_button.dart';
 export 'widgets/arogya_sewa_textform_field.dart';
 export 'widgets/arogya_sewa_bottom_sheet.dart';
+export 'widgets/availability_card.dart';
 
 // Export search widgets
 export 'widgets/search/arogya_sewa_search_bar.dart';
