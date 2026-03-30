@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
+import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_bloc.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_event.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_state.dart';
@@ -482,7 +484,17 @@ class _DoctorsPageState extends State<DoctorsPage> {
                           );
                         }
 
-                        return DoctorCard(doctor: state.doctors[index]);
+                        return DoctorCard(
+                          doctor: state.doctors[index],
+                          onTap: () {
+                            context.pushNamed(
+                              RoutesName.doctorDetailScreen,
+                              pathParameters: {
+                                'doctorId': state.doctors[index].doctorId,
+                              },
+                            );
+                          },
+                        );
                       },
                     );
                   }
