@@ -18,8 +18,13 @@ export 'data/models/hospital_model.dart';
 // Export location entities and models
 export 'domain/entities/location_entity.dart';
 export 'data/models/location_model.dart';
+
 // Export services
 export 'services/location_service.dart';
+
+// Export utilities
+export 'utils/date_formatter.dart';
+export 'utils/url_launcher_utils.dart';
 
 /// A Calculator.
 class Calculator {
