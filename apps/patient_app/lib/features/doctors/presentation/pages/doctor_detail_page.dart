@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:shared_core/shared_core.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_bloc.dart';
@@ -289,22 +290,13 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           : ArogyaSewaColors.textColorWhite,
       elevation: 0,
       leading: IconButton(
-        onPressed: () => Navigator.pop(context),
-        icon: Container(
-          padding: EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: isDarkMode
-                ? Colors.white.withValues(alpha: 0.15)
-                : Colors.black.withValues(alpha: 0.08),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 18,
-            color: isDarkMode
-                ? ArogyaSewaColors.textColorWhite
-                : ArogyaSewaColors.textColorBlack,
-          ),
+        onPressed: () => context.pop(),
+        icon:  Icon(
+          Icons.arrow_back_ios_new_rounded,
+          size: 20,
+          color: Theme.of(context).brightness == Brightness.dark
+              ? ArogyaSewaColors.textColorWhite
+              : ArogyaSewaColors.textColorBlack,
         ),
       ),
       flexibleSpace: FlexibleSpaceBar(
@@ -641,17 +633,17 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   Widget _buildDepartmentCard(DoctorDetailEntity doctor, bool isDarkMode) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
             ? const Color(0xFF1D255F)
             : ArogyaSewaColors.textColorWhite,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDarkMode ? 0.2 : 0.06),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: isDarkMode ? 0.15 : 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -661,41 +653,40 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(14),
+                  color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   Icons.local_hospital_rounded,
                   color: ArogyaSewaColors.primaryColor,
-                  size: 24,
+                  size: 18,
                 ),
               ),
-              SizedBox(width: 14),
+              SizedBox(width: 10),
               Text(
                 departmentString,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: isDarkMode
                       ? ArogyaSewaColors.textColorWhite
                       : ArogyaSewaColors.textColorBlack,
-                  letterSpacing: -0.2,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 18),
+          SizedBox(height: 12),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: isDarkMode
                   ? Colors.white.withValues(alpha: 0.05)
                   : ArogyaSewaColors.primaryColor.withValues(alpha: 0.04),
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.15),
+                color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.12),
               ),
             ),
             child: Column(
@@ -704,23 +695,22 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 Text(
                   doctor.department.name,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: ArogyaSewaColors.primaryColor,
-                    letterSpacing: -0.3,
                   ),
                 ),
                 if (doctor.department.description != null &&
                     doctor.department.description!.isNotEmpty) ...[
-                  SizedBox(height: 10),
+                  SizedBox(height: 6),
                   Text(
                     doctor.department.description!,
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 11,
                       color: isDarkMode
-                          ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.65)
+                          ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.6)
                           : ArogyaSewaColors.textColorGrey,
-                      height: 1.6,
+                      height: 1.5,
                     ),
                   ),
                 ],
@@ -734,17 +724,17 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   Widget _buildHospitalCard(DoctorDetailEntity doctor, bool isDarkMode) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
             ? const Color(0xFF1D255F)
             : ArogyaSewaColors.textColorWhite,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDarkMode ? 0.2 : 0.06),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: isDarkMode ? 0.15 : 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -754,49 +744,48 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.teal.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(14),
+                  color: Colors.teal.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   Icons.business_rounded,
                   color: Colors.teal,
-                  size: 24,
+                  size: 18,
                 ),
               ),
-              SizedBox(width: 14),
+              SizedBox(width: 10),
               Text(
                 hospitalString,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: isDarkMode
                       ? ArogyaSewaColors.textColorWhite
                       : ArogyaSewaColors.textColorBlack,
-                  letterSpacing: -0.2,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 18),
+          SizedBox(height: 12),
           Row(
             children: [
               if (doctor.hospital.logo != null &&
                   doctor.hospital.logo!.fileUrl.isNotEmpty)
                 Container(
-                  width: 64,
-                  height: 64,
-                  margin: EdgeInsets.only(right: 16),
+                  width: 50,
+                  height: 50,
+                  margin: EdgeInsets.only(right: 12),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.2),
-                      width: 1.5,
+                      color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.15),
+                      width: 1,
                     ),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(10),
                     child: Image.network(
                       doctor.hospital.logo!.fileUrl,
                       fit: BoxFit.cover,
@@ -823,32 +812,31 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     Text(
                       doctor.hospital.name,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: isDarkMode
                             ? ArogyaSewaColors.textColorWhite
                             : ArogyaSewaColors.textColorBlack,
-                        letterSpacing: -0.2,
                       ),
                     ),
-                    SizedBox(height: 6),
+                    SizedBox(height: 4),
                     Row(
                       children: [
                         Icon(
                           Icons.location_on_rounded,
-                          size: 16,
+                          size: 12,
                           color: isDarkMode
                               ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.4)
                               : ArogyaSewaColors.textColorGrey,
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             doctor.hospital.location,
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 11,
                               color: isDarkMode
-                                  ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.55)
+                                  ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.5)
                                   : ArogyaSewaColors.textColorGrey,
                             ),
                             maxLines: 1,
@@ -862,32 +850,32 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               ),
             ],
           ),
-          SizedBox(height: 14),
+          SizedBox(height: 10),
           Container(
-            padding: EdgeInsets.all(14),
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: isDarkMode
                   ? Colors.white.withValues(alpha: 0.05)
                   : Colors.grey.shade50,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
               children: [
                 Icon(
                   Icons.calendar_today_rounded,
-                  size: 18,
+                  size: 14,
                   color: ArogyaSewaColors.primaryColor,
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 8),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       establishedString,
                       style: TextStyle(
-                        fontSize: 11,
+                        fontSize: 9,
                         color: isDarkMode
-                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.45)
+                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.4)
                             : ArogyaSewaColors.textColorGrey,
                         fontWeight: FontWeight.w500,
                       ),
@@ -896,9 +884,9 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     Text(
                       DateFormatter.formatDateStandard(doctor.hospital.openedDate),
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 11,
                         color: isDarkMode
-                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.7)
+                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.65)
                             : ArogyaSewaColors.textColorGrey,
                         fontWeight: FontWeight.w600,
                       ),
@@ -915,17 +903,17 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   Widget _buildContactCard(DoctorDetailEntity doctor, bool isDarkMode) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
             ? const Color(0xFF1D255F)
             : ArogyaSewaColors.textColorWhite,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDarkMode ? 0.2 : 0.06),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: isDarkMode ? 0.15 : 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -935,32 +923,31 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(14),
+                  color: Colors.blue.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   Icons.contact_phone_rounded,
                   color: Colors.blue,
-                  size: 24,
+                  size: 18,
                 ),
               ),
-              SizedBox(width: 14),
+              SizedBox(width: 10),
               Text(
                 contactString,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: isDarkMode
                       ? ArogyaSewaColors.textColorWhite
                       : ArogyaSewaColors.textColorBlack,
-                  letterSpacing: -0.2,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 18),
+          SizedBox(height: 12),
           _buildContactTile(
             icon: Icons.email_rounded,
             title: emailAddressString,
@@ -969,10 +956,10 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             isDarkMode: isDarkMode,
           ),
           Divider(
-            height: 24,
+            height: 16,
             color: isDarkMode
-                ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.08)
-                : ArogyaSewaColors.textColorBlack.withValues(alpha: 0.08),
+                ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.06)
+                : ArogyaSewaColors.textColorBlack.withValues(alpha: 0.06),
           ),
           _buildContactTile(
             icon: Icons.phone_rounded,
@@ -995,13 +982,13 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(10),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: isDarkMode
                     ? Colors.white.withValues(alpha: 0.05)
@@ -1010,11 +997,11 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               ),
               child: Icon(
                 icon,
-                size: 20,
+                size: 18,
                 color: ArogyaSewaColors.primaryColor,
               ),
             ),
-            SizedBox(width: 14),
+            SizedBox(width: 12),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1022,23 +1009,22 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                       color: isDarkMode
-                          ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.45)
+                          ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.4)
                           : ArogyaSewaColors.textColorGrey,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 2),
                   Text(
                     subtitle,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w600,
                       color: isDarkMode
                           ? ArogyaSewaColors.textColorWhite
                           : ArogyaSewaColors.textColorBlack,
-                      letterSpacing: -0.2,
                     ),
                   ),
                 ],
@@ -1046,7 +1032,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             ),
             Icon(
               Icons.open_in_new_rounded,
-              size: 18,
+              size: 16,
               color: isDarkMode
                   ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.3)
                   : ArogyaSewaColors.textColorGrey,
@@ -1059,17 +1045,17 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
 
   Widget _buildBioCard(DoctorDetailEntity doctor, bool isDarkMode) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
             ? const Color(0xFF1D255F)
             : ArogyaSewaColors.textColorWhite,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDarkMode ? 0.2 : 0.06),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: isDarkMode ? 0.15 : 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -1079,49 +1065,47 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.purple.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(14),
+                  color: Colors.purple.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   Icons.info_rounded,
                   color: Colors.purple,
-                  size: 24,
+                  size: 18,
                 ),
               ),
-              SizedBox(width: 14),
+              SizedBox(width: 10),
               Text(
                 aboutDoctorString,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: isDarkMode
                       ? ArogyaSewaColors.textColorWhite
                       : ArogyaSewaColors.textColorBlack,
-                  letterSpacing: -0.2,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 18),
+          SizedBox(height: 12),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: isDarkMode
                   ? Colors.white.withValues(alpha: 0.05)
                   : Colors.grey.shade50,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
               doctor.bio!,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: isDarkMode
-                    ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.75)
-                    : ArogyaSewaColors.textColorBlack.withValues(alpha: 0.8),
-                height: 1.7,
-                letterSpacing: 0.1,
+                    ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.7)
+                    : ArogyaSewaColors.textColorBlack.withValues(alpha: 0.75),
+                height: 1.6,
               ),
             ),
           ),
