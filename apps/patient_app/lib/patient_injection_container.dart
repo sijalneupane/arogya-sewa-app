@@ -1,11 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:patient_app/features/doctors/data/datasources/doctor_detail_remote_datasource.dart';
+import 'package:patient_app/features/doctors/data/datasources/doctor_detail_remote_datasource_impl.dart';
 import 'package:patient_app/features/doctors/data/datasources/doctor_remote_datasource.dart';
 import 'package:patient_app/features/doctors/data/datasources/doctor_remote_datasource_impl.dart';
+import 'package:patient_app/features/doctors/domain/repositories/doctor_detail_repository.dart';
+import 'package:patient_app/features/doctors/domain/repositories/doctor_detail_repository_impl.dart';
 import 'package:patient_app/features/doctors/domain/repositories/doctor_repository.dart';
 import 'package:patient_app/features/doctors/domain/repositories/doctor_repository_impl.dart';
+import 'package:patient_app/features/doctors/domain/usecase/fetch_doctor_detail_usecase.dart';
 import 'package:patient_app/features/doctors/domain/usecase/fetch_doctors_usecase.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_bloc.dart';
+import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_bloc.dart';
 import 'package:patient_app/config/routes/patient_app_router.dart';
 import 'package:patient_app/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:patient_app/features/home/data/datasources/home_remote_datasource_impl.dart';
@@ -37,6 +43,9 @@ Future<void> initDI() async {
   sl.registerLazySingleton<DoctorRemoteDataSource>(
     () => DoctorRemoteDataSourceImpl(sl<Dio>()),
   );
+  sl.registerLazySingleton<DoctorDetailRemoteDataSource>(
+    () => DoctorDetailRemoteDataSourceImpl(sl<Dio>()),
+  );
 
   // Repository
   sl.registerLazySingleton<HomeRepository>(
@@ -53,6 +62,13 @@ Future<void> initDI() async {
     ),
   );
 
+  sl.registerLazySingleton<DoctorDetailRepository>(
+    () => DoctorDetailRepositoryImpl(
+      remoteDataSource: sl<DoctorDetailRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
   // Usecase
   // --------- Home Usecases
   sl.registerLazySingleton<FetchNearestHospitalsUsecase>(
@@ -62,6 +78,10 @@ Future<void> initDI() async {
   // --------- Doctors Usecases
   sl.registerLazySingleton<FetchDoctorsUsecase>(
     () => FetchDoctorsUsecase(repository: sl<DoctorRepository>()),
+  );
+
+  sl.registerLazySingleton<FetchDoctorDetailUsecase>(
+    () => FetchDoctorDetailUsecase(repository: sl<DoctorDetailRepository>()),
   );
 
   // Bloc
@@ -80,6 +100,10 @@ Future<void> initDI() async {
   // --------- Doctors Blocs
   sl.registerFactory<DoctorBloc>(
     () => DoctorBloc(fetchDoctorsUsecase: sl<FetchDoctorsUsecase>()),
+  );
+
+  sl.registerFactory<DoctorDetailBloc>(
+    () => DoctorDetailBloc(fetchDoctorDetailUsecase: sl<FetchDoctorDetailUsecase>()),
   );
 
   await sl.allReady();

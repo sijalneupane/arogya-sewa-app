@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_bloc.dart';
+import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_bloc.dart';
 import 'package:patient_app/features/auth/presentation/login_page.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_doctor_bloc.dart';
 import 'package:patient_app/features/home/presentation/pages/home_page.dart';
 import 'package:patient_app/features/home/presentation/pages/hospital_search_screen.dart';
 import 'package:patient_app/features/doctors/presentation/pages/doctors_page.dart';
+import 'package:patient_app/features/doctors/presentation/pages/doctor_detail_page.dart';
 import 'package:patient_app/features/splashscreen/pages/patient_splash_screen.dart';
 import 'package:get_it/get_it.dart';
 
@@ -54,6 +56,17 @@ class PatientAppRouter {
               create: (context) => GetIt.instance<DoctorBloc>(),
               child: const DoctorsPage(),
             ),
+          ),
+          GoRoute(
+            path: 'doctor-detail/:doctorId',
+            name: RoutesName.doctorDetailScreen,
+            builder: (context, state) {
+              final doctorId = state.pathParameters['doctorId']!;
+              return BlocProvider<DoctorDetailBloc>(
+                create: (context) => GetIt.instance<DoctorDetailBloc>(),
+                child: DoctorDetailPage(doctorId: doctorId),
+              );
+            },
           ),
           GoRoute(
             path: 'search',
