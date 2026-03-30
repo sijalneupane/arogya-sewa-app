@@ -71,34 +71,31 @@ class HospitalCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /// Logo and Name Row - Fixed height to maintain consistent layout
-                    SizedBox(
-                      height: context.vh(4.5),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _buildLogo(context, isDarkMode),
-                          SizedBox(width: context.vw(2)),
-                          Expanded(
-                            child: Text(
-                              hospital.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: isDarkMode
-                                        ? ArogyaSewaColors.textColorWhite
-                                        : ArogyaSewaColors.textColorBlack,
-                                    fontSize: 13,
-                                    height: 1.2,
-                                  ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                    /// Keep this row flexible so long names or larger text scale don't overflow.
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        _buildLogo(context, isDarkMode),
+                        SizedBox(width: context.vw(2)),
+                        Expanded(
+                          child: Text(
+                            hospital.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: isDarkMode
+                                      ? ArogyaSewaColors.textColorWhite
+                                      : ArogyaSewaColors.textColorBlack,
+                                  fontSize: 13,
+                                  height: 1.2,
+                                ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     const Spacer(),
                     /// Location
@@ -140,14 +137,18 @@ class HospitalCard extends StatelessWidget {
                                 : ArogyaSewaColors.primaryColor,
                           ),
                           SizedBox(width: context.vw(1)),
-                          Text(
-                            '${hospital.distanceKm!.toStringAsFixed(1)} $kilometersString',
-                            style: TextStyle(
-                              color: isDarkMode
-                                  ? ArogyaSewaColors.textColorWhite
-                                  : ArogyaSewaColors.primaryColor,
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Text(
+                              '${hospital.distanceKm!.toStringAsFixed(1)} $kilometersString',
+                              style: TextStyle(
+                                color: isDarkMode
+                                    ? ArogyaSewaColors.textColorWhite
+                                    : ArogyaSewaColors.primaryColor,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
