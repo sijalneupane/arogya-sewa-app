@@ -23,9 +23,7 @@ class ArogyaSewaRetryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 30,
-        horizontal: 20,
+      padding: const EdgeInsets.all(10,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -33,18 +31,18 @@ class ArogyaSewaRetryWidget extends StatelessWidget {
           if (showIcon) ...[
             /// Error Icon
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.red.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 icon,
-                size: 48,
+                size: 20,
                 color: Colors.redAccent,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
           ],
 
           /// Error Message
@@ -52,12 +50,12 @@ class ArogyaSewaRetryWidget extends StatelessWidget {
             message,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),
 
-          const SizedBox(height: 25),
+          const SizedBox(height: 10),
 
           /// Retry Button
           ArogyaSewaButton(
