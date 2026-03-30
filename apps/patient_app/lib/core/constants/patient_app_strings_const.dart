@@ -208,6 +208,23 @@ const String freeUpcomingOnlyString = "Free upcoming only";
 const String applyFilterString = "Apply";
 const String clearFilterString = "Clear";
 
+// Doctor Detail Page strings
+const String currentStatusString = "Current Status";
+const String licenseString = "License";
+const String licenseCertificateString = "License Certificate";
+const String professionalInformationString = "Professional Information";
+const String departmentDetailsString = "Department Details";
+const String hospitalInformationString = "Hospital Information";
+const String contactInformationString = "Contact Information";
+const String aboutString = "About";
+const String aboutDoctorString = "About Doctor";
+const String doctorIdString = "Doctor ID";
+const String experienceString = "Experience";
+const String departmentString = "Department";
+const String establishedString = "Established";
+const String phoneNumberString = "Phone Number";
+const String pinchToZoomString = "Pinch to zoom • Drag to pan";
+
 // leave status type
 const String pendingString = "Pending";
 

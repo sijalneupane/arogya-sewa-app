@@ -164,24 +164,24 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 SizedBox(height: 20),
                 _buildStatusCard(doctor, isDarkMode),
                 SizedBox(height: 20),
-                _buildSectionTitle('Professional Information', isDarkMode),
+                _buildSectionTitle(professionalInformationString, isDarkMode),
                 SizedBox(height: 12),
                 _buildInfoCard(doctor, isDarkMode),
                 SizedBox(height: 20),
-                _buildSectionTitle('Department Details', isDarkMode),
+                _buildSectionTitle(departmentDetailsString, isDarkMode),
                 SizedBox(height: 12),
                 _buildDepartmentCard(doctor, isDarkMode),
                 SizedBox(height: 20),
-                _buildSectionTitle('Hospital Information', isDarkMode),
+                _buildSectionTitle(hospitalInformationString, isDarkMode),
                 SizedBox(height: 12),
                 _buildHospitalCard(doctor, isDarkMode),
                 SizedBox(height: 20),
-                _buildSectionTitle('Contact Information', isDarkMode),
+                _buildSectionTitle(contactInformationString, isDarkMode),
                 SizedBox(height: 12),
                 _buildContactCard(doctor, isDarkMode),
                 if (doctor.bio != null && doctor.bio!.isNotEmpty) ...[
                   SizedBox(height: 20),
-                  _buildSectionTitle('About', isDarkMode),
+                  _buildSectionTitle(aboutString, isDarkMode),
                   SizedBox(height: 12),
                   _buildBioCard(doctor, isDarkMode),
                 ],
@@ -449,7 +449,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Current Status',
+                  currentStatusString,
                   style: TextStyle(
                     fontSize: 12,
                     color: isDarkMode
@@ -500,7 +500,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     ),
                     SizedBox(width: 8),
                     Text(
-                      'License',
+                      licenseString,
                       style: TextStyle(
                         color: ArogyaSewaColors.primaryColor,
                         fontWeight: FontWeight.w600,
@@ -550,21 +550,21 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
         children: [
           _buildInfoRow(
             icon: Icons.badge_rounded,
-            label: 'Doctor ID',
+            label: doctorIdString,
             value: doctor.doctorId,
             isDarkMode: isDarkMode,
             showDivider: true,
           ),
           _buildInfoRow(
             icon: Icons.medical_services_rounded,
-            label: 'Experience',
+            label: experienceString,
             value: doctor.experience,
             isDarkMode: isDarkMode,
             showDivider: true,
           ),
           _buildInfoRow(
             icon: Icons.person_rounded,
-            label: 'Full Name',
+            label: fullNameString,
             value: doctor.user.name,
             isDarkMode: isDarkMode,
             showDivider: false,
@@ -679,7 +679,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               ),
               SizedBox(width: 14),
               Text(
-                'Department',
+                departmentString,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -772,7 +772,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               ),
               SizedBox(width: 14),
               Text(
-                'Hospital',
+                hospitalString,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -888,7 +888,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Established',
+                      establishedString,
                       style: TextStyle(
                         fontSize: 11,
                         color: isDarkMode
@@ -953,7 +953,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               ),
               SizedBox(width: 14),
               Text(
-                'Contact',
+                contactString,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -968,7 +968,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           SizedBox(height: 18),
           _buildContactTile(
             icon: Icons.email_rounded,
-            title: 'Email Address',
+            title: emailAddressString,
             subtitle: doctor.user.email,
             onTap: () => UrlLauncher.launchEmail(doctor.user.email),
             isDarkMode: isDarkMode,
@@ -981,7 +981,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           ),
           _buildContactTile(
             icon: Icons.phone_rounded,
-            title: 'Phone Number',
+            title: phoneNumberString,
             subtitle: doctor.user.phoneNumber,
             onTap: () => UrlLauncher.launchPhone(doctor.user.phoneNumber),
             isDarkMode: isDarkMode,
@@ -1097,7 +1097,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               ),
               SizedBox(width: 14),
               Text(
-                'About Doctor',
+                aboutDoctorString,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
