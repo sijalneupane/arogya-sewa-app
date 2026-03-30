@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:patient_app/core/constants/patient_api_const.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource.dart';
+import 'package:shared_core/constants/arogya_sewa_api_const.dart';
 import 'package:shared_core/data/models/availability_query_params_model.dart';
 import 'package:shared_core/data/models/doctor_availability_list_model.dart';
 import 'package:shared_core/error/datasource_exception_handler.dart';
@@ -17,7 +17,7 @@ class AvailabilityRemoteDataSourceImpl implements AvailabilityRemoteDataSource {
   ) async {
     try {
       final response = await dio.get(
-        '${PatientApiConst.availabilities}/doctor/${queryParams.doctorId}',
+        '${ArogyaSewaApiConst.doctorAvailabilitiesUrl}/${queryParams.doctorId}',
         queryParameters: queryParams.toQueryParams(),
       );
 
@@ -34,7 +34,7 @@ class AvailabilityRemoteDataSourceImpl implements AvailabilityRemoteDataSource {
     } catch (e) {
       throw handleDataSourceDioException(
         e,
-        path: '${PatientApiConst.availabilities}/doctor/${queryParams.doctorId}',
+        path: '${ArogyaSewaApiConst.doctorAvailabilitiesUrl}/${queryParams.doctorId}',
       );
     }
   }
