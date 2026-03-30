@@ -28,9 +28,16 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<!-- Background App Refresh and Location Updates -->
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
+	</array>
+	<!-- URI laucnher package requirement key and array -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>sms</string>
+		<string>tel</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
