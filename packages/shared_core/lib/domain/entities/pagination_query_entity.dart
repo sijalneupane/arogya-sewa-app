@@ -2,7 +2,7 @@ class PaginationQueryEntity {
   final int? page;
   final int? size;
 
-  PaginationQueryEntity({
+  const PaginationQueryEntity({
     this.page,
     this.size,
   });

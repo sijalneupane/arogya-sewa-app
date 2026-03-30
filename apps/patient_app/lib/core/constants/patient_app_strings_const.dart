@@ -1,6 +1,7 @@
 const String appName = "Patient App";
-const String appLogoWhiteBgPath= 'assets/images/patient_app_logo_white_bg.png';
-const String appLogoTransparentBgPath= 'assets/images/patient_app_logo_transparent_bg.png';
+const String appLogoWhiteBgPath = 'assets/images/patient_app_logo_white_bg.png';
+const String appLogoTransparentBgPath =
+    'assets/images/patient_app_logo_transparent_bg.png';
 // const String letsGoString = "Let’s Go";
 const String enterLoginDetailString = "Please enter the details to Log in";
 const String emailString = "Email";
@@ -17,13 +18,15 @@ const String orString = "or";
 const String sendOtp = "Send OTP";
 const String forgetPasswordDetails = "We will help you to reset your password";
 const String enteryouremailString = "Enter your email";
-const String checkYourEmailString =  "Check your email";
-const String sendOTPdetailsString = "We have sent a OTP to your \n  email address ";
+const String checkYourEmailString = "Check your email";
+const String sendOTPdetailsString =
+    "We have sent a OTP to your \n  email address ";
 const String resetPasswordString = "Reset Password";
 const String continueString = "Continue";
 const String sendTheCodeString = "We have sent the code to ";
 const String timerString = "02:00";
-const String receiveTheCodeString = "Didn't receive the code or it expired? Click here to resend";
+const String receiveTheCodeString =
+    "Didn't receive the code or it expired? Click here to resend";
 
 const String passwordSetSuccessfullyString = "Password reset successful";
 const String setNewPasswordString = "Set New Password";
@@ -44,8 +47,8 @@ const String leaveRequestString = "Leave Request";
 const String myRequestString = "My Request";
 const String logoutString = "Logout";
 const String logoutConfirmationString = "Are you sure you want to logout?";
-const String logoutFailedString="Logout failed";
-const String loggedOutString="Logged out successfully";
+const String logoutFailedString = "Logout failed";
+const String loggedOutString = "Logged out successfully";
 
 const String homeString = "Home";
 const String calendarString = "Calender";
@@ -74,23 +77,24 @@ const String emergencycontactString = "Emergency Contact";
 const String citizenshipString = "Citizenship No";
 const String panString = "PAN No";
 
-const String noInternetConnectionString='No internet connection';
-const String dateMessage="Date";
-const String statusMessage="Status";
-const String checkInMessage="Check-in";
-const String checkOutMessage="Check-out";
-const String workedHourMessage="Worked Hour";
-const String attendanceRecordsMessage="Attendance Records";
-const String presentString="Present";
-const String absentString="Absent";
-const String failedToLoadAttendanceString="Failed to load attendance records";
-const String failedToFetchAttendanceString="Failed to fetch attendance records";
-const String noAttendanceRecordsString="No attendance records found";
-const String somethingWrongString="Something went wrong!";
-const String pullToRefreshString="Pull to refresh";
-const String emptyDataString="No data available";
-const String retryString="Retry";
-const String loadMoreString="Load More";
+const String noInternetConnectionString = 'No internet connection';
+const String dateMessage = "Date";
+const String statusMessage = "Status";
+const String checkInMessage = "Check-in";
+const String checkOutMessage = "Check-out";
+const String workedHourMessage = "Worked Hour";
+const String attendanceRecordsMessage = "Attendance Records";
+const String presentString = "Present";
+const String absentString = "Absent";
+const String failedToLoadAttendanceString = "Failed to load attendance records";
+const String failedToFetchAttendanceString =
+    "Failed to fetch attendance records";
+const String noAttendanceRecordsString = "No attendance records found";
+const String somethingWrongString = "Something went wrong!";
+const String pullToRefreshString = "Pull to refresh";
+const String emptyDataString = "No data available";
+const String retryString = "Retry";
+const String loadMoreString = "Load More";
 
 const String recentString = "Recent ";
 const String pendingRequestString = "Pending \nRequest";
@@ -104,7 +108,7 @@ const String leaveTypeMessage = "Leave Type";
 const String startDateMessage = "Start Date";
 const String endDateMessage = "End Date";
 const String daysCountMessage = "Days Count";
-const String failedToFetchLeaveRecordString="Failed to fetch leave records";
+const String failedToFetchLeaveRecordString = "Failed to fetch leave records";
 
 const String requestTypeString = "Request Type";
 const String selectYourLeaveString = "Select leave type";
@@ -127,7 +131,7 @@ const String timeToString = "Time To";
 const String stringString = "string";
 const String leaverequestSubmittedString = "Leave request submitted ";
 const String fillYourFormString = "Please fill all required fields";
-const String confirmSubmitString="Are you sure you want to submit?";
+const String confirmSubmitString = "Are you sure you want to submit?";
 // const String okString = "OK";
 
 // Leave request form validation strings
@@ -139,8 +143,10 @@ const String selectStartDateValidationString = "Please select start date";
 const String selectEndDateValidationString = "Please select end date";
 const String descriptionString = "Description";
 const String enterReasonString = "Enter reason for leave request";
-const String provideReasonValidationString = "Please provide a reason for your leave request";
-const String descriptionLengthValidationString = "Description must be at least 10 characters long";
+const String provideReasonValidationString =
+    "Please provide a reason for your leave request";
+const String descriptionLengthValidationString =
+    "Description must be at least 10 characters long";
 const String submittingString = "Submitting...";
 
 // Leave type labels
@@ -154,7 +160,8 @@ const String searchHospitalsString = "Search Hospitals";
 const String searchString = "Search";
 const String nearestHospitalsString = "Nearest Hospitals";
 const String enableLocationString = "Enable Location";
-const String enableLocationDescString = "Enable location services to find nearest hospitals";
+const String enableLocationDescString =
+    "Enable location services to find nearest hospitals";
 const String locationDisabledString = "Location services are disabled";
 const String noHospitalsFoundString = "No hospitals found in your area";
 const String hospitalString = "Hospital";
@@ -163,14 +170,16 @@ const String contactString = "Contact";
 const String openedDateString = "Opened";
 const String fetchingHospitalsString = "Fetching hospitals...";
 const String failedToFetchHospitalsString = "Failed to fetch hospitals";
-const String pleaseEnableLocationString = "Please enable location to get nearest hospitals";
+const String pleaseEnableLocationString =
+    "Please enable location to get nearest hospitals";
 const String maternityString = "Maternity";
 const String paternityString = "Paternity";
 const String unpaidString = "Unpaid";
 
 // Home - Location permission UI strings
 const String locationPermissionTitleString = "Location Access Required";
-const String locationPermissionDescString = "We need your location to show nearest hospitals. Please enable location services to continue.";
+const String locationPermissionDescString =
+    "We need your location to show nearest hospitals. Please enable location services to continue.";
 const String grantPermissionString = "Grant Permission";
 
 // Home - Hospital card strings
@@ -180,21 +189,29 @@ const String viewDetailsString = "View Details";
 
 // Home - Empty state strings
 const String noHospitalsNearbyString = "No Hospitals Nearby";
-const String noHospitalsNearbyDescString = "There are no hospitals registered in your current area. Try searching manually.";
+const String noHospitalsNearbyDescString =
+    "There are no hospitals registered in your current area. Try searching manually.";
 
 // Home - Doctor strings
 const String topDoctorsString = "Top Doctors";
 const String viewMoreString = "View More";
+const String viewAllString = "View All";
 const String failedToFetchDoctorsString = "Failed to fetch doctors";
 const String noDoctorsFoundString = "No doctors found";
-const String noDoctorsFoundDescString = "There are no doctors available at the moment. Please check back later.";
+const String noDoctorsFoundDescString =
+    "There are no doctors available at the moment. Please check back later.";
+const String doctorsString = "Doctors";
+const String searchDoctorsString = "Search doctors by name";
+const String filterString = "Filter";
+const String departmentNameString = "Department name";
+const String freeUpcomingOnlyString = "Free upcoming only";
+const String applyFilterString = "Apply";
+const String clearFilterString = "Clear";
 
-// leave status type 
-const String pendingString ="Pending";
+// leave status type
+const String pendingString = "Pending";
 
 const String noLeaveRecordString = "No leave records found";
-
-
 
 // Day options labels
 const String oneDayString = "One Day";
@@ -206,7 +223,8 @@ const String updateProfileString = "Update Profile";
 const String changeProfilePictureString = "Change Profile Picture";
 const String addressValidationString = "Address is required";
 const String contactNoValidationString = "Contact number is required";
-const String emergencyContactNoValidationString = "Emergency contact number is required";
+const String emergencyContactNoValidationString =
+    "Emergency contact number is required";
 const String citizenshipNoValidationString = "Citizenship number is required";
 const String panNoValidationString = "PAN number is required";
 const String profileUpdatedString = "Profile updated successfully";
@@ -219,91 +237,95 @@ const String cancelString = "Cancel";
 const String confirmString = "Confirm";
 const String yesString = "Yes";
 const String noString = "No";
-const String okString= "OK";
-const String closeString= "Close";
+const String okString = "OK";
+const String closeString = "Close";
 
 //  change password strings
-const String oldPasswordString="Old Password";
-const String enterOldPasswordString="Enter old password";
-const String newpass="Please enter your new password";
-const String confirmPasswordValidationString="Please confirm your password";
-const String reEnterNewPasswordString="Re-enter new password";
-const String changePasswordSuccessString="Password changed successfully!";
-const String changePasswordTextString="Please enter your old password and new password";
-const String oldPasswordValidationString= "Old password is required";
-
-
-
-
-
-
-
-
+const String oldPasswordString = "Old Password";
+const String enterOldPasswordString = "Enter old password";
+const String newpass = "Please enter your new password";
+const String confirmPasswordValidationString = "Please confirm your password";
+const String reEnterNewPasswordString = "Re-enter new password";
+const String changePasswordSuccessString = "Password changed successfully!";
+const String changePasswordTextString =
+    "Please enter your old password and new password";
+const String oldPasswordValidationString = "Old password is required";
 
 /* 
   api response message
 */
 // Message string used during the api responses and error handling
-const String loginFailedStr="Login failed";
-const String invalidCredentialsString="Invalid credentials. Try again with correct credentials";
-const String badrequestString="Bad Request from client side";
-const String notAuthorizedString="You are not authorized to perform this action";
-const String unexpectedResponseFormatString="Unexpected response format";
-const String notFoundString="The requested resource was not found";
-const String unauthorizedString="You are not authorized to access this resource";
-const String forbiddenString="You don't have permission to access this resource";
-const String internalServerErrorString="Internal server error occurred";
-const String badGatewayString="Bad gateway error occurred";
-const String serviceUnavailableString="The service is currently unavailable. Please try again later";
-const String gatewayTimeoutString="The server is taking too long to respond";
-const String unknownErrorString="An unknown error occurred";
-const String serverErrorString="Server error occurred";
+const String loginFailedStr = "Login failed";
+const String invalidCredentialsString =
+    "Invalid credentials. Try again with correct credentials";
+const String badrequestString = "Bad Request from client side";
+const String notAuthorizedString =
+    "You are not authorized to perform this action";
+const String unexpectedResponseFormatString = "Unexpected response format";
+const String notFoundString = "The requested resource was not found";
+const String unauthorizedString =
+    "You are not authorized to access this resource";
+const String forbiddenString =
+    "You don't have permission to access this resource";
+const String internalServerErrorString = "Internal server error occurred";
+const String badGatewayString = "Bad gateway error occurred";
+const String serviceUnavailableString =
+    "The service is currently unavailable. Please try again later";
+const String gatewayTimeoutString = "The server is taking too long to respond";
+const String unknownErrorString = "An unknown error occurred";
+const String serverErrorString = "Server error occurred";
 
-const String otpRequestFailedString="OTP request failed";
-const String otpSentString="OTP sent to your email";
-const String hintToResetPasswordString="We will help you to reset your password";
-const String enterOtpString="Enter OTP";
-const String loggedInSuccessString="Logged in successfully";
-const String pleaseenterOtpString="Please enter OTP";
-const String otpLengthValidationString="OTP must be 6 digits";
-const String otpTypeValidationString="OTP must contain only numbers";
-const String otpVerificationFailedString="OTP verification failed";
-const String failedConnectionToEmailString="Failed to connect to email server";
-const String otpVerifiedString="OTP verified successfully";
-const String otpResendString="OTP has been resent to your email";
-const String otpExpiredString="OTP has expired";
+const String otpRequestFailedString = "OTP request failed";
+const String otpSentString = "OTP sent to your email";
+const String hintToResetPasswordString =
+    "We will help you to reset your password";
+const String enterOtpString = "Enter OTP";
+const String loggedInSuccessString = "Logged in successfully";
+const String pleaseenterOtpString = "Please enter OTP";
+const String otpLengthValidationString = "OTP must be 6 digits";
+const String otpTypeValidationString = "OTP must contain only numbers";
+const String otpVerificationFailedString = "OTP verification failed";
+const String failedConnectionToEmailString =
+    "Failed to connect to email server";
+const String otpVerifiedString = "OTP verified successfully";
+const String otpResendString = "OTP has been resent to your email";
+const String otpExpiredString = "OTP has expired";
 
-
-const String passwordResetFailedString="Password reset failed";
-const String passwordResetSuccessString="Password has been reset successfully";
+const String passwordResetFailedString = "Password reset failed";
+const String passwordResetSuccessString =
+    "Password has been reset successfully";
 
 /* BottomSheet Default messages*/
-const String defaultErrorMessage="Something went wrong!";
-const String defaultSuccessMessage="Operation Successful!";
-const String defaultInfoMessage="Information. Please read carefully";
+const String defaultErrorMessage = "Something went wrong!";
+const String defaultSuccessMessage = "Operation Successful!";
+const String defaultInfoMessage = "Information. Please read carefully";
 /*
 Image and file path strings
 */
-const String forgotPasswordImgPath='assets/images/forget_password.png';
-const String profileImgPath='assets/images/profile.png';
+const String forgotPasswordImgPath = 'assets/images/forget_password.png';
+const String profileImgPath = 'assets/images/profile.png';
 // Biometric constants
-const String biometricUnavailableString = "Biometric authentication unavailable";
+const String biometricUnavailableString =
+    "Biometric authentication unavailable";
 const String biometricNotEnrolledString = "No biometric enrolled";
 const String biometricErrorString = "Biometric authentication error";
 const String biometricAuthFailedString = "Authentication Failed";
 const String authenticationSuccessfulString = "Authentication Successful";
-const String biometricsNotEnabledString = "Biometric authentication is not enabled";
-const String registerBiometricsString = "Please register biometrics first through settings.";
+const String biometricsNotEnabledString =
+    "Biometric authentication is not enabled";
+const String registerBiometricsString =
+    "Please register biometrics first through settings.";
 const String enableBiometricsString = "Enable biometric authentication";
 const String disableBiometricsString = "Disable biometric authentication";
-const String biometricsRegisterSuccessString = "Biometric registered successfully";
+const String biometricsRegisterSuccessString =
+    "Biometric registered successfully";
 const String biometricRegisterFailedString = "Biometric registration failed";
 const String loginReason = "Please authenticate to log in to your account";
 const String checkinReason = "Please authenticate to check in";
 const String checkoutReason = "Please authenticate to check out";
-const String biometricsCheckFailedString="Failed to check biometrics status";
-const String biometricRevokeFailedString="Failed to revoke biometrics";
-const String biometricRevokeSuccessString="Biometric revoked successfully";
+const String biometricsCheckFailedString = "Failed to check biometrics status";
+const String biometricRevokeFailedString = "Failed to revoke biometrics";
+const String biometricRevokeSuccessString = "Biometric revoked successfully";
 
 // Splash/version strings
 const String versionLabelString = "Version";
@@ -311,17 +333,17 @@ const String versionFetchFailedString = "Failed to fetch app version";
 const String dashString = "-";
 
 //logged in user details
-const String userDetailsFetchFailedString="Failed to fetch user details";
-const String noUserDetailsString="No user details found";
-const String userDetailsClearFailedString="Failed to clear user details";
+const String userDetailsFetchFailedString = "Failed to fetch user details";
+const String noUserDetailsString = "No user details found";
+const String userDetailsClearFailedString = "Failed to clear user details";
 
 //edit profile strings
-const String profileUpdateFailedString="Failed to update profile";
-const String fileUploadFailedString="Failed to upload file";
-const String fileUpdateFailedString="Failed to update file";
-const String profileUpdatedSuccessString="Profile updated successfully";
-const String uploadingProfileImageString="Uploading profile image...";
-const String updatingProfileString="Updating profile...";
+const String profileUpdateFailedString = "Failed to update profile";
+const String fileUploadFailedString = "Failed to upload file";
+const String fileUpdateFailedString = "Failed to update file";
+const String profileUpdatedSuccessString = "Profile updated successfully";
+const String uploadingProfileImageString = "Uploading profile image...";
+const String updatingProfileString = "Updating profile...";
 
 //Pagination
 const String paginationNextString = "Next";
@@ -331,6 +353,6 @@ const String totalRecordsString = "total Records";
 const String paginationOfString = "of";
 const String paginationPageString = "Page";
 
-// change password 
-const String changePasswordFailedString="Failed to change password";
-const String passwordChangeSuccessString="Password changed successfully";
+// change password
+const String changePasswordFailedString = "Failed to change password";
+const String passwordChangeSuccessString = "Password changed successfully";

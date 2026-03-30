@@ -6,9 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/common/widgets/hospital_card.dart';
-import 'package:patient_app/features/home/presentation/bloc/doctors_bloc.dart';
-import 'package:patient_app/features/home/presentation/bloc/doctors_event.dart';
-import 'package:patient_app/features/home/presentation/bloc/doctors_state.dart';
+import 'package:patient_app/features/home/presentation/bloc/home_doctor_bloc.dart';
+import 'package:patient_app/features/home/presentation/bloc/home_doctor_event.dart';
+import 'package:patient_app/features/home/presentation/bloc/home_doctor_state.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_event.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_state.dart';
@@ -86,16 +86,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _fetchDoctors() {
-    context.read<DoctorsBloc>().add(FetchDoctorsEvent());
+    context.read<HomeDoctorBloc>().add(const FetchHomeDoctorEvent());
   }
 
   void _onDoctorsScroll() {
     if (_doctorsScrollController.position.pixels >=
         _doctorsScrollController.position.maxScrollExtent - 200) {
-      final state = context.read<DoctorsBloc>().state;
-      if (state is DoctorsLoaded && !state.hasReachedMax) {
-        context.read<DoctorsBloc>().add(
-          LoadMoreDoctorsEvent(currentPage: state.currentPage + 1),
+      final state = context.read<HomeDoctorBloc>().state;
+      if (state is HomeDoctorLoaded && !state.hasReachedMax) {
+        context.read<HomeDoctorBloc>().add(
+          LoadMoreHomeDoctorEvent(currentPage: state.currentPage + 1),
         );
       }
     }
@@ -165,15 +165,30 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: context.vh(3)),
 
                 /// Top Doctors Section
-                Text(
-                  topDoctorsString,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      topDoctorsString,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => context.pushNamed(RoutesName.doctorsScreen),
+                      child: Text(
+                        viewAllString,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: ArogyaSewaColors.primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: context.vh(1)),
-                BlocBuilder<DoctorsBloc, DoctorsState>(
+                BlocBuilder<HomeDoctorBloc, HomeDoctorState>(
                   builder: (context, state) {
                     return _buildDoctorsSection(context, state, isDarkMode);
                   },
@@ -229,18 +244,18 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDoctorsSection(
     BuildContext context,
-    DoctorsState state,
+    HomeDoctorState state,
     bool isDarkMode,
   ) {
-    if (state is DoctorsLoading) {
+    if (state is HomeDoctorLoading) {
       return const DoctorsShimmerWidget();
     }
 
-    if (state is DoctorsError) {
+    if (state is HomeDoctorError) {
       return DoctorsErrorWidget(onRetry: _fetchDoctors);
     }
 
-    if (state is DoctorsLoaded) {
+    if (state is HomeDoctorLoaded) {
       if (state.doctors.isEmpty) {
         return _buildNoDoctorsWidget(context, isDarkMode);
       }
@@ -281,17 +296,17 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildLoadMoreButton(
     BuildContext context,
-    DoctorsLoaded state,
+    HomeDoctorLoaded state,
     bool isDarkMode,
   ) {
-    final isLoadingMore = context.select<DoctorsBloc, bool>(
-      (bloc) => bloc.state is DoctorsLoadingMore,
+    final isLoadingMore = context.select<HomeDoctorBloc, bool>(
+      (bloc) => bloc.state is HomeDoctorLoadingMore,
     );
 
     return GestureDetector(
       onTap: () {
-        context.read<DoctorsBloc>().add(
-          LoadMoreDoctorsEvent(currentPage: state.currentPage + 1),
+        context.read<HomeDoctorBloc>().add(
+          LoadMoreHomeDoctorEvent(currentPage: state.currentPage + 1),
         );
       },
       child: Container(
