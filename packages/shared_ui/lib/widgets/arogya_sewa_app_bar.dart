@@ -61,19 +61,12 @@ class ArogyaSewaAppBar {
       elevation: 0,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
-        icon: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: isDarkMode
-                ? Colors.white.withValues(alpha: 0.15)
-                : Colors.black.withValues(alpha: 0.08),
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 20,
-            color: ArogyaSewaColors.textColorWhite,
-          ),
+        icon: Icon(
+          Icons.arrow_back_ios_new_rounded,
+          size: 20,
+          color: isDarkMode
+              ? ArogyaSewaColors.textColorWhite
+              : ArogyaSewaColors.textColorBlack,
         ),
       ),
       flexibleSpace: FlexibleSpaceBar(
