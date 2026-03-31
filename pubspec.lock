@@ -712,14 +712,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
-  nepali_date_converter:
+  nepali_utils:
     dependency: transitive
     description:
-      name: nepali_date_converter
-      sha256: e1fcbf373e073dc69ec956298d10de51fa0df6f10e15b38ff947bd7df136a854
+      name: nepali_utils
+      sha256: "686ac878ca844e0ec264a7c0da6404ab7992db5b9120d3ffe1356a3b1de266f4"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "3.0.8"
   nested:
     dependency: transitive
     description:

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_core/domain/entities/doctor_availability_entity.dart';
+import 'package:shared_core/utils/date_formatter.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
+import 'package:shared_ui/widgets/arogya_sewa_button.dart';
 
 /// Reusable card widget for displaying doctor availability information
 class AvailabilityCard extends StatelessWidget {
@@ -82,15 +83,23 @@ class AvailabilityCard extends StatelessWidget {
                             : ArogyaSewaColors.textColorGrey,
                       ),
                       SizedBox(width: 6),
-                      Text(
-                        _formatDate(availability.startDateTime),
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: isDarkMode
-                              ? ArogyaSewaColors.textColorWhite
-                              : ArogyaSewaColors.textColorBlack,
+                      FutureBuilder<String?>(
+                        future: DateFormatter.convertAdToBsFormatted(
+                          availability.startDateTime.toIso8601String(),
                         ),
+                        builder: (context, snapshot) {
+                          final bsDate = snapshot.data ?? _formatDate(availability.startDateTime);
+                          return Text(
+                            bsDate,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: isDarkMode
+                                  ? ArogyaSewaColors.textColorWhite
+                                  : ArogyaSewaColors.textColorBlack,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -107,7 +116,7 @@ class AvailabilityCard extends StatelessWidget {
                       ),
                       SizedBox(width: 6),
                       Text(
-                        '${_formatTime(availability.startDateTime)} - ${_formatTime(availability.endDateTime)}',
+                        '${DateFormatter.formatTime(availability.startDateTime.toIso8601String())} - ${DateFormatter.formatTime(availability.endDateTime.toIso8601String())}',
                         style: TextStyle(
                           fontSize: 12,
                           color: isDarkMode
@@ -154,22 +163,18 @@ class AvailabilityCard extends StatelessWidget {
             ),
             // Book button (optional)
             if (showBookButton && isAvailable)
-              ElevatedButton(
+              ArogyaSewaButton(
                 onPressed: onTap,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ArogyaSewaColors.primaryColor,
-                  foregroundColor: ArogyaSewaColors.textColorWhite,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 0,
-                ),
+                width: 80,
+                height: 36,
+                backgroundColor: ArogyaSewaColors.primaryColor,
+                foregroundColor: ArogyaSewaColors.textColorWhite,
                 child: Text(
                   'Book',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
+                    color: ArogyaSewaColors.textColorWhite,
                   ),
                 ),
               ),
@@ -180,10 +185,6 @@ class AvailabilityCard extends StatelessWidget {
   }
 
   String _formatDate(DateTime dateTime) {
-    return DateFormat('EEEE, MMMM dd, yyyy').format(dateTime);
-  }
-
-  String _formatTime(DateTime dateTime) {
-    return DateFormat('hh:mm a').format(dateTime);
+    return DateFormatter.formatDateFull(dateTime.toIso8601String());
   }
 }

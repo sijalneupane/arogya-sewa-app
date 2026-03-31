@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:nepali_date_converter/nepali_date_converter.dart';
+import 'package:nepali_utils/nepali_utils.dart';
 
 /// Utility class for formatting dates across the application
 /// 
@@ -7,22 +7,16 @@ import 'package:nepali_date_converter/nepali_date_converter.dart';
 class DateFormatter {
   DateFormatter._();
 
-  static NepaliDateConverter? _nepaliDateConverter;
-
-  /// Initialize the Nepali date converter (must be called before using BS date methods)
+  /// Kept for backward compatibility. nepali_utils does not require explicit initialization.
   static Future<void> initialize() async {
-    _nepaliDateConverter = await NepaliDateConverter.load();
+    return;
   }
 
-  /// Check if the converter is initialized
-  static bool get isInitialized => _nepaliDateConverter != null;
+  /// Kept for backward compatibility. Conversion is always available.
+  static bool get isInitialized => true;
 
-  /// Get the converter instance, initializing if necessary
-  static Future<NepaliDateConverter> _getConverter() async {
-    if (_nepaliDateConverter == null) {
-      await initialize();
-    }
-    return _nepaliDateConverter!;
+  static NepaliDateTime _toBsDate(DateTime adDate) {
+    return adDate.toNepaliDateTime();
   }
 
   // ==================== AD DATE FORMATTING ====================
@@ -301,10 +295,7 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      if (bsDate == null) return null;
+      final bsDate = _toBsDate(adDate);
       return '${bsDate.year}-${bsDate.month.toString().padLeft(2, '0')}-${bsDate.day.toString().padLeft(2, '0')}';
     } catch (e) {
       return null;
@@ -317,10 +308,7 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      if (bsDate == null) return null;
+      final bsDate = _toBsDate(adDate);
       return _formatNepaliDate(bsDate);
     } catch (e) {
       return null;
@@ -333,10 +321,7 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      if (bsDate == null) return null;
+      final bsDate = _toBsDate(adDate);
       return '${bsDate.year}/${bsDate.month.toString().padLeft(2, '0')}/${bsDate.day.toString().padLeft(2, '0')}';
     } catch (e) {
       return null;
@@ -349,10 +334,7 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      if (bsDate == null) return null;
+      final bsDate = _toBsDate(adDate);
       final dayName = DateFormat('EEEE').format(adDate);
       return '$dayName, ${_formatNepaliDate(bsDate)}';
     } catch (e) {
@@ -364,10 +346,7 @@ class DateFormatter {
   /// Returns format: "DD Month YYYY" (e.g., "02 Chaitra 2081")
   static Future<String> getCurrentBsDate() async {
     final now = DateTime.now();
-    final adDateObj = AdDate(year: now.year, month: now.month, day: now.day);
-    final converter = await _getConverter();
-    final bsDate = converter.convertAdToBs(adDateObj);
-    if (bsDate == null) return '';
+    final bsDate = _toBsDate(now);
     return _formatNepaliDate(bsDate);
   }
 
@@ -375,10 +354,7 @@ class DateFormatter {
   /// Returns format: "YYYY/MM/DD"
   static Future<String> getCurrentBsDateShort() async {
     final now = DateTime.now();
-    final adDateObj = AdDate(year: now.year, month: now.month, day: now.day);
-    final converter = await _getConverter();
-    final bsDate = converter.convertAdToBs(adDateObj);
-    if (bsDate == null) return '';
+    final bsDate = _toBsDate(now);
     return '${bsDate.year}/${bsDate.month.toString().padLeft(2, '0')}/${bsDate.day.toString().padLeft(2, '0')}';
   }
 
@@ -387,10 +363,8 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      return bsDate?.year;
+      final bsDate = _toBsDate(adDate);
+      return bsDate.year;
     } catch (e) {
       return null;
     }
@@ -401,10 +375,8 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      return bsDate?.month;
+      final bsDate = _toBsDate(adDate);
+      return bsDate.month;
     } catch (e) {
       return null;
     }
@@ -415,10 +387,8 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      return bsDate?.day;
+      final bsDate = _toBsDate(adDate);
+      return bsDate.day;
     } catch (e) {
       return null;
     }
@@ -429,10 +399,7 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      if (bsDate == null) return null;
+      final bsDate = _toBsDate(adDate);
       return _getNepaliMonthName(bsDate.month);
     } catch (e) {
       return null;
@@ -440,7 +407,7 @@ class DateFormatter {
   }
 
   /// Format NepaliDate to readable string
-  static String _formatNepaliDate(NepaliDate nepaliDate) {
+  static String _formatNepaliDate(NepaliDateTime nepaliDate) {
     final monthName = _getNepaliMonthName(nepaliDate.month);
     return '${nepaliDate.day.toString().padLeft(2, '0')} $monthName ${nepaliDate.year}';
   }
@@ -515,10 +482,7 @@ class DateFormatter {
       final month = int.parse(parts[1]);
       final day = int.parse(parts[2]);
 
-      final nepaliDate = NepaliDate(year: year, month: month, day: day);
-      final converter = await _getConverter();
-      final adDate = converter.convertBsToAd(nepaliDate);
-      if (adDate == null) return null;
+      final adDate = NepaliDateTime(year, month, day).toDateTime();
       return '${adDate.year}-${adDate.month.toString().padLeft(2, '0')}-${adDate.day.toString().padLeft(2, '0')}';
     } catch (e) {
       return null;
@@ -531,10 +495,7 @@ class DateFormatter {
     if (adDateString == null || adDateString.isEmpty) return null;
     try {
       final adDate = DateTime.parse(adDateString);
-      final adDateObj = AdDate(year: adDate.year, month: adDate.month, day: adDate.day);
-      final converter = await _getConverter();
-      final bsDate = converter.convertAdToBs(adDateObj);
-      if (bsDate == null) return null;
+      final bsDate = _toBsDate(adDate);
 
       String result = format;
       result = result.replaceAll('YYYY', bsDate.year.toString());
