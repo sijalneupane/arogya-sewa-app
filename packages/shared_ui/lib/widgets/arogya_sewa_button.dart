@@ -33,7 +33,7 @@ class ArogyaSewaButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: ArogyaSewaColors.transparent,
+          backgroundColor:backgroundColor?? ArogyaSewaColors.transparent,
           foregroundColor: foregroundColor ?? Colors.white,
           minimumSize: Size.fromHeight(45),
           padding: EdgeInsets.zero,
