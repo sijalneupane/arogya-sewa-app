@@ -11,35 +11,32 @@ class ArogyaSewaAppBar {
     List<Widget>? actions,
     Color? backgroundColor,
     Color? foregroundColor,
-    double elevation = 0,
+    double? elevation,
   }) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final appBarTheme = theme.appBarTheme;
 
     return AppBar(
       leading: showBackButton
           ? IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 20,
+                color: foregroundColor ?? appBarTheme.foregroundColor,
               ),
             )
           : null,
       title: Text(
         title,
-        style: TextStyle(
-          color: foregroundColor ??
-              (isDarkMode
-                  ? ArogyaSewaColors.textColorWhite
-                  : ArogyaSewaColors.textColorBlack),
+        style: appBarTheme.titleTextStyle?.copyWith(
+          color: foregroundColor ?? appBarTheme.foregroundColor,
           fontWeight: FontWeight.bold,
         ),
       ),
-      backgroundColor: backgroundColor ??
-          (isDarkMode
-              ? ArogyaSewaColors.primaryColor
-              : ArogyaSewaColors.textColorWhite),
-      elevation: elevation,
+      backgroundColor: backgroundColor ?? appBarTheme.backgroundColor,
+      elevation: elevation ?? appBarTheme.elevation,
+      foregroundColor: foregroundColor ?? appBarTheme.foregroundColor,
       actions: actions,
     );
   }
@@ -49,24 +46,23 @@ class ArogyaSewaAppBar {
     double expandedHeight = 280,
     bool showProfilePlaceholder = true,
   }) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final appBarTheme = theme.appBarTheme;
+    final colorScheme = theme.colorScheme;
 
     return SliverAppBar(
       expandedHeight: expandedHeight,
       floating: false,
       pinned: true,
-      backgroundColor: isDarkMode
-          ? ArogyaSewaColors.primaryColor
-          : ArogyaSewaColors.textColorWhite,
-      elevation: 0,
+      backgroundColor: appBarTheme.backgroundColor,
+      elevation: appBarTheme.elevation,
+      foregroundColor: appBarTheme.foregroundColor,
       leading: IconButton(
         onPressed: () => Navigator.pop(context),
         icon: Icon(
           Icons.arrow_back_ios_new_rounded,
           size: 20,
-          color: isDarkMode
-              ? ArogyaSewaColors.textColorWhite
-              : ArogyaSewaColors.textColorBlack,
+          color: appBarTheme.foregroundColor,
         ),
       ),
       flexibleSpace: FlexibleSpaceBar(
@@ -75,14 +71,14 @@ class ArogyaSewaAppBar {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: isDarkMode
+              colors: theme.brightness == Brightness.dark
                   ? [
                       ArogyaSewaColors.primaryColor,
                       ArogyaSewaColors.primaryColor.withValues(alpha: 0.85),
                     ]
                   : [
                       ArogyaSewaColors.primaryColor.withValues(alpha: 0.08),
-                      ArogyaSewaColors.textColorWhite,
+                      colorScheme.surface,
                     ],
             ),
           ),
@@ -92,7 +88,7 @@ class ArogyaSewaAppBar {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: isDarkMode
+                      color: theme.brightness == Brightness.dark
                           ? ArogyaSewaColors.shimmerBaseDark
                           : ArogyaSewaColors.shimmerBaseLight,
                       shape: BoxShape.circle,

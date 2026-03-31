@@ -15,6 +15,10 @@ class ArogyaSewaColors {
   static const Color textColorBlack = Colors.black;
    static const Color textColorGrey = Colors.grey;
 
+  // icon colors
+  static const Color iconColorWhite = Colors.white;
+  static const Color iconColorPrimary=primaryColor;
+  static const Color iconColorBlack = Colors.black;
   //border and text colors
   static const Color borderColorWhite = Color(0xFF333333);
   static const Color borderColorBlack = Color(0xFFDDDDDD);

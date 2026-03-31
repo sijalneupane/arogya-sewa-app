@@ -167,6 +167,7 @@ class AvailabilityCard extends StatelessWidget {
                 onPressed: onTap,
                 width: 80,
                 height: 36,
+                // gradient: ArogyaSewaColors.primrayGraidient,
                 backgroundColor: ArogyaSewaColors.primaryColor,
                 foregroundColor: ArogyaSewaColors.textColorWhite,
                 child: Text(
@@ -174,7 +175,7 @@ class AvailabilityCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: ArogyaSewaColors.textColorWhite,
+                    // color: ArogyaSewaColors.textColorWhite,
                   ),
                 ),
               ),
