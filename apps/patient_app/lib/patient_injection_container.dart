@@ -1,5 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource.dart';
+import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource_impl.dart';
+import 'package:patient_app/features/availability/domain/repositories/availability_repository.dart';
+import 'package:patient_app/features/availability/domain/repositories/availability_repository_impl.dart';
+import 'package:patient_app/features/availability/domain/usecases/fetch_doctor_availabilities_usecase.dart';
+import 'package:patient_app/features/availability/presentation/bloc/patient_doctor_availability_bloc.dart';
 import 'package:patient_app/features/doctors/data/datasources/doctor_detail_remote_datasource.dart';
 import 'package:patient_app/features/doctors/data/datasources/doctor_detail_remote_datasource_impl.dart';
 import 'package:patient_app/features/doctors/data/datasources/doctor_remote_datasource.dart';
@@ -104,6 +110,32 @@ Future<void> initDI() async {
 
   sl.registerFactory<DoctorDetailBloc>(
     () => DoctorDetailBloc(fetchDoctorDetailUsecase: sl<FetchDoctorDetailUsecase>()),
+  );
+
+  // Availability Feature Dependencies
+  // Datasource
+  sl.registerLazySingleton<AvailabilityRemoteDataSource>(
+    () => AvailabilityRemoteDataSourceImpl(sl<Dio>()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<AvailabilityRepository>(
+    () => AvailabilityRepositoryImpl(
+      remoteDataSource: sl<AvailabilityRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
+  // Usecase
+  sl.registerLazySingleton<FetchDoctorAvailabilitiesUsecase>(
+    () => FetchDoctorAvailabilitiesUsecase(repository: sl<AvailabilityRepository>()),
+  );
+
+  // Bloc
+  sl.registerFactory<PatientDoctorAvailabilityBloc>(
+    () => PatientDoctorAvailabilityBloc(
+      fetchDoctorAvailabilitiesUsecase: sl<FetchDoctorAvailabilitiesUsecase>(),
+    ),
   );
 
   await sl.allReady();
