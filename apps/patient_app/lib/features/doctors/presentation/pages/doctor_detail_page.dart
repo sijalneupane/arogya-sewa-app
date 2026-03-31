@@ -14,6 +14,7 @@ import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_sta
 import 'package:shared_core/domain/entities/doctor_detail_entity.dart';
 import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
+import 'package:shared_ui/shared_ui.dart';
 import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
 import 'package:shared_ui/widgets/arogya_sewa_interactive_viewer.dart';
 import 'package:shared_ui/widgets/availability_card.dart';
@@ -1225,7 +1226,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   availability: availability,
                   showBookButton: true,
                   onTap: () {
-                    // Handle booking tap
+                    ArogyaSewaDialogs.showConfirmDialog(context: context, title: 'Availability Info', message: 'This is the availability information.',onConfirm: () {
+                    },icon: Icons.info_outline_rounded,);
                   },
                 );
               },

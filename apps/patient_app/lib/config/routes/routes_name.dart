@@ -6,4 +6,9 @@ class RoutesName {
   static const String hospitalSearchScreen = 'hospitalSearchScreen';
   static const String doctorsScreen = 'doctorsScreen';
   static const String doctorDetailScreen = 'doctorDetailScreen';
+  
+  // Bottom Navigation Tabs
+  static const String appointmentsScreen = 'appointmentsScreen';
+  static const String notificationsScreen = 'notificationsScreen';
+  static const String settingsScreen = 'settingsScreen';
 }
