@@ -17,6 +17,9 @@ class AppThemeData {
       colorScheme: colorScheme,
       scaffoldBackgroundColor: ArogyaSewaColors.scaffoldBackgroundColorLight,
       textTheme: GoogleFonts.poppinsTextTheme(),
+      iconTheme: const IconThemeData(
+        color: ArogyaSewaColors.iconColorPrimary,
+      ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
@@ -61,6 +64,9 @@ class AppThemeData {
       colorScheme: colorScheme,
       scaffoldBackgroundColor: ArogyaSewaColors.scaffoldBackgroundColorDark,
       textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+      iconTheme: const IconThemeData(
+        color: ArogyaSewaColors.iconColorWhite,
+      ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
           TargetPlatform.android: CupertinoPageTransitionsBuilder(),
