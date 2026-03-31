@@ -164,18 +164,19 @@ class AvailabilityCard extends StatelessWidget {
             // Book button (optional)
             if (showBookButton && isAvailable)
               ArogyaSewaButton(
-                onPressed: onTap,
+                onPressed: isAvailable ? onTap : null,
                 width: 80,
                 height: 36,
-                // gradient: ArogyaSewaColors.primrayGraidient,
-                backgroundColor: ArogyaSewaColors.primaryColor,
+                backgroundColor: isAvailable
+                    ? ArogyaSewaColors.primaryColor
+                    : ArogyaSewaColors.textColorGrey.withValues(alpha: 0.3),
                 foregroundColor: ArogyaSewaColors.textColorWhite,
                 child: Text(
-                  'Book',
+                  isAvailable ? 'Book' : 'Booked',
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    // color: ArogyaSewaColors.textColorWhite,
+                    color: ArogyaSewaColors.textColorWhite,
                   ),
                 ),
               ),
