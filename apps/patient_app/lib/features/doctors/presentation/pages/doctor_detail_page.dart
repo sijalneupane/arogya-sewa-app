@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:shared_core/shared_core.dart';
+import 'package:patient_app/features/availability/domain/usecases/fetch_doctor_availabilities_usecase.dart';
+import 'package:patient_app/features/availability/presentation/bloc/patient_doctor_availability_bloc.dart';
+import 'package:patient_app/features/availability/presentation/bloc/patient_doctor_availability_event.dart';
+import 'package:patient_app/features/availability/presentation/bloc/patient_doctor_availability_state.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_bloc.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_event.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_state.dart';
@@ -11,6 +16,9 @@ import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
 import 'package:shared_ui/widgets/arogya_sewa_interactive_viewer.dart';
+import 'package:shared_ui/widgets/availability_card.dart';
+
+final sl = GetIt.instance;
 
 class DoctorDetailPage extends StatefulWidget {
   final String doctorId;
@@ -50,7 +58,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           }
 
           if (state is DoctorDetailLoaded) {
-            return _buildDoctorDetailContent(state.doctor, isDarkMode);
+            return _buildDoctorDetailContent(state.doctor, isDarkMode, context);
           }
 
           return _buildErrorState(somethingWrongString, isDarkMode);
@@ -151,7 +159,11 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
     );
   }
 
-  Widget _buildDoctorDetailContent(DoctorDetailEntity doctor, bool isDarkMode) {
+  Widget _buildDoctorDetailContent(
+    DoctorDetailEntity doctor,
+    bool isDarkMode,
+    BuildContext context,
+  ) {
     return CustomScrollView(
       slivers: [
         _buildAppBar(doctor, isDarkMode),
@@ -186,6 +198,11 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   SizedBox(height: 8),
                   _buildBioCard(doctor, isDarkMode),
                 ],
+                // Availability Section
+                SizedBox(height: 16),
+                _buildSectionTitle('Available Appointments', isDarkMode),
+                SizedBox(height: 8),
+                _buildAvailabilitySection(doctor.doctorId, isDarkMode, context),
                 SizedBox(height: 24),
               ],
             ),
@@ -1110,6 +1127,131 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildAvailabilitySection(
+    String doctorId,
+    bool isDarkMode,
+    BuildContext context,
+  ) {
+    return BlocProvider(
+      create: (_) => PatientDoctorAvailabilityBloc(
+        fetchDoctorAvailabilitiesUsecase: sl<FetchDoctorAvailabilitiesUsecase>(),
+      )..add(
+        FetchPatientDoctorAvailabilityEvent(
+          doctorId: doctorId,
+          futureOnly: true,
+          page: 1,
+          size: 5,
+        ),
+      ),
+      child: BlocBuilder<PatientDoctorAvailabilityBloc, PatientDoctorAvailabilityState>(
+        builder: (context, state) {
+          if (state is PatientDoctorAvailabilityLoading) {
+            return _buildAvailabilityShimmer(isDarkMode);
+          }
+
+          if (state is PatientDoctorAvailabilityError) {
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.event_busy_rounded,
+                      size: 48,
+                      color: isDarkMode
+                          ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.3)
+                          : ArogyaSewaColors.textColorGrey.withValues(alpha: 0.3),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      state.message,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isDarkMode
+                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.5)
+                            : ArogyaSewaColors.textColorGrey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
+          if (state is PatientDoctorAvailabilityLoaded) {
+            if (state.availabilities.isEmpty) {
+              return Center(
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.event_busy_rounded,
+                        size: 48,
+                        color: isDarkMode
+                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.3)
+                            : ArogyaSewaColors.textColorGrey.withValues(alpha: 0.3),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'No available appointments',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: isDarkMode
+                              ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.5)
+                              : ArogyaSewaColors.textColorGrey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.availabilities.length,
+              separatorBuilder: (_, __) => SizedBox(height: 10),
+              itemBuilder: (context, index) {
+                final availability = state.availabilities[index];
+                return AvailabilityCard(
+                  availability: availability,
+                  showBookButton: true,
+                  onTap: () {
+                    // Handle booking tap
+                  },
+                );
+              },
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
+    );
+  }
+
+  Widget _buildAvailabilityShimmer(bool isDarkMode) {
+    return Column(
+      children: List.generate(
+        2,
+        (index) => Container(
+          height: 80,
+          margin: EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            color: isDarkMode
+                ? ArogyaSewaColors.shimmerBaseDark
+                : ArogyaSewaColors.shimmerBaseLight,
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     );
   }
