@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 
 /// Global project-wide reusable dialog modal
@@ -47,7 +47,7 @@ class ArogyaSewaDialogs {
       icon: icon ?? Icons.info_outline_rounded,
       iconColor: ArogyaSewaColors.primaryColor,
       primaryButtonText: buttonText,
-      onPrimaryPressed: () => Navigator.pop(context),
+      onPrimaryPressed: () => context.pop(),
       isTwoButton: false,
       dialogType: _DialogType.info,
     );
@@ -68,7 +68,7 @@ class ArogyaSewaDialogs {
       icon: icon ?? Icons.check_circle_rounded,
       iconColor: const Color(0xFF34C759),
       primaryButtonText: buttonText,
-      onPrimaryPressed: () => Navigator.pop(context),
+      onPrimaryPressed: () => context.pop(),
       isTwoButton: false,
       dialogType: _DialogType.success,
     );
@@ -89,7 +89,7 @@ class ArogyaSewaDialogs {
       icon: icon ?? Icons.warning_rounded,
       iconColor: const Color(0xFFFF9500),
       primaryButtonText: buttonText,
-      onPrimaryPressed: () => Navigator.pop(context),
+      onPrimaryPressed: () => context.pop(),
       isTwoButton: false,
       dialogType: _DialogType.warning,
     );
@@ -110,7 +110,7 @@ class ArogyaSewaDialogs {
       icon: icon ?? Icons.error_rounded,
       iconColor: const Color(0xFFFF3B30),
       primaryButtonText: buttonText,
-      onPrimaryPressed: () => Navigator.pop(context),
+      onPrimaryPressed: () => context.pop(),
       isTwoButton: false,
       dialogType: _DialogType.error,
     );
@@ -130,7 +130,7 @@ class ArogyaSewaDialogs {
     required _DialogType dialogType,
   }) async {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    // final colorScheme = theme.colorScheme;
     final isDarkMode = theme.brightness == Brightness.dark;
 
     return showDialog(
@@ -142,151 +142,157 @@ class ArogyaSewaDialogs {
           backgroundColor: Colors.transparent,
           elevation: 0,
           insetPadding: const EdgeInsets.symmetric(
-            horizontal: 40,
+            horizontal: 32,
             vertical: 24,
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: isDarkMode
-                  ? const Color(0xFF1C1C1E)
-                  : const Color(0xFFF2F2F7),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Content Section
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 24,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: isDarkMode
+                    ? const Color(0xFF1C1C1E)
+                    : Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 16,
+                    offset: const Offset(0, 4),
                   ),
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? const Color(0xFF2C2C2E)
-                        : Colors.white,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(14),
-                      topRight: Radius.circular(14),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Icon
-                      if (icon != null) ...[
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: iconColor.withValues(alpha: 0.1),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            icon,
-                            color: iconColor,
-                            size: 32,
-                          ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Content Section
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Title with Icon (Left or Right based on dialog type)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            if (icon != null && dialogType != _DialogType.confirm) ...[
+                              Icon(
+                                icon,
+                                color: iconColor,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                            Expanded(
+                              child: Text(
+                                title,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : const Color(0xFF1C1C1E),
+                                  height: 1.3,
+                                ),
+                              ),
+                            ),
+                            if (icon != null && dialogType == _DialogType.confirm) ...[
+                              Icon(
+                                icon,
+                                color: iconColor,
+                                size: 20,
+                              ),
+                            ],
+                          ],
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 12),
+                        // Message
+                        Text(
+                          message,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            fontSize: 13,
+                            color: isDarkMode
+                                ? Colors.white.withValues(alpha: 0.7)
+                                : const Color(0xFF6C6C70),
+                            height: 1.4,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ],
-                      // Title
-                      Text(
-                        title,
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: isDarkMode
-                              ? Colors.white
-                              : const Color(0xFF1C1C1C),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 8),
-                      // Message
-                      Text(
-                        message,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: isDarkMode
-                              ? Colors.white.withValues(alpha: 0.6)
-                              : const Color(0xFF8E8E93),
-                          height: 1.4,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 8),
-
-                // Buttons Section
-                Container(
-                  decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? const Color(0xFF2C2C2E)
-                        : Colors.white,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(14),
-                      bottomRight: Radius.circular(14),
                     ),
                   ),
-                  child: isTwoButton
+
+                  // Divider
+                  Container(
+                    height: 0.5,
+                    color: isDarkMode
+                        ? Colors.white.withValues(alpha: 0.1)
+                        : const Color(0xFFE5E5EA),
+                  ),
+
+                  // Buttons Section
+                  isTwoButton
                       ? Row(
                           children: [
                             // Cancel Button (Left)
                             Expanded(
-                              child: InkWell(
-                                onTap: () => Navigator.pop(context),
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(14),
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 14,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => context.pop(),
+                                  borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(16),
                                   ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    secondaryButtonText ?? 'Cancel',
-                                    style: theme.textTheme.titleSmall?.copyWith(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : const Color(0xFF007AFF),
-                                      fontWeight: FontWeight.w600,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      secondaryButtonText ?? 'Cancel',
+                                      style: theme.textTheme.titleSmall?.copyWith(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: isDarkMode
+                                            ? Colors.white.withValues(alpha: 0.7)
+                                            : const Color(0xFF8E8E93),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            // Divider
+                            // Vertical Divider
                             Container(
                               width: 0.5,
-                              height: 44,
+                              height: 40,
                               color: isDarkMode
                                   ? Colors.white.withValues(alpha: 0.1)
-                                  : const Color(0xFFC6C6C8),
+                                  : const Color(0xFFE5E5EA),
                             ),
                             // Confirm Button (Right)
                             Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  onPrimaryPressed();
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  bottomRight: Radius.circular(14),
-                                ),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 14,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    context.pop();
+                                    onPrimaryPressed();
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    bottomRight: Radius.circular(16),
                                   ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    primaryButtonText,
-                                    style: theme.textTheme.titleSmall?.copyWith(
-                                      color: isDarkMode
-                                          ? Colors.white
-                                          : const Color(0xFF007AFF),
-                                      fontWeight: FontWeight.w600,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 12,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      primaryButtonText,
+                                      style: theme.textTheme.titleSmall?.copyWith(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        color: iconColor,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -294,28 +300,30 @@ class ArogyaSewaDialogs {
                             ),
                           ],
                         )
-                      : InkWell(
-                          onTap: onPrimaryPressed,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(14),
-                            bottomRight: Radius.circular(14),
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-                            alignment: Alignment.center,
-                            child: Text(
-                              primaryButtonText,
-                              style: theme.textTheme.titleSmall?.copyWith(
-                                color: isDarkMode
-                                    ? Colors.white
-                                    : const Color(0xFF007AFF),
-                                fontWeight: FontWeight.w600,
+                      : Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: onPrimaryPressed,
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(16),
+                              bottomRight: Radius.circular(16),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              alignment: Alignment.center,
+                              child: Text(
+                                primaryButtonText,
+                                style: theme.textTheme.titleSmall?.copyWith(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: iconColor,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
