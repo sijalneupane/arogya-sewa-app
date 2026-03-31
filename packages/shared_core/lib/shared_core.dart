@@ -7,13 +7,19 @@ export 'domain/enums/doctor_status_enum.dart';
 export 'domain/entities/doctor_availability_entity.dart';
 export 'domain/entities/doctor_entity.dart';
 export 'domain/entities/doctor_list_entity.dart';
+export 'domain/entities/doctor_detail_entity.dart';
 export 'domain/entities/department_entity.dart';
 export 'domain/entities/hospital_entity.dart';
+export 'domain/entities/availability_query_params_entity.dart';
+export 'domain/entities/doctor_availability_list_entity.dart';
 export 'data/models/doctor_availability_model.dart';
 export 'data/models/doctor_model.dart';
 export 'data/models/doctor_list_model.dart';
+export 'data/models/doctor_detail_model.dart';
 export 'data/models/department_model.dart';
 export 'data/models/hospital_model.dart';
+export 'data/models/availability_query_params_model.dart';
+export 'data/models/doctor_availability_list_model.dart';
 
 // Export location entities and models
 export 'domain/entities/location_entity.dart';
