@@ -1,20 +1,21 @@
-import 'package:dio/dio.dart';
 import 'package:shared_core/constants/arogya_sewa_api_const.dart';
 import 'package:shared_core/constants/arogya_sewa_string_const.dart';
 import 'package:shared_core/error/datasource_exception_handler.dart';
+import 'package:shared_core/network/api_client.dart';
 import 'package:shared_feature/auth/data/datasources/auth_remote_datasource.dart';
 
 import '../models/login_model.dart';
 import '../models/auth_session_model.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final Dio dio;
-  AuthRemoteDataSourceImpl(this.dio);
+  final ApiClient apiClient;
+  AuthRemoteDataSourceImpl({required this.apiClient});
+  
   @override
   Future<AuthSessionModel> login(LoginModel payload) async {
     try {
-      final response = await dio.post(ArogyaSewaApiConst.loginUrl, data: payload.toJson());
-      
+      final response = await apiClient.dio.post(ArogyaSewaApiConst.loginUrl, data: payload.toJson());
+
       // If we reach here, response is successful (2xx due to validateStatus config)
       if(response.statusCode == 200 || response.statusCode == 201) {
       if (response.data is Map<String, dynamic>) {

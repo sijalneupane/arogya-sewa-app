@@ -1,22 +1,22 @@
-import 'package:dio/dio.dart';
 import 'package:shared_core/constants/arogya_sewa_api_const.dart';
 import 'package:shared_core/constants/arogya_sewa_string_const.dart';
 import 'package:shared_core/data/models/appointment_model.dart';
 import 'package:shared_core/error/datasource_exception_handler.dart';
+import 'package:shared_core/network/api_client.dart';
 import 'package:shared_feature/appointments/data/datasources/appointment_remote_datasource.dart';
 import 'package:shared_feature/appointments/data/models/appointment_list_model.dart';
 import 'package:shared_feature/appointments/data/models/create_appointment_model.dart';
 import 'package:shared_feature/appointments/data/models/fetch_my_appointments_query_model.dart';
 
 class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
-  final Dio dio;
+  final ApiClient apiClient;
 
-  AppointmentRemoteDataSourceImpl(this.dio);
+  AppointmentRemoteDataSourceImpl({required this.apiClient});
 
   @override
   Future<AppointmentModel> createAppointment(CreateAppointmentModel payload) async {
     try {
-      final response = await dio.post(
+      final response = await apiClient.dio.post(
         ArogyaSewaApiConst.appointmentsUrl,
         data: payload.toJson(),
       );
@@ -40,7 +40,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
     FetchMyAppointmentsQueryModel query,
   ) async {
     try {
-      final response = await dio.get(
+      final response = await apiClient.dio.get(
         ArogyaSewaApiConst.patientMyAppointmentsUrl,
         queryParameters: query.toQueryParams(),
       );
@@ -64,7 +64,7 @@ class AppointmentRemoteDataSourceImpl implements AppointmentRemoteDataSource {
     final path = '${ArogyaSewaApiConst.appointmentsUrl}/$appointmentId';
 
     try {
-      final response = await dio.get(path);
+      final response = await apiClient.dio.get(path);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final body = response.data as Map<String, dynamic>;

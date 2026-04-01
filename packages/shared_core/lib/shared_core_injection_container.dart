@@ -25,6 +25,7 @@ import 'package:shared_core/device/device_info.dart';
 import 'package:shared_core/hashing/hashing.dart';
 import 'package:shared_core/network/api_client.dart';
 import 'package:shared_core/network/network_info.dart';
+import 'package:shared_core/services/firebase_notification_service.dart';
 import 'package:shared_feature/splash/data/datasources/splash_local_datasource.dart';
 import 'package:shared_feature/splash/data/datasources/splash_local_datasource_impl.dart';
 import 'package:shared_feature/splash/domain/repositories/splash_repository.dart';
@@ -89,11 +90,11 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
 
   // datasource dependencies
   sl.registerLazySingleton<AuthRemoteDataSource>(
-    () => AuthRemoteDataSourceImpl(sl<Dio>()),
+    () => AuthRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
 
   sl.registerLazySingleton<AppointmentRemoteDataSource>(
-    () => AppointmentRemoteDataSourceImpl(sl<Dio>()),
+    () => AppointmentRemoteDataSourceImpl(apiClient: sl<ApiClient>()),
   );
 
 
@@ -109,6 +110,7 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
      networkInfo: sl<NetworkInfo>(),
      remote: sl<AuthRemoteDataSource>(),
       securePref: sl<SecurePref>(),
+      firebaseNotificationService: sl<FirebaseNotificationService>(),
     ),
   );
 
