@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
+import 'package:patient_app/features/appointments/presentation/bloc/create_appointment_bloc.dart';
+import 'package:patient_app/features/appointments/presentation/bloc/create_appointment_state.dart';
 import 'package:shared_core/shared_core.dart';
 import 'package:patient_app/features/availability/domain/usecases/fetch_doctor_availabilities_usecase.dart';
 import 'package:patient_app/features/availability/presentation/bloc/patient_doctor_availability_bloc.dart';
@@ -18,6 +21,7 @@ import 'package:shared_ui/shared_ui.dart';
 import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
 import 'package:shared_ui/widgets/arogya_sewa_interactive_viewer.dart';
 import 'package:shared_ui/widgets/availability_card.dart';
+import 'package:shared_ui/widgets/dialogs/arogya_sewa_loading_dialog.dart';
 
 final sl = GetIt.instance;
 
@@ -1223,10 +1227,13 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                 return AvailabilityCard(
                   availability: availability,
                   showBookButton: true,
-                  onTap: () {
-                    ArogyaSewaDialogs.showConfirmDialog(context: context, title: 'Availability Info', message: 'This is the availability information.',onConfirm: () {
-                    },icon: Icons.info_outline_rounded,);
-                  },
+                  onTap: () => _handleBookAppointment(
+                    context,
+                    availability.availabilityId,
+                    doctorId,
+                    isDarkMode,
+                    availability,
+                  ),
                 );
               },
             );
@@ -1235,6 +1242,31 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
           return const SizedBox.shrink();
         },
       ),
+    );
+  }
+
+  Future<void> _handleBookAppointment(
+    BuildContext context,
+    String availabilityId,
+    String doctorId,
+    bool isDarkMode,
+    dynamic availability,
+  ) async {
+    final doctorDetailState = context.read<DoctorDetailBloc>().state;
+    if (doctorDetailState is! DoctorDetailLoaded) return;
+
+    final doctor = doctorDetailState.doctor;
+
+    // Navigate to appointment submission page using named route
+    await context.pushNamed(
+      RoutesName.bookAppointmentScreen,
+      pathParameters: {
+        'doctorId': doctorId,
+      },
+      extra: {
+        'availability': availability,
+        'doctorName': doctor.user.name,
+      },
     );
   }
 
