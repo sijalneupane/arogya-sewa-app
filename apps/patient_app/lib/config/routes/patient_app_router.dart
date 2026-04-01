@@ -6,7 +6,7 @@ import 'package:patient_app/core/config/widgets/patient_bottom_navigation_bar.da
 import 'package:patient_app/features/appointments/presentation/pages/appointments_page.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_bloc.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_bloc.dart';
-import 'package:patient_app/features/auth/presentation/login_page.dart';
+import 'package:patient_app/features/auth/presentation/pages/login_page.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:patient_app/features/home/presentation/bloc/home_doctor_bloc.dart';
 import 'package:patient_app/features/home/presentation/pages/home_page.dart';
