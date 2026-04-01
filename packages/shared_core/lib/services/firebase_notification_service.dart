@@ -43,7 +43,7 @@ class FirebaseNotificationService {
   }
 
   Future<void> _initializeLocalNotifications() async {
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings('@mipmap/launcher_icon');
     final iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -177,7 +177,7 @@ class FirebaseNotificationService {
       android: AndroidNotificationDetails(
         _androidChannelId,
         'High Importance Notifications',
-        icon: '@mipmap/ic_launcher',
+        icon: '@mipmap/launcher_icon',
         priority: Priority.high,
         importance: Importance.max,
         playSound: true,
