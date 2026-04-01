@@ -1,15 +1,14 @@
 enum AppointmentStatusEnum {
-  pendingPayment('Pending Payment', 'pending_payment'),
-  confirmed('Confirmed', 'confirmed'),
-  inProgress('In Progress', 'in_progress'),
-  completed('Completed', 'completed'),
-  cancelled('Cancelled', 'cancelled'),
-  rescheduled('Rescheduled', 'rescheduled');
+  pendingPayment('Pending Payment'),
+  confirmed('Confirmed'),
+  inProgress('In Progress'),
+  completed('Completed'),
+  cancelled('Cancelled'),
+  rescheduled('Rescheduled');
 
   final String value;
-  final String apiValue;
 
-  const AppointmentStatusEnum(this.value, this.apiValue);
+  const AppointmentStatusEnum(this.value);
 }
 
 extension AppointmentStatusEnumX on AppointmentStatusEnum {
