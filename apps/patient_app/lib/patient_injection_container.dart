@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:patient_app/features/appointments/domain/usecases/patient_fetch_my_appointments_usecase.dart';
+import 'package:patient_app/features/appointments/presentation/bloc/create_appointment_bloc.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_bloc.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource.dart';
+import 'package:shared_feature/appointments/domain/usecase/create_appointment_usecase.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource_impl.dart';
 import 'package:patient_app/features/availability/domain/repositories/availability_repository.dart';
 import 'package:patient_app/features/availability/domain/repositories/availability_repository_impl.dart';
@@ -151,6 +153,12 @@ Future<void> initDI() async {
   sl.registerFactory<PatientAppointmentBloc>(
     () => PatientAppointmentBloc(
       fetchMyAppointmentsUsecase: sl<FetchMyAppointmentsUsecase>(),
+    ),
+  );
+
+  sl.registerFactory<CreateAppointmentBloc>(
+    () => CreateAppointmentBloc(
+      createAppointmentUsecase: sl<CreateAppointmentUsecase>(),
     ),
   );
 
