@@ -1,5 +1,5 @@
 class ArogyaSewaApiConst {
-  static const String baseUrl = "https://000e-27-34-73-229.ngrok-free.app/api/v1";
+  static const String baseUrl = "https://da10-27-34-73-153.ngrok-free.app/api/v1";
   static const String loginUrl = "$baseUrl/auth/login";
   static const String refreshTokenUrl = "$baseUrl/auth/refresh-token";
   static const String fileUpdateUrl = "$baseUrl/file/update";

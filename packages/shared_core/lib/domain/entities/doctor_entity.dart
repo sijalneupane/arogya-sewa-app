@@ -2,6 +2,7 @@ import 'package:shared_core/domain/entities/department_entity.dart';
 import 'package:shared_core/domain/entities/doctor_availability_entity.dart';
 import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_core/domain/entities/file_entity.dart';
+import 'package:shared_core/domain/entities/mini_hospital_entity.dart';
 import 'package:shared_core/domain/entities/user_entity.dart';
 
 class DoctorEntity {
@@ -11,6 +12,7 @@ class DoctorEntity {
   final String? bio;
   final FileEntity? licenseCertificate;
   final String hospitalId;
+  final MiniHospitalEntity hospital;
   final DepartmentEntity department;
   final UserEntity user;
   final DoctorAvailabilityEntity? upcomingAvailability;
@@ -22,6 +24,7 @@ class DoctorEntity {
     this.bio,
     this.licenseCertificate,
     required this.hospitalId,
+    required this.hospital,
     required this.department,
     required this.user,
     this.upcomingAvailability,

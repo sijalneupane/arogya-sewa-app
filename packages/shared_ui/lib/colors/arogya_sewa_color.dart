@@ -29,7 +29,8 @@ class ArogyaSewaColors {
   static const Color scaffoldBackgroundColorLight = Color(0xFFFAFAFA);
   static const Color scaffoldBackgroundColorDark = Color(0xFF1F1F1F);
 
-
+  static const Color cardBackgroundColorLight = Colors.white;
+  static const Color cardBackgroundColorDark = Color(0xFF1B1B1B);
   // textformfield colors 
   static const textformfieldColor = Colors.white;
   static const textformfieldColorDark =Color(0xFF343434);

@@ -106,9 +106,6 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDarkMode
-          ? const Color(0xFF0F1338)
-          : ArogyaSewaColors.scaffoldBackgroundColorLight,
       appBar: ArogyaSewaAppBar.create(
         context: context,
         title: 'My Appointments',
@@ -199,8 +196,8 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
       },
       color: ArogyaSewaColors.primaryColor,
       backgroundColor: isDarkMode
-          ? const Color(0xFF1D255F)
-          : Colors.white,
+          ? ArogyaSewaColors.cardBackgroundColorDark
+          : ArogyaSewaColors.cardBackgroundColorLight,
       child: CustomScrollView(
         controller: _scrollController,
         slivers: [
@@ -289,17 +286,23 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.1),
+        color: isDarkMode
+            ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.15)
+            : ArogyaSewaColors.primaryColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.3),
+          color: isDarkMode
+              ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.4)
+              : ArogyaSewaColors.primaryColor.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
         children: [
           Icon(
             Icons.filter_alt_rounded,
-            color: ArogyaSewaColors.primaryColor,
+            color: isDarkMode
+                ? ArogyaSewaColors.textColorWhite
+                : ArogyaSewaColors.primaryColor,
             size: 20,
           ),
           const SizedBox(width: 8),
@@ -307,7 +310,9 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
             child: Text(
               'Filters active',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: ArogyaSewaColors.primaryColor,
+                    color: isDarkMode
+                        ? ArogyaSewaColors.textColorWhite
+                        : ArogyaSewaColors.primaryColor,
                     fontWeight: FontWeight.w600,
                   ),
             ),
@@ -319,21 +324,32 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
+                color: isDarkMode
+                    ? Colors.red.withValues(alpha: 0.2)
+                    : Colors.red.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: isDarkMode
+                      ? Colors.red.withValues(alpha: 0.4)
+                      : Colors.red.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.clear_rounded,
                     size: 14,
-                    color: Colors.red,
+                    color: isDarkMode
+                        ? ArogyaSewaColors.textColorWhite
+                        : Colors.red,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     'Clear',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.red,
+                          color: isDarkMode
+                              ? ArogyaSewaColors.textColorWhite
+                              : Colors.red,
                           fontWeight: FontWeight.bold,
                         ),
                   ),
@@ -433,13 +449,6 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   }
 
   void _navigateToAppointmentDetail(BuildContext context, String appointmentId) {
-    // TODO: Navigate to appointment detail page when created
-    // For now, just show a snackbar
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Appointment ID: $appointmentId'),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    
   }
 }

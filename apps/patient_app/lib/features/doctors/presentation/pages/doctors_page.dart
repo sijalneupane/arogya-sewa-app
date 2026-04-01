@@ -86,8 +86,8 @@ class _DoctorsPageState extends State<DoctorsPage> {
     DoctorStatusEnum? localStatus = _status;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final sheetBgColor = isDarkMode
-        ? const Color(0xFF1D255F)
-        : ArogyaSewaColors.textColorWhite;
+        ? ArogyaSewaColors.cardBackgroundColorDark
+        : ArogyaSewaColors.cardBackgroundColorLight;
     final sheetBorderColor = isDarkMode
         ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.6)
         : ArogyaSewaColors.primaryColor.withValues(alpha: 0.2);
@@ -510,8 +510,8 @@ class _DoctorsPageState extends State<DoctorsPage> {
     return Container(
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1B245F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isDarkMode
@@ -596,7 +596,7 @@ class _DoctorsPageState extends State<DoctorsPage> {
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: isDarkMode
-                              ? const Color(0xFF1B245F)
+                              ? ArogyaSewaColors.cardBackgroundColorDark
                               : ArogyaSewaColors.textColorWhite,
                           width: 1.5,
                         ),

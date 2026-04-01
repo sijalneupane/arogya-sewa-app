@@ -42,12 +42,10 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final scaffoldBgColor = isDarkMode
-        ? const Color(0xFF0F1338)
-        : ArogyaSewaColors.scaffoldBackgroundColorLight;
+    // final scaffoldBgColor = 
 
     return Scaffold(
-      backgroundColor: scaffoldBgColor,
+      // backgroundColor: scaffoldBgColor,
       body: BlocBuilder<DoctorDetailBloc, DoctorDetailState>(
         builder: (context, state) {
           if (state is DoctorDetailLoading) {
@@ -325,8 +323,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               end: Alignment.bottomCenter,
               colors: isDarkMode
                   ? [
-                      ArogyaSewaColors.primaryColor,
-                      ArogyaSewaColors.primaryColor.withValues(alpha: 0.85),
+                      ArogyaSewaColors.cardBackgroundColorDark,
+                      ArogyaSewaColors.cardBackgroundColorDark.withValues(alpha: 0.8),
                     ]
                   : [
                       ArogyaSewaColors.primaryColor.withValues(alpha: 0.08),
@@ -363,7 +361,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                               : ArogyaSewaColors.primaryColor.withValues(alpha: 0.05),
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.3),
+                            color:isDarkMode? ArogyaSewaColors.borderColorGrey: ArogyaSewaColors.primaryColor.withValues(alpha: 0.1),
                             width: 3,
                           ),
                           boxShadow: [
@@ -416,8 +414,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1D255F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isAvailable
@@ -493,7 +491,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.06),
+                  color: ArogyaSewaColors.textColorGrey,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: ArogyaSewaColors.primaryColor.withValues(alpha: 0.15),
@@ -503,14 +501,14 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   children: [
                     Icon(
                       Icons.verified_user_rounded,
-                      color: ArogyaSewaColors.primaryColor,
+                      // color: ArogyaSewaColors.primaryColor,
                       size: 16,
                     ),
                     SizedBox(width: 6),
                     Text(
                       licenseString,
                       style: TextStyle(
-                        color: ArogyaSewaColors.primaryColor,
+                        // color: ArogyaSewaColors.primaryColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -542,8 +540,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1D255F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -654,8 +652,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1D255F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -745,8 +743,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1D255F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -869,51 +867,51 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             ],
           ),
           SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: isDarkMode
-                  ? Colors.white.withValues(alpha: 0.05)
-                  : Colors.grey.shade50,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.calendar_today_rounded,
-                  size: 14,
-                  color: ArogyaSewaColors.primaryColor,
-                ),
-                SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      establishedString,
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: isDarkMode
-                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.4)
-                            : ArogyaSewaColors.textColorGrey,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      DateFormatter.formatDateStandard(doctor.hospital.openedDate),
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: isDarkMode
-                            ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.65)
-                            : ArogyaSewaColors.textColorGrey,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.all(10),
+          //   decoration: BoxDecoration(
+          //     color: isDarkMode
+          //         ? Colors.white.withValues(alpha: 0.05)
+          //         : Colors.grey.shade50,
+          //     borderRadius: BorderRadius.circular(10),
+          //   ),
+          //   child: Row(
+          //     children: [
+          //       Icon(
+          //         Icons.calendar_today_rounded,
+          //         size: 14,
+          //         color: ArogyaSewaColors.primaryColor,
+          //       ),
+          //       SizedBox(width: 8),
+          //       Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text(
+          //             establishedString,
+          //             style: TextStyle(
+          //               fontSize: 9,
+          //               color: isDarkMode
+          //                   ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.4)
+          //                   : ArogyaSewaColors.textColorGrey,
+          //               fontWeight: FontWeight.w500,
+          //             ),
+          //           ),
+          //           SizedBox(height: 2),
+          //           Text(
+          //             DateFormatter.formatDateStandard(doctor.hospital.openedDate),
+          //             style: TextStyle(
+          //               fontSize: 11,
+          //               color: isDarkMode
+          //                   ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.65)
+          //                   : ArogyaSewaColors.textColorGrey,
+          //               fontWeight: FontWeight.w600,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -924,8 +922,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1D255F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -1066,8 +1064,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDarkMode
-            ? const Color(0xFF1D255F)
-            : ArogyaSewaColors.textColorWhite,
+            ? ArogyaSewaColors.cardBackgroundColorDark
+            : ArogyaSewaColors.cardBackgroundColorLight,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(

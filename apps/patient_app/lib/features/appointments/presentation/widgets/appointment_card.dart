@@ -3,17 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_core/domain/entities/appointment_entity.dart';
 import 'package:shared_core/domain/enums/appointment_status_enum.dart';
+import 'package:shared_core/utils/date_formatter.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
+import 'package:shared_ui/widgets/arogya_sewa_delete_icon_button.dart';
 
 /// Attractive card widget for displaying appointment information
 class AppointmentCard extends StatelessWidget {
   final AppointmentEntity appointment;
   final VoidCallback? onTap;
+  final VoidCallback? onDelete;
 
   const AppointmentCard({
     super.key,
     required this.appointment,
     this.onTap,
+    this.onDelete,
   });
 
   @override
@@ -26,8 +30,8 @@ class AppointmentCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           color: isDarkMode
-              ? const Color(0xFF1D255F)
-              : Colors.white,
+                ? ArogyaSewaColors.cardBackgroundColorDark
+                : ArogyaSewaColors.cardBackgroundColorLight,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -46,7 +50,7 @@ class AppointmentCard extends StatelessWidget {
           children: [
             /// Header with status badge
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -65,8 +69,8 @@ class AppointmentCard extends StatelessWidget {
                   /// Doctor Profile Image
                   ClipOval(
                     child: Container(
-                      width: 50,
-                      height: 50,
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: isDarkMode
                             ? ArogyaSewaColors.shimmerBaseDark
@@ -108,7 +112,7 @@ class AppointmentCard extends StatelessWidget {
                           appointment.doctor.user.name,
                           style: Theme.of(context)
                               .textTheme
-                              .titleMedium
+                              .titleSmall
                               ?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: isDarkMode
@@ -123,7 +127,7 @@ class AppointmentCard extends StatelessWidget {
                           appointment.doctor.department.name,
                           style: Theme.of(context)
                               .textTheme
-                              .bodySmall
+                              .labelSmall
                               ?.copyWith(
                                 color: isDarkMode
                                     ? ArogyaSewaColors.textColorWhite
@@ -151,36 +155,32 @@ class AppointmentCard extends StatelessWidget {
               child: Column(
                 children: [
                   /// Date and Time Row
-                  _buildDetailRow(
+                  _buildDateTimeRow(
                     context,
-                    icon: Icons.calendar_today_rounded,
-                    title: 'Date & Time',
-                    value: _formatDateTime(
-                      appointment.availability.startDateTime,
-                    ),
+                    dateTime: appointment.availability.startDateTime,
                     isDarkMode: isDarkMode,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 4),
 
                   /// Hospital Location
                   _buildDetailRow(
                     context,
                     icon: Icons.location_on_rounded,
                     title: 'Location',
-                    value: 'Hospital ID: ${appointment.doctor.hospitalId}',
+                    value: appointment.doctor.hospital.name,
                     isDarkMode: isDarkMode,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 4),
 
-                  /// Appointment Type (In-person/Virtual)
-                  _buildDetailRow(
-                    context,
-                    icon: Icons.info_outline_rounded,
-                    title: 'Consultation',
-                    value: 'Scheduled Appointment',
-                    isDarkMode: isDarkMode,
-                  ),
-                  const SizedBox(height: 12),
+                  // /// Appointment Type (In-person/Virtual)
+                  // _buildDetailRow(
+                  //   context,
+                  //   icon: Icons.info_outline_rounded,
+                  //   title: 'Consultation',
+                  //   value: 'Scheduled Appointment',
+                  //   isDarkMode: isDarkMode,
+                  // ),
+                  // const SizedBox(height: 12),
 
                   /// Reason for Appointment (if available)
                   if (appointment.reason.isNotEmpty) ...[
@@ -192,7 +192,7 @@ class AppointmentCard extends StatelessWidget {
                       isDarkMode: isDarkMode,
                       maxLines: 2,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 4),
                   ],
 
                   /// Payment Status
@@ -200,6 +200,20 @@ class AppointmentCard extends StatelessWidget {
                 ],
               ),
             ),
+
+            /// Delete Button at bottom right
+            if (onDelete != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 16, bottom: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ArogyaSewaDeleteIconButton(
+                      onPressed: onDelete,
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),
@@ -215,7 +229,7 @@ class AppointmentCard extends StatelessWidget {
     int maxLines = 1,
   }) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           padding: const EdgeInsets.all(8),
@@ -225,36 +239,22 @@ class AppointmentCard extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            size: 18,
-            color: ArogyaSewaColors.primaryColor,
+            size: 14,
+            // color: ArogyaSewaColors.primaryColor,
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: isDarkMode
-                          ? ArogyaSewaColors.textColorWhite.withValues(alpha: 0.6)
-                          : ArogyaSewaColors.textColorGrey,
-                    ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: isDarkMode
-                          ? ArogyaSewaColors.textColorWhite
-                          : ArogyaSewaColors.textColorBlack,
-                      fontWeight: FontWeight.w500,
-                    ),
-                maxLines: maxLines,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+          child: Text(
+            value,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: isDarkMode
+                      ? ArogyaSewaColors.textColorWhite
+                      : ArogyaSewaColors.textColorBlack,
+                  fontWeight: FontWeight.w500,
+                ),
+            maxLines: maxLines,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
@@ -263,18 +263,23 @@ class AppointmentCard extends StatelessWidget {
 
   Widget _buildPaymentRow(BuildContext context, bool isDarkMode) {
     final isFullyPaid = appointment.dueAmount <= 0;
+    final paidColor = isFullyPaid ? Colors.green : Colors.amber;
 
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isFullyPaid
-            ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.1)
-            : ArogyaSewaColors.secondaryColor.withValues(alpha: 0.1),
+        color: isDarkMode
+            ? (isFullyPaid ? Colors.green.withValues(alpha: 0.2) : Colors.amber.withValues(alpha: 0.2))
+            : (isFullyPaid
+                ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.1)
+                : ArogyaSewaColors.secondaryColor.withValues(alpha: 0.1)),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isFullyPaid
-              ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.3)
-              : ArogyaSewaColors.secondaryColor.withValues(alpha: 0.3),
+          color: isDarkMode
+              ? (isFullyPaid ? Colors.green.withValues(alpha: 0.5) : Colors.amber.withValues(alpha: 0.5))
+              : (isFullyPaid
+                  ? ArogyaSewaColors.primaryColor.withValues(alpha: 0.3)
+                  : ArogyaSewaColors.secondaryColor.withValues(alpha: 0.3)),
         ),
       ),
       child: Row(
@@ -286,9 +291,9 @@ class AppointmentCard extends StatelessWidget {
                 isFullyPaid
                     ? Icons.check_circle_rounded
                     : Icons.payment_rounded,
-                color: isFullyPaid
+                color: isDarkMode ? paidColor : (isFullyPaid
                     ? ArogyaSewaColors.primaryColor
-                    : ArogyaSewaColors.secondaryColor,
+                    : ArogyaSewaColors.secondaryColor),
                 size: 20,
               ),
               const SizedBox(width: 8),
@@ -296,9 +301,9 @@ class AppointmentCard extends StatelessWidget {
                 isFullyPaid ? 'Paid' : 'Payment Pending',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: isFullyPaid
+                      color: isDarkMode ? paidColor : (isFullyPaid
                           ? ArogyaSewaColors.primaryColor
-                          : ArogyaSewaColors.secondaryColor,
+                          : ArogyaSewaColors.secondaryColor),
                     ),
               ),
             ],
@@ -314,6 +319,31 @@ class AppointmentCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDateTimeRow(
+    BuildContext context, {
+    required DateTime dateTime,
+    required bool isDarkMode,
+  }) {
+    final timeFormat = DateFormat('hh:mm a');
+    final timeString = timeFormat.format(dateTime);
+
+    return FutureBuilder<String?>(
+      future: DateFormatter.convertAdToBsFull(dateTime.toIso8601String()),
+      builder: (context, snapshot) {
+        final nepaliDate = snapshot.data;
+        final displayDate = nepaliDate ?? _formatDate(dateTime);
+        
+        return _buildDetailRow(
+          context,
+          icon: Icons.calendar_today_rounded,
+          title: 'Date & Time',
+          value: '$displayDate at $timeString',
+          isDarkMode: isDarkMode,
+        );
+      },
     );
   }
 
@@ -344,9 +374,9 @@ class AppointmentCard extends StatelessWidget {
           const SizedBox(width: 6),
           Text(
             _getStatusText(),
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: statusColor,
+                  // color: statusColor,
                 ),
           ),
         ],
@@ -367,7 +397,7 @@ class AppointmentCard extends StatelessWidget {
       case AppointmentStatusEnum.cancelled:
         return Colors.red;
       case AppointmentStatusEnum.rescheduled:
-        return Colors.orange;
+        return Colors.purple;
     }
   }
 
@@ -388,10 +418,8 @@ class AppointmentCard extends StatelessWidget {
     }
   }
 
-  String _formatDateTime(DateTime dateTime) {
+  String _formatDate(DateTime dateTime) {
     final dateFormat = DateFormat('MMM dd, yyyy');
-    final timeFormat = DateFormat('hh:mm a');
-
-    return '${dateFormat.format(dateTime)} at ${timeFormat.format(dateTime)}';
+    return dateFormat.format(dateTime);
   }
 }

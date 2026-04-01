@@ -39,8 +39,8 @@ class _AppointmentFilterSheetState extends State<AppointmentFilterSheet> {
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final sheetBgColor = isDarkMode
-        ? const Color(0xFF1D255F)
-        : Colors.white;
+        ? ArogyaSewaColors.cardBackgroundColorDark
+        : ArogyaSewaColors.cardBackgroundColorLight;
     final textColor = isDarkMode
         ? ArogyaSewaColors.textColorWhite
         : ArogyaSewaColors.textColorBlack;
@@ -403,7 +403,7 @@ class _AppointmentFilterSheetState extends State<AppointmentFilterSheet> {
             colorScheme: ColorScheme.light(
               primary: ArogyaSewaColors.primaryColor,
               onPrimary: Colors.white,
-              surface: isDarkMode ? const Color(0xFF1D255F) : Colors.white,
+              surface: isDarkMode ? ArogyaSewaColors.cardBackgroundColorDark : Colors.white,
               onSurface: isDarkMode ? Colors.white : Colors.black,
             ),
           ),

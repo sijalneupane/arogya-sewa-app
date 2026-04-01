@@ -1,6 +1,7 @@
 import 'package:shared_core/data/models/department_model.dart';
 import 'package:shared_core/data/models/doctor_availability_model.dart';
 import 'package:shared_core/data/models/file_model.dart';
+import 'package:shared_core/data/models/mini_hospital_model.dart';
 import 'package:shared_core/data/models/user_model.dart';
 import 'package:shared_core/domain/entities/doctor_entity.dart';
 import 'package:shared_core/domain/enums/doctor_status_enum.dart';
@@ -13,6 +14,7 @@ class DoctorModel extends DoctorEntity {
     super.bio,
     super.licenseCertificate,
     required super.hospitalId,
+    required super.hospital,
     required super.department,
     required super.user,
     super.upcomingAvailability,
@@ -30,6 +32,9 @@ class DoctorModel extends DoctorEntity {
             )
           : null,
       hospitalId: json['hospital_id'] as String? ?? '',
+      hospital: MiniHospitalModel.fromJson(
+        json['hospital'] as Map<String, dynamic>,
+      ),
       department: DepartmentModel.fromJson(
         json['department'] as Map<String, dynamic>,
       ),
@@ -52,6 +57,7 @@ class DoctorModel extends DoctorEntity {
           ? FileModel.fromEntity(licenseCertificate!).toJson()
           : null,
       'hospital_id': hospitalId,
+      'hospital': MiniHospitalModel.fromEntity(hospital).toJson(),
       'department': DepartmentModel.fromEntity(department).toJson(),
       'user': (user as UserModel).toJson(),
       'upcoming_availability': upcomingAvailability != null
@@ -68,6 +74,7 @@ class DoctorModel extends DoctorEntity {
       bio: entity.bio,
       licenseCertificate: entity.licenseCertificate,
       hospitalId: entity.hospitalId,
+      hospital: entity.hospital,
       department: entity.department,
       user: entity.user,
       upcomingAvailability: entity.upcomingAvailability,

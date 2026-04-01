@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 
 /// Reusable interactive viewer for displaying images with zoom and pan functionality
@@ -82,7 +83,7 @@ class ArogyaSewaInteractiveViewer {
                         ),
                       ),
                       IconButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => context.pop(),
                         icon: Icon(Icons.close_rounded),
                         style: IconButton.styleFrom(
                           backgroundColor: isDarkMode
