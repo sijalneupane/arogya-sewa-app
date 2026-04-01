@@ -14,6 +14,13 @@ import 'package:shared_feature/auth/domain/usecase/login_usecase.dart';
 import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shared_feature/auth/domain/repository/auth_repository.dart';
 import 'package:shared_feature/auth/domain/repository/auth_repository_impl.dart';
+import 'package:shared_feature/appointments/data/datasources/appointment_remote_datasource.dart';
+import 'package:shared_feature/appointments/data/datasources/appointment_remote_datasource_impl.dart';
+import 'package:shared_feature/appointments/domain/repository/appointment_repository.dart';
+import 'package:shared_feature/appointments/domain/repository/appointment_repository_impl.dart';
+import 'package:shared_feature/appointments/domain/usecase/create_appointment_usecase.dart';
+import 'package:shared_feature/appointments/domain/usecase/fetch_appointment_by_id_usecase.dart';
+import 'package:shared_feature/appointments/domain/usecase/fetch_my_appointments_usecase.dart';
 import 'package:shared_core/device/device_info.dart';
 import 'package:shared_core/hashing/hashing.dart';
 import 'package:shared_core/network/api_client.dart';
@@ -85,6 +92,10 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
     () => AuthRemoteDataSourceImpl(sl<Dio>()),
   );
 
+  sl.registerLazySingleton<AppointmentRemoteDataSource>(
+    () => AppointmentRemoteDataSourceImpl(sl<Dio>()),
+  );
+
 
   // Splash local
   sl.registerSingletonAsync<SplashLocalDataSource>(() async {
@@ -101,6 +112,13 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
     ),
   );
 
+  sl.registerLazySingleton<AppointmentRepository>(
+    () => AppointmentRepositoryImpl(
+      networkInfo: sl<NetworkInfo>(),
+      remote: sl<AppointmentRemoteDataSource>(),
+    ),
+  );
+
   sl.registerLazySingleton<SplashRepository>(
     () => SplashRepositoryImpl(local: sl<SplashLocalDataSource>()),
   );
@@ -109,6 +127,18 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
 //-- auth use cases
   sl.registerLazySingleton<LoginUsecase>(
     () => LoginUsecase(sl<AuthRepository>()),
+  );
+
+  sl.registerLazySingleton<CreateAppointmentUsecase>(
+    () => CreateAppointmentUsecase(sl<AppointmentRepository>()),
+  );
+
+  sl.registerLazySingleton<FetchMyAppointmentsUsecase>(
+    () => FetchMyAppointmentsUsecase(sl<AppointmentRepository>()),
+  );
+
+  sl.registerLazySingleton<FetchAppointmentByIdUsecase>(
+    () => FetchAppointmentByIdUsecase(sl<AppointmentRepository>()),
   );
   // -- splash use cases
   

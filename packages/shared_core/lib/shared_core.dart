@@ -3,7 +3,11 @@ export 'domain/entities/file_entity.dart';
 export 'data/models/file_model.dart';
 
 // Export doctor domain entities and models
+export 'domain/enums/appointment_status_enum.dart';
 export 'domain/enums/doctor_status_enum.dart';
+export 'domain/entities/appointment_changed_time_entity.dart';
+export 'domain/entities/appointment_entity.dart';
+export 'domain/entities/patient_entity.dart';
 export 'domain/entities/doctor_availability_entity.dart';
 export 'domain/entities/doctor_entity.dart';
 export 'domain/entities/doctor_list_entity.dart';
@@ -13,6 +17,9 @@ export 'domain/entities/hospital_entity.dart';
 export 'domain/entities/availability_query_params_entity.dart';
 export 'domain/entities/doctor_availability_list_entity.dart';
 export 'data/models/doctor_availability_model.dart';
+export 'data/models/appointment_changed_time_model.dart';
+export 'data/models/appointment_model.dart';
+export 'data/models/patient_model.dart';
 export 'data/models/doctor_model.dart';
 export 'data/models/doctor_list_model.dart';
 export 'data/models/doctor_detail_model.dart';

@@ -1,5 +1,9 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'package:shared_core/domain/enums/appointment_status_enum.dart';
+export 'appointments/domain/entities/create_appointment_entity.dart';
+export 'appointments/domain/entities/fetch_my_appointments_query_entity.dart';
+export 'package:shared_core/domain/entities/appointment_entity.dart';
+export 'appointments/domain/entities/appointment_list_entity.dart';
+export 'appointments/domain/repository/appointment_repository.dart';
+export 'appointments/domain/usecase/create_appointment_usecase.dart';
+export 'appointments/domain/usecase/fetch_my_appointments_usecase.dart';
+export 'appointments/domain/usecase/fetch_appointment_by_id_usecase.dart';
