@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:patient_app/config/routes/patient_app_router.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart';
+import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_bloc.dart';
 import 'package:patient_app/firebase_options.dart';
 import 'package:patient_app/patient_injection_container.dart';
 import 'package:shared_core/bloc/notification/notification_bloc.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => sl<SplashBloc>()),
         BlocProvider(create: (_) => sl<AuthBloc>()),
         BlocProvider(create: (_) => sl<NotificationBloc>()),
+        BlocProvider(create: (_) => sl<PatientAppointmentBloc>()),
       ],
       child: ToastificationWrapper(
         child: MaterialApp.router(

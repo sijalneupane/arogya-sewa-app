@@ -69,7 +69,7 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
   //   // ApiClient with auth header injection
   sl.registerLazySingleton<ApiClient>(
     () =>
-        ApiClient(networkInfo: sl<NetworkInfo>(), securePref: sl<SecurePref>()),
+        ApiClient(dio: sl<Dio>(), securePref: sl<SecurePref>()),
   );
   //   // Hashing utility
   sl.registerLazySingleton<Hashing>(() => Hashing(hash: sl<Hash>()));

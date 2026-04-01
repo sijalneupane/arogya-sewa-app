@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:patient_app/features/appointments/domain/usecases/patient_fetch_my_appointments_usecase.dart';
+import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_bloc.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource_impl.dart';
 import 'package:patient_app/features/availability/domain/repositories/availability_repository.dart';
@@ -31,6 +33,7 @@ import 'package:shared_core/network/network_info.dart';
 import 'package:shared_core/services/firebase_notification_service.dart';
 import 'package:shared_core/services/location_service.dart';
 import 'package:shared_core/shared_core_injection_container.dart';
+import 'package:shared_feature/appointments/domain/usecase/fetch_my_appointments_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -135,6 +138,19 @@ Future<void> initDI() async {
   sl.registerFactory<PatientDoctorAvailabilityBloc>(
     () => PatientDoctorAvailabilityBloc(
       fetchDoctorAvailabilitiesUsecase: sl<FetchDoctorAvailabilitiesUsecase>(),
+    ),
+  );
+
+  // Appointment Feature Dependencies
+  // Usecase
+  sl.registerLazySingleton<PatientFetchMyAppointmentsUsecase>(
+    () => PatientFetchMyAppointmentsUsecase(sl<FetchMyAppointmentsUsecase>()),
+  );
+
+  // Bloc
+  sl.registerFactory<PatientAppointmentBloc>(
+    () => PatientAppointmentBloc(
+      fetchMyAppointmentsUsecase: sl<FetchMyAppointmentsUsecase>(),
     ),
   );
 
