@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/core/config/widgets/patient_bottom_navigation_bar.dart';
+import 'package:patient_app/features/appointments/presentation/bloc/create_appointment_bloc.dart';
+import 'package:patient_app/features/appointments/presentation/pages/appointment_submission_page.dart';
 import 'package:patient_app/features/appointments/presentation/pages/appointments_page.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_bloc.dart';
 import 'package:patient_app/features/doctors/presentation/bloc/doctor_detail_bloc.dart';
@@ -94,6 +96,27 @@ class PatientAppRouter {
                         child: DoctorDetailPage(doctorId: doctorId),
                       );
                     },
+                    routes: [
+                      GoRoute(
+                        path: 'book-appointment',
+                        name: RoutesName.bookAppointmentScreen,
+                        builder: (context, state) {
+                          final extra = state.extra as Map<String, dynamic>?;
+                          if (extra == null) {
+                            return const Scaffold(
+                              body: Center(child: Text('Invalid appointment data')),
+                            );
+                          }
+                          return BlocProvider<CreateAppointmentBloc>(
+                            create: (context) => GetIt.instance<CreateAppointmentBloc>(),
+                            child: AppointmentSubmissionPage(
+                              availability: extra['availability'],
+                              doctorName: extra['doctorName'],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                   GoRoute(
                     path: 'search',
