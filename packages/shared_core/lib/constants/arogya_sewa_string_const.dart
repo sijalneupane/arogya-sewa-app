@@ -1,5 +1,9 @@
 // -- A --
 const String accessDenied = 'Access denied';
+const String appointmentCreateFailedString = 'Failed to create appointment';
+const String appointmentByIdFetchFailedString =
+	'Failed to fetch appointment details';
+const String appointmentsFetchFailedString = 'Failed to fetch appointments';
 
 // -- B --
 const String badGatewayString="Bad gateway";
