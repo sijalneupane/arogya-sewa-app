@@ -67,14 +67,17 @@ Widget build(BuildContext context) {
               ],
             ),
             onPressed: () async {
-              final result = await context.pushNamed(
+              // Navigate to login with popOnSuccess = true
+              final result = await context.pushNamed<bool>(
                 loginRouteName,
-              extra: true,
-            );
-            if (result == true && context.mounted) {
-              onLoginSuccess?.call();
-            }
-          })
+                extra: true, // This will be passed as popOnSuccess to login page
+              );
+              // Login was successful and popped
+              if (result == true && context.mounted) {
+                onLoginSuccess?.call();
+              }
+            },
+          ),
           // TextButton.icon(
           //   onPressed: () async {
           //     final result = await context.pushNamed(
