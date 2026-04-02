@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_core/bloc/notification/notification_bloc.dart';
 import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/login_bloc.dart';
 import 'package:shared_feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:shared_ui/theme/app_theme.dart';
 import 'package:toastification/toastification.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<SplashBloc>(create:  (_) => sl<SplashBloc>()),
         BlocProvider<AuthBloc>(create:  (_) => sl<AuthBloc>()),
+        BlocProvider<LoginBloc>(create:  (_) => sl<LoginBloc>()),
         BlocProvider<NotificationBloc>(create:  (_) => sl<NotificationBloc>()),
       ],
       child: ToastificationWrapper(

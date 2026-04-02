@@ -9,6 +9,7 @@ import 'package:patient_app/firebase_options.dart';
 import 'package:patient_app/patient_injection_container.dart';
 import 'package:shared_core/bloc/notification/notification_bloc.dart';
 import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/login_bloc.dart';
 import 'package:shared_feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:shared_ui/theme/app_theme.dart';
 import 'package:toastification/toastification.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => sl<SplashBloc>()),
         BlocProvider(create: (_) => sl<AuthBloc>()),
+        BlocProvider(create: (_) => sl<LoginBloc>()),
         BlocProvider(create: (_) => sl<NotificationBloc>()),
         BlocProvider(create: (_) => sl<PatientAppointmentBloc>()),
       ],
