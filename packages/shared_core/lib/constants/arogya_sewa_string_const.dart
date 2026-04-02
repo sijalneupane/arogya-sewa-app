@@ -59,6 +59,8 @@ const String passwordEmptyValidationString = 'Please enter your password';
 const String passwordLengthValidationString = 'Password must be at least 6 characters long';
 
 // -- R --
+const String rememberMeString='Remember me';
+const String rememberMeFetchFailedString='Failed to fetch remember me status';
 const String requestTimedOut = 'Request timed out';
 
 // -- S --
