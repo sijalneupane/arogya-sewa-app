@@ -1,7 +1,6 @@
 enum DoctorStatusEnum {
-  available('Available'),
+  active('Active'),
   onLeave('On Leave'),
-  onAppointment('On Appointment'),
   inactive('Inactive');
 
   final String value;
@@ -15,16 +14,11 @@ extension DoctorStatusEnumX on DoctorStatusEnum {
     switch (normalized) {
       case 'available':
       case 'active':
-        return DoctorStatusEnum.available;
+        return DoctorStatusEnum.active;
       case 'on leave':
       case 'on_leave':
       case 'leave':
         return DoctorStatusEnum.onLeave;
-      case 'on appointment':
-      case 'on_appointment':
-      case 'appointment':
-      case 'busy':
-        return DoctorStatusEnum.onAppointment;
       case 'inactive':
       default:
         return DoctorStatusEnum.inactive;
