@@ -11,10 +11,12 @@ class PatientSplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ArogyaSewaSplashPage(
-        appLogoImgPath:appLogoWhiteBgPath,
+        appLogoImgPath: appLogoWhiteBgPath,
         appTitle: appName,
-        afterDelayNavigate: () {
-          context.pushNamed(RoutesName.loginScreen);
+        afterDelayNavigate: (isRememberMe) {
+          // Navigate to homepage regardless of remember me status
+          // AuthBloc handles fetching user details if remember me is true
+          context.goNamed(RoutesName.homeScreen);
         },
       ),
     );
