@@ -248,7 +248,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    doctor.department.name,
+                    doctor.department?.name ?? 'No Department',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -412,7 +412,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   }
 
   Widget _buildStatusCard(DoctorDetailEntity doctor, bool isDarkMode) {
-    final isAvailable = doctor.status == DoctorStatusEnum.available;
+    final isAvailable = doctor.status == DoctorStatusEnum.active;
 
     return Container(
       padding: EdgeInsets.all(14),
@@ -713,18 +713,18 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  doctor.department.name,
+                  doctor.department?.name ?? 'No Department',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: ArogyaSewaColors.primaryColor,
                   ),
                 ),
-                if (doctor.department.description != null &&
-                    doctor.department.description!.isNotEmpty) ...[
+                if (doctor.department?.description != null &&
+                    doctor.department!.description!.isNotEmpty) ...[
                   SizedBox(height: 6),
                   Text(
-                    doctor.department.description!,
+                    doctor.department!.description!,
                     style: TextStyle(
                       fontSize: 11,
                       color: isDarkMode
