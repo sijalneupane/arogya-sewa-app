@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_feature/auth/domain/entity/login_entity.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_event.dart';
 import 'package:shared_feature/auth/presentation/bloc/login_bloc.dart';
 import 'package:shared_feature/auth/presentation/bloc/login_event.dart';
 import 'package:shared_feature/auth/presentation/bloc/login_state.dart';
@@ -22,7 +24,6 @@ class ArogyaSewaLoginForm extends StatelessWidget {
   final String appLogoPath;
   bool obscure;
   bool rememberMe;
-  final bool popOnSuccess;
 
   final GlobalKey<FormState> formKey;
 
@@ -37,7 +38,6 @@ class ArogyaSewaLoginForm extends StatelessWidget {
     required this.formKey,
     this.obscure = true,
     this.rememberMe = false,
-    this.popOnSuccess = false,
   }) : _passwordController = passwordController,
        _emailController = emailController;
 
@@ -68,6 +68,7 @@ class ArogyaSewaLoginForm extends StatelessWidget {
           afterAuthenticationFail();
         }
         if (state is LoginSuccess) {
+          context.read<AuthBloc>().add(UserLoggedIn(state.session.user));
           ArogyaSewaBottomSheet().showAppBottomSheet(
             context,
             type: BottomSheetType.success,
