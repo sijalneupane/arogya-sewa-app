@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:patient_app/config/routes/routes_name.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_bloc.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_event.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_state.dart';
 import 'package:patient_app/features/appointments/presentation/widgets/appointment_card.dart';
 import 'package:patient_app/features/appointments/presentation/widgets/appointment_filter_sheet.dart';
 import 'package:patient_app/features/appointments/presentation/widgets/appointments_shimmer_widget.dart';
+import 'package:shared_core/constants/arogya_sewa_string_const.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_state.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
+import 'package:shared_ui/widgets/arogya_sewa_login_prompt.dart';
 import 'package:shared_ui/widgets/arogya_sewa_retry_widget.dart';
 
 class AppointmentsPage extends StatefulWidget {
@@ -25,8 +30,14 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   void initState() {
     super.initState();
-    _fetchAppointments(page: 1);
     _scrollController.addListener(_onScroll);
+    // Only fetch appointments if user is authenticated
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (context.read<AuthBloc>().state is AuthAuthenticated) {
+        _fetchAppointments(page: 1);
+      }
+    });
   }
 
   @override
@@ -104,6 +115,9 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isAuthenticated = context.select<AuthBloc, bool>(
+      (bloc) => bloc.state is AuthAuthenticated,
+    );
 
     return Scaffold(
       appBar: ArogyaSewaAppBar.create(
@@ -123,11 +137,19 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
           ),
         ],
       ),
-      body: BlocBuilder<PatientAppointmentBloc, PatientAppointmentState>(
-        builder: (context, state) {
-          return _buildBody(context, state, isDarkMode);
-        },
-      ),
+      body: isAuthenticated
+          ? BlocBuilder<PatientAppointmentBloc, PatientAppointmentState>(
+              builder: (context, state) {
+                return _buildBody(context, state, isDarkMode);
+              },
+            )
+          : ArogyaSewaLoginPrompt(
+              message: loginToAccessAppointmentsString,
+              loginRouteName: RoutesName.loginScreen,
+              onLoginSuccess: () {
+                _fetchAppointments(page: 1);
+              },
+            ),
     );
   }
 
