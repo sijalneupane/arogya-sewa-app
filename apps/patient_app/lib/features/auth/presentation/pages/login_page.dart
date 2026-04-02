@@ -38,19 +38,19 @@ class PatientLoginPage extends StatelessWidget {
                       child: ArogyaSewaLoginForm(
                         emailController: emailController,
                         passwordController: passwordController,
-                        afterAuthenticationSuccess: (context) {
+                        afterAuthenticationSuccess: (_) {
                           // Handle navigation based on popOnSuccess flag
                           if (popOnSuccess) {
-                            if (context.canPop()) {
-                              context.pop(true);
+                            if (pageContext.canPop()) {
+                              pageContext.pop(true);
                             } else {
-                              context.goNamed(RoutesName.homeScreen);
+                              pageContext.goNamed(RoutesName.homeScreen);
                             }
                             return;
                           }
                           
                           // Navigate to home page on successful login
-                          context.goNamed(RoutesName.homeScreen);
+                          pageContext.goNamed(RoutesName.homeScreen);
                         },
                         afterAuthenticationFail: () {
                           // Error handling is already done in the form via bottom sheet
