@@ -2,9 +2,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 const String accessTokenKey = "access_token";
 const String refreshTokenKey = "refresh_token";
+const String rememberMeKey = "remember_me";
 // const String biometricsKey = "biometric_enabled";
 const String biometricsTokenKey = "biometrics_token";
-// const String fingerprintHashKey = "fingerprint_hash";
 const String themeModeKey = "theme_mode";
 
 class SecurePref {
