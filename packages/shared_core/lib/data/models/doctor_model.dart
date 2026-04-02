@@ -35,9 +35,11 @@ class DoctorModel extends DoctorEntity {
       hospital: MiniHospitalModel.fromJson(
         json['hospital'] as Map<String, dynamic>,
       ),
-      department: DepartmentModel.fromJson(
-        json['department'] as Map<String, dynamic>,
-      ),
+      department: json['department'] != null
+          ? DepartmentModel.fromJson(
+              json['department'] as Map<String, dynamic>,
+            )
+          : null,
       user: UserModel.fromJson(json['user'] as Map<String, dynamic>),
       upcomingAvailability: json['upcoming_availability'] != null
           ? DoctorAvailabilityModel.fromJson(
@@ -58,7 +60,9 @@ class DoctorModel extends DoctorEntity {
           : null,
       'hospital_id': hospitalId,
       'hospital': MiniHospitalModel.fromEntity(hospital).toJson(),
-      'department': DepartmentModel.fromEntity(department).toJson(),
+      'department': department != null
+          ? DepartmentModel.fromEntity(department!).toJson()
+          : null,
       'user': (user as UserModel).toJson(),
       'upcoming_availability': upcomingAvailability != null
           ? DoctorAvailabilityModel.fromEntity(upcomingAvailability!).toJson()

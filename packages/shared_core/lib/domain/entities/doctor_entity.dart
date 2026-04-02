@@ -13,7 +13,7 @@ class DoctorEntity {
   final FileEntity? licenseCertificate;
   final String hospitalId;
   final MiniHospitalEntity hospital;
-  final DepartmentEntity department;
+  final DepartmentEntity? department;
   final UserEntity user;
   final DoctorAvailabilityEntity? upcomingAvailability;
 
@@ -25,7 +25,7 @@ class DoctorEntity {
     this.licenseCertificate,
     required this.hospitalId,
     required this.hospital,
-    required this.department,
+    this.department,
     required this.user,
     this.upcomingAvailability,
   });

@@ -18,12 +18,7 @@ class DoctorListModel extends DoctorListEntity {
       doctors: data
           .map((doctor) => DoctorModel.fromJson(doctor as Map<String, dynamic>))
           .toList(),
-      paginationMeta: PaginationMetaModel(
-        totalPage: (paginationMeta['totalPage'] as num?)?.toInt() ?? 1,
-        currentPage: (paginationMeta['currentPage'] as num?)?.toInt() ?? 1,
-        pageSize: (paginationMeta['pageSize'] as num?)?.toInt() ?? 10,
-        totalRecords: (paginationMeta['totalRecords'] as num?)?.toInt() ?? 0,
-      ),
+      paginationMeta: PaginationMetaModel.fromJson( paginationMeta)
     );
   }
 
