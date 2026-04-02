@@ -7,15 +7,16 @@ import 'package:shared_ui/widgets/splash/arogya_sewa_splash_page.dart';
 class DoctorSplashScreen extends StatelessWidget {
   const DoctorSplashScreen({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ArogyaSewaSplashPage(
-        appLogoImgPath:appLogoWhiteBgPath,
+        appLogoImgPath: appLogoWhiteBgPath,
         appTitle: appName,
-        afterDelayNavigate: () {
-          context.pushNamed(RoutesName.loginScreen);
+        afterDelayNavigate: (isRememberMe) {
+          // Navigate to homepage regardless of remember me status
+          // AuthBloc handles fetching user details if remember me is true
+          context.goNamed(RoutesName.homeScreen);
         },
       ),
     );
