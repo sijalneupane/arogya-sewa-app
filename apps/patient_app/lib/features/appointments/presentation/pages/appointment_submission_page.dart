@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/utils/date_formatter.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
+import 'package:shared_ui/shared_ui.dart';
 import 'package:shared_ui/widgets/arogya_sewa_app_bar.dart';
 import 'package:shared_ui/widgets/arogya_sewa_button.dart';
 import 'package:shared_ui/widgets/arogya_sewa_textform_field.dart';
@@ -432,6 +433,7 @@ class _AppointmentSubmissionPageState
     if (!_formKey.currentState!.validate()) {
       return;
     }
+    HideKeyboard.hide(pageContext);
     _submitAppointment(pageContext);
   }
 
