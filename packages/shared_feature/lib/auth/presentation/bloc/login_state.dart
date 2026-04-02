@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:shared_feature/auth/domain/entity/auth_session_entity.dart';
 
 abstract class LoginState extends Equatable {
   const LoginState();
@@ -23,7 +24,10 @@ class LoginLoading extends LoginState {
 
 /// Login successful.
 class LoginSuccess extends LoginState {
-  const LoginSuccess();
+  final AuthSessionEntity session;
+  const LoginSuccess(this.session);
+  @override
+  List<Object?> get props => [session];
 }
 
 /// Login failed with error message.
