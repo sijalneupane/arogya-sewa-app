@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:shared_core/domain/entities/appointment_entity.dart';
 import 'package:shared_core/domain/enums/appointment_status_enum.dart';
 import 'package:shared_core/utils/date_formatter.dart';
@@ -124,7 +125,7 @@ class AppointmentCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          appointment.doctor.department?.name ?? 'No Department',
+                          appointment.doctor.department?.name ?? noDepartmentString,
                           style: Theme.of(context)
                               .textTheme
                               .labelSmall

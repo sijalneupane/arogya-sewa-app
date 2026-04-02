@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:patient_app/core/constants/patient_app_strings_const.dart';
 import 'package:shared_core/domain/entities/doctor_entity.dart';
 import 'package:shared_core/domain/enums/doctor_status_enum.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
@@ -104,7 +105,7 @@ class DoctorCard extends StatelessWidget {
                         SizedBox(width: context.vw(1)),
                         Expanded(
                           child: Text(
-                            doctor.department?.name ?? 'No Department',
+                            doctor.department?.name ?? noDepartmentString,
                             style: TextStyle(
                               color: isDarkMode
                                   ? ArogyaSewaColors.textColorWhite.withValues(

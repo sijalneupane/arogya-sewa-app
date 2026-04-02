@@ -207,6 +207,7 @@ const String departmentNameString = "Department name";
 const String freeUpcomingOnlyString = "Free upcoming only";
 const String applyFilterString = "Apply";
 const String clearFilterString = "Clear";
+const String noDepartmentString = "No Department";
 
 // Doctor Detail Page strings
 const String currentStatusString = "Current Status";

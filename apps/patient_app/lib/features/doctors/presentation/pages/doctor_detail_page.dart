@@ -248,7 +248,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    doctor.department?.name ?? 'No Department',
+                    doctor.department?.name ?? noDepartmentString,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -713,7 +713,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  doctor.department?.name ?? 'No Department',
+                  doctor.department?.name ?? noDepartmentString,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
