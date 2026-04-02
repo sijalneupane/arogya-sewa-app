@@ -9,3 +9,6 @@ abstract class SplashEvent extends Equatable {
 class FetchVersionEvent extends SplashEvent {
 	const FetchVersionEvent();
 }
+class FetchRememberMeValue extends SplashEvent {
+  const FetchRememberMeValue();
+}
