@@ -11,6 +11,8 @@ import 'package:shared_ui/colors/arogya_sewa_color.dart';
 /// - Centered loading indicator with message
 /// - Theme-aware colors
 class ArogyaSewaLoadingDialog extends StatelessWidget {
+  static bool _isShowing = false;
+
   final String message;
   final Color? loaderColor;
 
@@ -27,21 +29,30 @@ class ArogyaSewaLoadingDialog extends StatelessWidget {
     String message = 'Loading...',
     Color? loaderColor,
   }) {
+    if (_isShowing) {
+      return Future.value();
+    }
+
+    _isShowing = true;
     return showDialog(
       context: context,
+      useRootNavigator: true,
       barrierDismissible: false,
       barrierColor: Colors.black.withValues(alpha: 0.6),
       builder: (context) => ArogyaSewaLoadingDialog(
         message: message,
         loaderColor: loaderColor,
       ),
-    );
+    ).whenComplete(() {
+      _isShowing = false;
+    });
   }
 
   /// Hide the loading dialog
   static void hide(BuildContext context) {
-    if (Navigator.canPop(context)) {
-      Navigator.of(context).pop();
+    final rootNavigator = Navigator.of(context, rootNavigator: true);
+    if (_isShowing && rootNavigator.canPop()) {
+      rootNavigator.pop();
     }
   }
 
