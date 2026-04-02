@@ -27,7 +27,7 @@ class DoctorLoginPage extends StatelessWidget {
             child: ArogyaSewaLoginForm(
               emailController: emailController,
               passwordController: passwordController,
-              afterAuthenticationSuccess: (context) {
+              afterAuthenticationSuccess: (_) {
                 // Handle navigation based on popOnSuccess flag
                 if (popOnSuccess) {
                   if (context.canPop()) {
