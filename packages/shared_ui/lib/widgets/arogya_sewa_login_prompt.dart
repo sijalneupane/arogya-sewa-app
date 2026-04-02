@@ -44,10 +44,11 @@ Widget build(BuildContext context) {
           ),
           const SizedBox(height: 8),
           ArogyaSewaButton(
-            width: context.vw(30),
+            width: context.vw(25),
             height: 35,
             gradient: ArogyaSewaColors.primrayGraidient,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   loginString,
