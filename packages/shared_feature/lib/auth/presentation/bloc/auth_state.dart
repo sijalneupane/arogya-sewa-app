@@ -1,43 +1,33 @@
 import 'package:equatable/equatable.dart';
-import 'package:shared_feature/auth/domain/entity/auth_session_entity.dart';
+import 'package:shared_core/domain/entities/user_entity.dart';
 
 abstract class AuthState extends Equatable {
-  final bool isLoading;
-  final String? error;
-
-  const AuthState({this.isLoading = false, this.error});
+  const AuthState();
 
   @override
-  List<Object?> get props => [isLoading, error];
+  List<Object?> get props => [];
 }
 
+/// App is checking persisted session on startup.
 class AuthInitial extends AuthState {
-  final bool obscure;
-  const AuthInitial({this.obscure = true});
-  
-  @override
-  List<Object?> get props => [obscure, ...super.props];
+  const AuthInitial();
 }
 
+/// Checking persisted token / validating session.
 class AuthLoading extends AuthState {
-  const AuthLoading() : super(isLoading: true);
+  const AuthLoading();
 }
 
-class Authenticated extends AuthState {
-  final AuthSessionEntity authSession;
-  const Authenticated({required this.authSession});
+/// A valid session exists — user is logged in.
+class AuthAuthenticated extends AuthState {
+  final UserEntity userData;
+  const AuthAuthenticated({required this.userData});
 
   @override
-  List<Object?> get props => [authSession, ...super.props];
+  List<Object?> get props => [userData];
 }
 
+/// No valid session — user must log in.
 class AuthUnauthenticated extends AuthState {
   const AuthUnauthenticated();
-}
-
-class AuthError extends AuthState {
-  const AuthError(String error) : super(error: error);
-
-  @override
-  List<Object?> get props => [error, ...super.props];
 }

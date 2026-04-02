@@ -1,13 +1,27 @@
-import 'package:shared_feature/auth/domain/entity/login_entity.dart';
+import 'package:equatable/equatable.dart';
+import 'package:shared_core/domain/entities/user_entity.dart';
 
-abstract class AuthEvent {}
+abstract class AuthEvent extends Equatable {
+  const AuthEvent();
+  @override
+  List<Object?> get props => [];
+}
 
-class AuthLoginInitiated extends AuthEvent {
-  final LoginEntity loginEntity;
-  AuthLoginInitiated(this.loginEntity);
+/// Fired once at app startup to restore persisted session.
+class FetchLoggedInUser extends AuthEvent {
+  const FetchLoggedInUser();
 }
-class AuthPasswordToggled extends AuthEvent {
-  final bool obscure;
-  AuthPasswordToggled({required this.obscure});
+
+/// Fired after a successful login / biometric auth.
+class UserLoggedIn extends AuthEvent {
+  final UserEntity userData;
+  const UserLoggedIn(this.userData);
+
+  @override
+  List<Object?> get props => [userData];
 }
-class AuthLogoutRequested extends AuthEvent {}
+
+/// Fired when the user explicitly logs out.
+class UserLoggedOut extends AuthEvent {
+  const UserLoggedOut();
+}
