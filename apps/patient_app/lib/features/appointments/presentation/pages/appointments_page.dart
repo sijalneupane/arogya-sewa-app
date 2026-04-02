@@ -119,37 +119,43 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
       (bloc) => bloc.state is AuthAuthenticated,
     );
 
-    return Scaffold(
-      appBar: ArogyaSewaAppBar.create(
-        context: context,
-        title: 'My Appointments',
-        showBackButton: true,
-        actions: [
-          IconButton(
-            onPressed: _showFilterSheet,
-            icon: Icon(
-              Icons.filter_list_rounded,
-              color: isDarkMode
-                  ? ArogyaSewaColors.textColorWhite
-                  : ArogyaSewaColors.textColorBlack,
+    return BlocListener<AuthBloc, AuthState>(
+      listenWhen: (previous, current) =>
+          previous is! AuthAuthenticated && current is AuthAuthenticated,
+      listener: (context, state) {
+        _fetchAppointments(page: 1);
+      },
+      child: Scaffold(
+        appBar: ArogyaSewaAppBar.create(
+          context: context,
+          title: 'My Appointments',
+          actions: [
+            IconButton(
+              onPressed: _showFilterSheet,
+              icon: Icon(
+                Icons.filter_list_rounded,
+                color: isDarkMode
+                    ? ArogyaSewaColors.textColorWhite
+                    : ArogyaSewaColors.textColorBlack,
+              ),
+              tooltip: 'Filter',
             ),
-            tooltip: 'Filter',
-          ),
-        ],
+          ],
+        ),
+        body: isAuthenticated
+            ? BlocBuilder<PatientAppointmentBloc, PatientAppointmentState>(
+                builder: (context, state) {
+                  return _buildBody(context, state, isDarkMode);
+                },
+              )
+            : ArogyaSewaLoginPrompt(
+                message: loginToAccessAppointmentsString,
+                loginRouteName: RoutesName.loginScreen,
+                onLoginSuccess: () {
+                  _fetchAppointments(page: 1);
+                },
+              ),
       ),
-      body: isAuthenticated
-          ? BlocBuilder<PatientAppointmentBloc, PatientAppointmentState>(
-              builder: (context, state) {
-                return _buildBody(context, state, isDarkMode);
-              },
-            )
-          : ArogyaSewaLoginPrompt(
-              message: loginToAccessAppointmentsString,
-              loginRouteName: RoutesName.loginScreen,
-              onLoginSuccess: () {
-                _fetchAppointments(page: 1);
-              },
-            ),
     );
   }
 
