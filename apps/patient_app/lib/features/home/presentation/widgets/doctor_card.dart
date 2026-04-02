@@ -104,7 +104,7 @@ class DoctorCard extends StatelessWidget {
                         SizedBox(width: context.vw(1)),
                         Expanded(
                           child: Text(
-                            doctor.department.name,
+                            doctor.department?.name ?? 'No Department',
                             style: TextStyle(
                               color: isDarkMode
                                   ? ArogyaSewaColors.textColorWhite.withValues(
@@ -210,7 +210,7 @@ class DoctorCard extends StatelessWidget {
     IconData statusIcon;
 
     switch (doctor.status) {
-      case DoctorStatusEnum.available:
+      case DoctorStatusEnum.active:
         badgeColor = Colors.green;
         textColor = Colors.white;
         statusIcon = Icons.check_circle_rounded;
@@ -219,11 +219,6 @@ class DoctorCard extends StatelessWidget {
         badgeColor = Colors.orange;
         textColor = Colors.white;
         statusIcon = Icons.beach_access_rounded;
-        break;
-      case DoctorStatusEnum.onAppointment:
-        badgeColor = Colors.blue;
-        textColor = Colors.white;
-        statusIcon = Icons.event_available_rounded;
         break;
       case DoctorStatusEnum.inactive:
         badgeColor = Colors.grey;

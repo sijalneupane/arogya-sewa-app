@@ -124,7 +124,7 @@ class AppointmentCard extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          appointment.doctor.department.name,
+                          appointment.doctor.department?.name ?? 'No Department',
                           style: Theme.of(context)
                               .textTheme
                               .labelSmall
