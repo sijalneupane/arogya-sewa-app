@@ -62,19 +62,25 @@ class ArogyaSewaLoginForm extends StatelessWidget {
         if (state is LoginFailure) {
           ArogyaSewaBottomSheet().showAppBottomSheet(
             context,
+            useRootNavigator: true,
             type: BottomSheetType.error,
-            message: state.errorMessage ,
+            message: state.errorMessage,
+            onDismissed: afterAuthenticationFail,
           );
-          afterAuthenticationFail();
         }
         if (state is LoginSuccess) {
           context.read<AuthBloc>().add(UserLoggedIn(state.session.user));
           ArogyaSewaBottomSheet().showAppBottomSheet(
             context,
+            useRootNavigator: true,
             type: BottomSheetType.success,
             message: loginSuccessStr,
+            onDismissed: () {
+              if (context.mounted) {
+                afterAuthenticationSuccess(context);
+              }
+            },
           );
-          afterAuthenticationSuccess(context);
         }
       },
       builder: (context, state) {
