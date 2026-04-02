@@ -58,6 +58,7 @@ dependencies:
     path: ../../packages/shared_feature
   shared_core:
     path: ../../packages/shared_core
+  khalti_checkout_flutter: ^1.0.0-dev.9
 
 
 dev_dependencies:
