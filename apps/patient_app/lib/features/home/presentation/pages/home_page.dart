@@ -19,6 +19,8 @@ import 'package:patient_app/features/home/presentation/widgets/hospitals_empty_s
 import 'package:patient_app/features/home/presentation/widgets/hospitals_shimmer_widget.dart';
 import 'package:patient_app/features/home/presentation/widgets/location_permission_widget.dart';
 import 'package:shared_core/services/location_service.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/auth_state.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 import 'package:shared_ui/utils/screen_size.dart';
 import 'package:shared_ui/widgets/app_toast.dart';
@@ -119,6 +121,46 @@ class _HomePageState extends State<HomePage> {
             : ArogyaSewaColors.textColorWhite,
         elevation: 0,
         centerTitle: false,
+        actions: [
+          // User name from AuthBloc
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is AuthAuthenticated) {
+                return Padding(
+                  padding: EdgeInsets.only(right: context.vw(2)),
+                  child: Row(
+                    children: [
+                      // User name
+                      Text(
+                        state.userData.name,
+                        style: TextStyle(
+                          color: textColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(width: context.vw(1)),
+                      // User avatar icon
+                      CircleAvatar(
+                        radius: 16,
+                        backgroundColor: ArogyaSewaColors.primaryColor,
+                        child: Icon(
+                          Icons.person,
+                          size: 18,
+                          color: ArogyaSewaColors.textColorWhite,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              // Show login prompt or empty container when not authenticated
+              return SizedBox.shrink();
+            },
+          ),
+        ],
       ),
       body: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
