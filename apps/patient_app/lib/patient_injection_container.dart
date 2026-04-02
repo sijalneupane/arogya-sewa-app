@@ -3,6 +3,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:patient_app/features/appointments/domain/usecases/patient_fetch_my_appointments_usecase.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/create_appointment_bloc.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_bloc.dart';
+import 'package:patient_app/features/payments/presentation/bloc/khalti_payment_bloc.dart';
+import 'package:patient_app/features/payments/data/datasources/khalti_payment_remote_datasource.dart';
+import 'package:patient_app/features/payments/data/datasources/khalti_payment_remote_datasource_impl.dart';
+import 'package:patient_app/features/payments/domain/repositories/khalti_payment_repository.dart';
+import 'package:patient_app/features/payments/domain/repositories/khalti_payment_repository_impl.dart';
+import 'package:patient_app/features/payments/domain/usecases/initiate_khalti_payment_usecase.dart';
+import 'package:patient_app/features/payments/domain/usecases/verify_khalti_payment_usecase.dart';
+import 'package:patient_app/core/services/patient_khalti_checkout_service.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource.dart';
 import 'package:shared_feature/appointments/domain/usecase/create_appointment_usecase.dart';
 import 'package:patient_app/features/availability/data/datasources/availability_remote_datasource_impl.dart';
@@ -42,6 +50,12 @@ final sl = GetIt.instance;
 
 Future<void> initDI() async {
   await registerSharedCoreDependencies(sl);
+
+  // ===== GLOBAL SERVICES INITIALIZATION =====
+  // Payment Service (Global - used throughout the app)
+  sl.registerSingleton<PatientKhaltiCheckoutService>(
+    PatientKhaltiCheckoutService(),
+  );
 
   // Home Feature Dependencies
   // Datasource
@@ -159,6 +173,37 @@ Future<void> initDI() async {
   sl.registerFactory<CreateAppointmentBloc>(
     () => CreateAppointmentBloc(
       createAppointmentUsecase: sl<CreateAppointmentUsecase>(),
+    ),
+  );
+
+  // ===== PAYMENT FEATURE DEPENDENCIES =====
+  // Datasource
+  sl.registerLazySingleton<KhaltiPaymentRemoteDataSource>(
+    () => KhaltiPaymentRemoteDataSourceImpl(sl<Dio>()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<KhaltiPaymentRepository>(
+    () => KhaltiPaymentRepositoryImpl(
+      remoteDataSource: sl<KhaltiPaymentRemoteDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
+    ),
+  );
+
+  // Usecases
+  sl.registerLazySingleton<InitiateKhaltiPaymentUsecase>(
+    () => InitiateKhaltiPaymentUsecase(sl<KhaltiPaymentRepository>()),
+  );
+
+  sl.registerLazySingleton<VerifyKhaltiPaymentUsecase>(
+    () => VerifyKhaltiPaymentUsecase(sl<KhaltiPaymentRepository>()),
+  );
+
+  // Bloc
+  sl.registerFactory<KhaltiPaymentBloc>(
+    () => KhaltiPaymentBloc(
+      initiateKhaltiPaymentUsecase: sl<InitiateKhaltiPaymentUsecase>(),
+      verifyKhaltiPaymentUsecase: sl<VerifyKhaltiPaymentUsecase>(),
     ),
   );
 
