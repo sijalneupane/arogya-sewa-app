@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_feature/auth/domain/entity/login_entity.dart';
-import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
-import 'package:shared_feature/auth/presentation/bloc/auth_event.dart';
-import 'package:shared_feature/auth/presentation/bloc/auth_state.dart';
+import 'package:shared_feature/auth/presentation/bloc/login_bloc.dart';
+import 'package:shared_feature/auth/presentation/bloc/login_event.dart';
+import 'package:shared_feature/auth/presentation/bloc/login_state.dart';
 import 'package:shared_core/constants/arogya_sewa_string_const.dart';
 import 'package:shared_ui/utils/hide_keyboard.dart';
 import 'package:shared_ui/utils/screen_size.dart';
@@ -16,16 +16,16 @@ import 'package:shared_ui/colors/arogya_sewa_color.dart';
 class ArogyaSewaLoginForm extends StatelessWidget {
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
-  // final void Function() onSubmit;
-  // final void Function() onForgotPassword;
   final void Function(BuildContext context) afterAuthenticationSuccess;
   final void Function() afterAuthenticationFail;
   final void Function(bool isLoading)? onLoadingChanged;
   final String appLogoPath;
   bool obscure;
+  bool rememberMe;
+  final bool popOnSuccess;
 
   final GlobalKey<FormState> formKey;
-  
+
   ArogyaSewaLoginForm({
     super.key,
     required TextEditingController emailController,
@@ -36,36 +36,38 @@ class ArogyaSewaLoginForm extends StatelessWidget {
     required this.appLogoPath,
     required this.formKey,
     this.obscure = true,
+    this.rememberMe = false,
+    this.popOnSuccess = false,
   }) : _passwordController = passwordController,
        _emailController = emailController;
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final textColor = isDarkMode 
-        ? ArogyaSewaColors.textColorWhite 
+    final textColor = isDarkMode
+        ? ArogyaSewaColors.textColorWhite
         : ArogyaSewaColors.textColorBlack;
     final hintColor = ArogyaSewaColors.textColorGrey;
-    final iconColor = isDarkMode 
-        ? ArogyaSewaColors.textColorWhite 
+    final iconColor = isDarkMode
+        ? ArogyaSewaColors.textColorWhite
         : ArogyaSewaColors.textColorBlack;
-    final primaryColortextColor = isDarkMode 
-        ? ArogyaSewaColors.textColorWhite 
+    final primaryColortextColor = isDarkMode
+        ? ArogyaSewaColors.textColorWhite
         : ArogyaSewaColors.primaryColor;
 
-    return BlocConsumer<AuthBloc, AuthState>(
+    return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
-        onLoadingChanged?.call(state is AuthLoading);
+        onLoadingChanged?.call(state is LoginLoading);
 
-        if (state is AuthError) {
+        if (state is LoginFailure) {
           ArogyaSewaBottomSheet().showAppBottomSheet(
             context,
             type: BottomSheetType.error,
-            message: state.error ?? loginFailedStr,
+            message: state.errorMessage ,
           );
           afterAuthenticationFail();
         }
-        if (state is Authenticated) {
+        if (state is LoginSuccess) {
           ArogyaSewaBottomSheet().showAppBottomSheet(
             context,
             type: BottomSheetType.success,
@@ -75,11 +77,11 @@ class ArogyaSewaLoginForm extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is AuthInitial) {
-          obscure = state.obscure;
+        if (state is LoginInitial) {
+          obscure = state.obscurePassword;
         }
-        
-        final isLoading = state is AuthLoading;
+
+        final isLoading = state is LoginLoading;
 
         return Form(
           key: formKey,
@@ -160,8 +162,8 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                     color: iconColor,
                   ),
                   onPressed: isLoading ? null : () {
-                    context.read<AuthBloc>().add(
-                      AuthPasswordToggled(obscure: obscure),
+                    context.read<LoginBloc>().add(
+                      LoginPasswordToggled(!obscure),
                     );
                   },
                 ),
@@ -175,9 +177,32 @@ class ArogyaSewaLoginForm extends StatelessWidget {
                   return null;
                 },
               ),
-              
+
               //  SizedBox(height: context.vh(1)),
-              
+
+              // Remember Me Checkbox
+              Row(
+                children: [
+                  Checkbox(
+                    value: rememberMe,
+                    onChanged: isLoading ? null : (value) {
+                      rememberMe = value ?? false;
+                    },
+                    activeColor: primaryColortextColor,
+                  ),
+                  Text(
+                    rememberMeString,
+                    style: TextStyle(
+                      color: isLoading ? ArogyaSewaColors.textColorGrey : textColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+
+              //  SizedBox(height: context.vh(1)),
+
               // Forgot Password - Right Aligned
               Align(
                 alignment: Alignment.centerRight,
@@ -298,12 +323,13 @@ class ArogyaSewaLoginForm extends StatelessWidget {
   void _submitLoginForm(BuildContext context, GlobalKey<FormState> formKey) {
     if (!(formKey.currentState?.validate() ?? false)) return;
     HideKeyboard.hide(context);
-    context.read<AuthBloc>().add(
-      AuthLoginInitiated(
+    context.read<LoginBloc>().add(
+      LoginSubmitted(
         LoginEntity(
           email: _emailController.text.trim(),
           password: _passwordController.text,
           fcmToken: 'abc',
+          rememberMe: rememberMe,
         ),
       ),
     );
