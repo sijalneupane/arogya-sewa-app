@@ -4,6 +4,7 @@ const String appointmentCreateFailedString = 'Failed to create appointment';
 const String appointmentByIdFetchFailedString =
 	'Failed to fetch appointment details';
 const String appointmentsFetchFailedString = 'Failed to fetch appointments';
+const String loginToAccessAppointmentsString = 'Please log in to view your appointments';
 
 // -- B --
 const String badGatewayString="Bad gateway";
