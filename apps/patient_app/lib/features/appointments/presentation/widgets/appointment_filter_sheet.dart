@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_bloc.dart';
 import 'package:patient_app/features/appointments/presentation/bloc/patient_appointment_event.dart';
@@ -99,7 +100,7 @@ class _AppointmentFilterSheetState extends State<AppointmentFilterSheet> {
                       ),
                 ),
                 IconButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () =>context.pop(),
                   icon: Icon(
                     Icons.close_rounded,
                     color: mutedTextColor,
@@ -447,6 +448,6 @@ class _AppointmentFilterSheetState extends State<AppointmentFilterSheet> {
             dateTo: _dateTo,
           ),
         );
-    Navigator.pop(context);
+   context.pop();
   }
 }
