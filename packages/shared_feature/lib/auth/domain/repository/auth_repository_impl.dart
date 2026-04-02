@@ -39,6 +39,8 @@ class AuthRepositoryImpl extends AuthRepository {
       final session = await remote.login(model);
       await securePref.saveData(accessTokenKey, session.accessToken);
       await securePref.saveData(refreshTokenKey, session.refreshToken);
+      // Save remember me preference
+      await securePref.saveData(rememberMeKey, payload.rememberMe.toString());
       return right(session);
     } on DioException catch (e) {
       return handleRepositoryException(
