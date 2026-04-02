@@ -18,6 +18,7 @@ class AppointmentModel extends AppointmentEntity {
     required super.totalAmount,
     required super.paidAmount,
     required super.dueAmount,
+    required super.advanceFee,
     required super.paymentStatus,
     required super.status,
     required super.changedTimes,
@@ -43,6 +44,7 @@ class AppointmentModel extends AppointmentEntity {
       totalAmount: (json['total_amount'] as num?)?.toDouble() ?? 0,
       paidAmount: (json['paid_amount'] as num?)?.toDouble() ?? 0,
       dueAmount: (json['due_amount'] as num?)?.toDouble() ?? 0,
+      advanceFee: (json['advance_fee'] as num?)?.toDouble() ?? 0,
       paymentStatus: json['payment_status'] as String? ?? '',
       status: AppointmentStatusEnumX.fromValue(json['status'] as String?),
       changedTimes: changedTimesRaw

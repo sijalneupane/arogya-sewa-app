@@ -16,6 +16,7 @@ class AppointmentEntity {
   final double totalAmount;
   final double paidAmount;
   final double dueAmount;
+  final double advanceFee;
   final String paymentStatus;
   final AppointmentStatusEnum status;
   final List<AppointmentChangedTimeEntity> changedTimes;
@@ -33,6 +34,7 @@ class AppointmentEntity {
     required this.totalAmount,
     required this.paidAmount,
     required this.dueAmount,
+    required this.advanceFee,
     required this.paymentStatus,
     required this.status,
     required this.changedTimes,
