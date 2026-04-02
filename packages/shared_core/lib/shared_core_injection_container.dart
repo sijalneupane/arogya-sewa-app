@@ -11,9 +11,9 @@ import 'package:shared_core/bloc/notification/notification_bloc.dart';
 import 'package:shared_feature/auth/data/datasources/auth_remote_dataseource_impl.dart';
 import 'package:shared_feature/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:shared_feature/auth/domain/usecase/login_usecase.dart';
-import 'package:shared_feature/auth/presentation/bloc/auth_bloc.dart';
 import 'package:shared_feature/auth/domain/repository/auth_repository.dart';
 import 'package:shared_feature/auth/domain/repository/auth_repository_impl.dart';
+import 'package:shared_feature/auth/auth_injection_container.dart';
 import 'package:shared_feature/appointments/data/datasources/appointment_remote_datasource.dart';
 import 'package:shared_feature/appointments/data/datasources/appointment_remote_datasource_impl.dart';
 import 'package:shared_feature/appointments/domain/repository/appointment_repository.dart';
@@ -31,6 +31,7 @@ import 'package:shared_feature/splash/data/datasources/splash_local_datasource_i
 import 'package:shared_feature/splash/domain/repositories/splash_repository.dart';
 import 'package:shared_feature/splash/domain/repositories/splash_repository_impl.dart';
 import 'package:shared_feature/splash/domain/usecases/fetch_app_version_usecase.dart';
+import 'package:shared_feature/splash/domain/usecases/fetch_remember_me_usecase.dart';
 import 'package:shared_feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:shared_core/storage/secure_storage.dart';
 import 'package:shared_core/services/location_service.dart';
@@ -122,8 +123,11 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
   );
 
   sl.registerLazySingleton<SplashRepository>(
-    () => SplashRepositoryImpl(local: sl<SplashLocalDataSource>()),
+    () => SplashRepositoryImpl(local: sl<SplashLocalDataSource>(),securePref: sl<SecurePref>()),
   );
+
+  // Register auth feature dependencies (LoginBloc, AuthBloc, etc.)
+  registerAuthFeatureDependencies(sl);
 
 // use case dependencies
 //-- auth use cases
@@ -143,18 +147,21 @@ sl.registerSingleton<FlutterLocalNotificationsPlugin>( FlutterLocalNotifications
     () => FetchAppointmentByIdUsecase(sl<AppointmentRepository>()),
   );
   // -- splash use cases
-  
   sl.registerLazySingleton<FetchAppVersionUsecase>(
     () => FetchAppVersionUsecase(sl<SplashRepository>()),
   );
 
-  // bloc dependencies
-  sl.registerFactory<AuthBloc>(
-    () => AuthBloc(loginUsecase: sl<LoginUsecase>()),
+  sl.registerLazySingleton<FetchRememberMeUseCase>(
+    () => FetchRememberMeUseCase(sl<SplashRepository>()),
   );
-    // -- splash bloc
+
+  // bloc dependencies
+  // -- splash bloc
   sl.registerFactory<SplashBloc>(
-    () => SplashBloc(fetchAppVersion: sl<FetchAppVersionUsecase>()),
+    () => SplashBloc(
+      fetchAppVersion: sl<FetchAppVersionUsecase>(),
+      fetchRememberMe: sl<FetchRememberMeUseCase>(),
+    ),
   );
   sl.registerFactory<NotificationBloc>(
     () => NotificationBloc(),
