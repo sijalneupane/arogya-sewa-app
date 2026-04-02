@@ -8,9 +8,10 @@ import 'package:shared_ui/widgets/auth/arogya_sewa_login_form.dart';
 class DoctorLoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  
-  DoctorLoginPage({super.key});
-  
+  final bool popOnSuccess;
+
+  DoctorLoginPage({super.key, this.popOnSuccess = false});
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -27,8 +28,18 @@ class DoctorLoginPage extends StatelessWidget {
               emailController: emailController,
               passwordController: passwordController,
               afterAuthenticationSuccess: (context) {
+                // Handle navigation based on popOnSuccess flag
+                if (popOnSuccess) {
+                  if (context.canPop()) {
+                    context.pop(true);
+                  } else {
+                    context.goNamed(RoutesName.homeScreen);
+                  }
+                  return;
+                }
+                
                 // Navigate to home screen on successful login
-                context.pushNamed(RoutesName.homeScreen);
+                context.goNamed(RoutesName.homeScreen);
               },
               afterAuthenticationFail: () {
                 // Error handling is already done in the form via bottom sheet

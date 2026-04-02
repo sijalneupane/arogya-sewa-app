@@ -11,7 +11,9 @@ import 'package:shared_ui/widgets/arogya_sewa_loader.dart';
 import 'package:patient_app/core/constants/patient_app_strings_const.dart' as patient_strings;
 
 class PatientLoginPage extends StatelessWidget {
-  PatientLoginPage({super.key});
+  final bool popOnSuccess;
+  
+  PatientLoginPage({super.key, this.popOnSuccess = false});
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -37,6 +39,16 @@ class PatientLoginPage extends StatelessWidget {
                         emailController: emailController,
                         passwordController: passwordController,
                         afterAuthenticationSuccess: (context) {
+                          // Handle navigation based on popOnSuccess flag
+                          if (popOnSuccess) {
+                            if (context.canPop()) {
+                              context.pop(true);
+                            } else {
+                              context.goNamed(RoutesName.homeScreen);
+                            }
+                            return;
+                          }
+                          
                           // Navigate to home page on successful login
                           context.goNamed(RoutesName.homeScreen);
                         },
