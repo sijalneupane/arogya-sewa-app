@@ -3,4 +3,5 @@ import 'package:shared_core/error/failure.dart';
 
 abstract class SplashRepository {
   Future<Either<Failure, String>> fetchAppVersion();
+  Future<Either<Failure, bool>> isRememberMe();
 }
