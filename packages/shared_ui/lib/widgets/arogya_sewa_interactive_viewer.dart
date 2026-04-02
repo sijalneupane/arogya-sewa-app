@@ -110,7 +110,7 @@ class ArogyaSewaInteractiveViewer {
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: IconButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () =>context.pop(),
                       icon: Icon(Icons.close_rounded),
                       style: IconButton.styleFrom(
                         backgroundColor: isDarkMode

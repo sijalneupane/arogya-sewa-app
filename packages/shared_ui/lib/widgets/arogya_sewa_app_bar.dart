@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_ui/colors/arogya_sewa_color.dart';
 
 /// Reusable app bar widget for consistent navigation across the app
@@ -19,7 +20,7 @@ class ArogyaSewaAppBar {
     return AppBar(
       leading: showBackButton
           ? IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () =>context.pop(),
               icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
                 size: 20,
@@ -58,7 +59,7 @@ class ArogyaSewaAppBar {
       elevation: appBarTheme.elevation,
       foregroundColor: appBarTheme.foregroundColor,
       leading: IconButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () =>context.pop(),
         icon: Icon(
           Icons.arrow_back_ios_new_rounded,
           size: 20,
