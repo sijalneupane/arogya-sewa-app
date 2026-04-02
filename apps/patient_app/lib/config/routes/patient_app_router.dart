@@ -45,7 +45,10 @@ class PatientAppRouter {
       GoRoute(
         path: '/login',
         name: RoutesName.loginScreen,
-        builder: (context, state) => PatientLoginPage(),
+        builder: (context, state) {
+          final popOnSuccess = state.extra as bool? ?? false;
+          return PatientLoginPage(popOnSuccess: popOnSuccess);
+        },
       ),
 
       // Stateful Shell Route for Bottom Navigation
@@ -104,11 +107,14 @@ class PatientAppRouter {
                           final extra = state.extra as Map<String, dynamic>?;
                           if (extra == null) {
                             return const Scaffold(
-                              body: Center(child: Text('Invalid appointment data')),
+                              body: Center(
+                                child: Text('Invalid appointment data'),
+                              ),
                             );
                           }
                           return BlocProvider<CreateAppointmentBloc>(
-                            create: (context) => GetIt.instance<CreateAppointmentBloc>(),
+                            create: (context) =>
+                                GetIt.instance<CreateAppointmentBloc>(),
                             child: AppointmentSubmissionPage(
                               availability: extra['availability'],
                               doctorName: extra['doctorName'],

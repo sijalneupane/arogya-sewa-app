@@ -22,7 +22,10 @@ class DoctorAppRouter {
       GoRoute(
         path: '/login',
         name: RoutesName.loginScreen,
-        builder: (context, state) =>  DoctorLoginPage(),
+        builder: (context, state) {
+          final popOnSuccess = state.extra as bool? ?? false;
+          return DoctorLoginPage(popOnSuccess: popOnSuccess);
+        },
       ),
     ],
   );
